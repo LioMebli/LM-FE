@@ -1,55 +1,68 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+
+import { BackendReachability } from './core/api/health';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
   template: `
-    <div class="healthcheck-test">
-      <p aria-live="polite">
-        @if (loading()) {
-          Завантаження...
-        } @else if (error()) {
-          Помилка: {{ error() }}
-        } @else if (result() !== null) {
-          {{ result() }}
+    <main class="skeleton">
+      <h1>LioMebli</h1>
+      <p>Наскрізний зріз: браузер → API.</p>
+
+      <button type="button" [disabled]="pending()" (click)="probe()">
+        Перевірити звʼязок із API
+      </button>
+
+      <p class="outcome" role="status" aria-live="polite">
+        @if (pending()) {
+          Запит виконується…
+        } @else if (message()) {
+          {{ message() }}
         }
       </p>
-      <button type="button" (click)="checkHealth()">Перевірити healthcheck</button>
-    </div>
+    </main>
     <router-outlet />
   `,
   styles: `
-    .healthcheck-test {
+    .skeleton {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
       align-items: flex-start;
+      gap: 1rem;
       padding: 1rem;
+      max-width: 40rem;
+    }
+
+    button {
+      min-height: 44px;
+      padding: 0 1rem;
+    }
+
+    .outcome {
+      min-height: 1.5rem;
+      margin: 0;
     }
   `,
 })
 export class App {
-  private readonly http = inject(HttpClient);
+  private readonly backend = inject(BackendReachability);
 
-  protected readonly result = signal<string | null>(null);
-  protected readonly error = signal<string | null>(null);
-  protected readonly loading = signal(false);
+  protected readonly message = signal<string | null>(null);
+  protected readonly pending = signal(false);
 
-  protected checkHealth(): void {
-    this.loading.set(true);
-    this.error.set(null);
+  protected probe(): void {
+    this.pending.set(true);
+    this.message.set(null);
 
-    this.http.get('http://localhost:8080/healthcheck', { responseType: 'text' }).subscribe({
-      next: (response) => {
-        this.result.set(response);
-        this.loading.set(false);
-      },
-      error: (err: unknown) => {
-        this.error.set(err instanceof Error ? err.message : 'Не вдалося виконати запит');
-        this.loading.set(false);
-      },
+    this.backend.probe().subscribe((outcome) => {
+      this.message.set(
+        outcome.reachable
+          ? `Відповідь отримано, HTTP ${outcome.httpStatus}. Крос-доменний запит пройшов.`
+          : 'Відповіді немає: API не запущено або запит заблоковано CORS.',
+      );
+      this.pending.set(false);
     });
   }
 }
