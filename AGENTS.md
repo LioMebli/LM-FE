@@ -1,5 +1,17 @@
+@../GLOBAL_DESCRIPTION_LM_PROJECT.md
 
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
+
+## Project specifics (LM-FE)
+
+- **Angular 22, Vitest, Node 24.** Static output with build-time prerender — no SSR
+  runtime, no Node process in production (ADR-006). `main.server.ts` and
+  `app.config.server.ts` exist only so the prerenderer can render pages; do not
+  reintroduce `server.ts` or `express`.
+- **Cross-origin by design.** The API lives on a different host in every environment,
+  so never add a dev-server proxy. The base URL comes from `src/environments/`.
+- Site language is Ukrainian only (ADR-010). UI text in Ukrainian, code in English.
+- Routes are numeric: `/category/:id`, `/product/:id` (ADR-012). No slugs.
 
 ## TypeScript Best Practices
 
