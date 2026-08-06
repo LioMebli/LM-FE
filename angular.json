@@ -42,11 +42,6 @@
             "production": {
               "budgets": [
                 {
-                  "type": "initial",
-                  "maximumWarning": "300kB",
-                  "maximumError": "500kB"
-                },
-                {
                   "type": "anyComponentStyle",
                   "maximumWarning": "4kB",
                   "maximumError": "8kB"
@@ -67,11 +62,6 @@
             },
             "container": {
               "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "300kB",
-                  "maximumError": "500kB"
-                },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "4kB",
@@ -102,7 +92,12 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:unit-test"
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "setupFiles": [
+              "src/testing/page-metadata-reset.ts"
+            ]
+          }
         }
       }
     }

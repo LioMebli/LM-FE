@@ -8,6 +8,7 @@ RUN npm ci
 
 COPY . .
 RUN npx ng build --configuration=${NG_CONFIGURATION}
+RUN node tools/site-artifacts.mjs
 
 FROM nginx:1.29-alpine AS runtime
 
