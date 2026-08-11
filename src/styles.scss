@@ -1,1 +1,66 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --lm-surface: #ffffff;
+  --lm-ink: #1a1a1a;
+  --lm-ink-muted: #4a4a4a;
+  --lm-link: #0b5cad;
+  --lm-placeholder: #ececec;
+  --lm-page-width: 60rem;
+  --lm-gutter: 1rem;
+  --lm-tap-target: 44px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--lm-surface);
+  color: var(--lm-ink);
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+main {
+  max-width: var(--lm-page-width);
+  margin: 0 auto;
+  padding: var(--lm-gutter);
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--lm-tap-target);
+  min-width: var(--lm-tap-target);
+  color: var(--lm-link);
+}
+
+button {
+  min-height: var(--lm-tap-target);
+  min-width: var(--lm-tap-target);
+}
+
+:focus-visible {
+  outline: 2px solid var(--lm-link);
+  outline-offset: 2px;
+}
+
+.image-slot {
+  aspect-ratio: 4 / 3;
+  background: var(--lm-placeholder);
+}

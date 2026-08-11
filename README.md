@@ -1,59 +1,162 @@
-# LMFE
+# LM-FE
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.8.
+Фронтенд **LioMebli** — Angular, статична збірка без серверного рантайму.
 
-## Development server
+Частина робочої області [`LM-WORKSPACE`](https://github.com/LioMebli/LM-WORKSPACE).
+Цей репозиторій має лежати всередині її теки — від цього залежить посилання
+`@../GLOBAL_DESCRIPTION_LM_PROJECT.md` в `AGENTS.md`.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
+## Передумови
+
+| Що | Версія | Навіщо |
+|---|---|---|
+| **Node.js** | **24** (Active LTS) | та сама версія, що в `Dockerfile`; на нижчій Angular 22 не збереться |
+| **npm** | той, що приходить із Node 24 | `packageManager` у `package.json` фіксує `npm@12.0.1` |
+| **Docker Desktop** | лише для режиму паритету | у щоденній роботі не потрібен |
+| Angular CLI глобально | **не потрібен** | викликається через `npx` і скрипти `npm` |
+
+Перевірити:
+
+```powershell
+node -v      # має бути 24.x
+npm -v
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## Запуск — щоденний режим
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```powershell
+cd LM-FE
+npm ci
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Відкрити `http://localhost:4200`. Сторінка перезбирається сама при зміні
+вихідних файлів.
 
-```bash
-ng generate --help
+`npm ci`, а не `npm install`: він ставить рівно те, що записано в
+`package-lock.json`, і падає, якщо lock розійшовся з `package.json`. Саме та
+поведінка, яка потрібна на чистій машині.
+
+**Бекенд має бути запущений окремо** — див. [`LM-BE/README.md`](../LM-BE/README.md).
+Без нього сторінки відкриються, а запити до каталогу впадуть із мережевою
+помилкою.
+
+---
+
+## Адреса API і чому немає проксі
+
+Адреса бекенду не зашита в код — вона береться з `src/environments/`:
+
+| Конфігурація | Файл | `apiBaseUrl` |
+|---|---|---|
+| `development` (те, що дає `npm start`) | `environment.development.ts` | `http://localhost:8080` |
+| `production` (те, що дає `npm run build`) | `environment.ts` | `https://api.liomebli.com.ua` |
+| `container` (режим паритету) | підставляє `environment.development.ts` | `http://localhost:8080` |
+
+Проксі dev-сервера до API **свідомо не налаштований**. У проді фронтенд і API
+живуть на різних доменах, тож запити крос-доменні завжди — і краще, щоб CORS
+ламався локально, де його видно, ніж уперше на продакшені. Наслідок: політику
+CORS тримає бекенд, а не збірка фронтенду.
+
+> ⚠️ **`src/environments/` — публічна тека.** Усе, що там лежить, компілюється у
+> файли, які може завантажити будь-який відвідувач. Жодних ключів, токенів чи
+> паролів — навіть тимчасових, навіть «на час розробки».
+
+---
+
+## Куди дивитися
+
+| Адреса | Що |
+|---|---|
+| `http://localhost:4200` | фронтенд |
+| `http://localhost:8080` | API, який він викликає |
+
+---
+
+## Інші команди
+
+```powershell
+npm test              # модульні тести, Vitest
+npm run build:site    # повний випуск: чотири етапи нижче, по черзі
+npm run watch         # збірка в режимі development з перезбіркою
+npx ng generate component <назва>
 ```
 
-## Building
+### Випуск — це чотири етапи, і порядок обовʼязковий
 
-To build the project run:
-
-```bash
-ng build
+```powershell
+npm run build:manifest    # 1. читає каталог з API один раз → .catalog-manifest.json
+npm run build             # 2. збирає сайт, сторінки бере з переліку
+npm run build:artifacts   # 3. sitemap.xml, robots.txt, 404.html
+npm run build:checks      # 4. перевіряє випуск і зупиняє його, якщо щось не так
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+`npm run build:site` виконує їх через `&&`, тому перша ж помилка зупиняє ланцюг.
 
-## Running unit tests
+> **`npm run build` сам по собі — не «продова збірка», і без етапу 1 він падає:**
+> `Prerender failed: .catalog-manifest.json could not be read`. Сторінки товарів і
+> розділів беруться з переліку, прочитаного на етапі 1, тож без нього збирати нічого.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+**Проти локального бекенда** етап 2 запускається окремо, з іншою конфігурацією —
+адреса API вшивається у збірку, а не читається зі змінної:
 
-```bash
-ng test
+```powershell
+$env:LM_API_BASE_URL = 'http://localhost:8080'
+npm run build:manifest
+npx ng build --configuration container
+npm run build:artifacts
+npm run build:checks
 ```
 
-## Running end-to-end tests
+Тести — **Vitest** через білдер `@angular/build:unit-test`, рідний для
+поточного тулчейну Angular. Jest і Karma не використовуються.
 
-For end-to-end (e2e) testing, run:
+E2E — Playwright, зʼявиться разом із першими наскрізними сценаріями.
 
-```bash
-ng e2e
+---
+
+## Коли не працює
+
+**Порт 4200 зайнятий.** Зазвичай через паралельно піднятий режим паритету —
+там фронтенд віддає nginx на тому ж порту:
+
+```powershell
+netstat -ano | Select-String ":4200"
+docker compose -f ..\compose.full.yaml down
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+**Не та версія Node.** Симптоми бувають дуже неочевидні — від помилок збірки до
+падінь усередині залежностей. `node -v` перед тим, як читати стек.
 
-## Additional Resources
+**`npm ci` падає.** Означає, що `package-lock.json` не відповідає
+`package.json`. Це не привід ставити `npm install` — це привід зʼясувати, хто
+змінив залежності без оновлення lock-файлу.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Запити до каталогу падають, сторінка порожня.** Перевірити по черзі:
+чи піднятий бекенд (`http://localhost:8080/actuator/health` має віддати `UP`),
+і чи він на тому ж порту, що в `environment.development.ts`.
+
+**У консолі помилка CORS.** Фронтенд тут ні до чого — правиться на бекенді.
+Публічні читання під `/api/v1/**` відкриті для всіх джерел; якщо ви запустили
+фронтенд не на `4200`, додайте новий origin у `lm.cors.admin-origins` в
+`LM-BE/src/main/resources/application-local.yaml`.
+
+**Стара збірка в `dist/`.** Вона нікуди не дівається сама. Видаліть теку, якщо
+є підозра, що дивитеся на вчорашній результат.
+
+---
+
+## Далі
+
+| Що | Де |
+|---|---|
+| Розкладка репозиторіїв, режим паритету | [`LM-WORKSPACE/README.md`](../README.md) |
+| Конвенції для асистентів у цьому репозиторії | [`AGENTS.md`](AGENTS.md) |
+| Візуальний напрямок | `../docs/VISUAL_STYLE_REFERENCE.md` |
+| Конвенції коду | [Confluence](https://liomebli.atlassian.net/wiki/spaces/LioMebli/pages/458846) |
+| Середовища | [Confluence](https://liomebli.atlassian.net/wiki/spaces/LioMebli/pages/589885) |
+| Задачі | [Jira, проєкт LM](https://liomebli.atlassian.net/jira/software/projects/LM/boards/1) |

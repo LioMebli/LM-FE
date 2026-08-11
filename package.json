@@ -6,8 +6,11 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:LM-FE": "node dist/LM-FE/server/server.mjs"
+    "test": "ng test && vitest run --config vitest.tools.config.mts",
+    "build:manifest": "node tools/catalog-manifest.mjs",
+    "build:artifacts": "node tools/site-artifacts.mjs",
+    "build:checks": "node tools/site-checks.mjs",
+    "build:site": "npm run build:manifest && npm run build && npm run build:artifacts && npm run build:checks"
   },
   "private": true,
   "packageManager": "npm@12.0.1",
@@ -20,7 +23,6 @@
     "@angular/platform-server": "^22.0.0",
     "@angular/router": "^22.0.0",
     "@angular/ssr": "^22.0.8",
-    "express": "^5.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -28,7 +30,6 @@
     "@angular/build": "^22.0.8",
     "@angular/cli": "^22.0.8",
     "@angular/compiler-cli": "^22.0.0",
-    "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
     "jsdom": "^28.0.0",
     "prettier": "^3.8.1",

@@ -1,5 +1,17 @@
+@../GLOBAL_DESCRIPTION_LM_PROJECT.md
 
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
+
+## Project specifics (LM-FE)
+
+- **Angular 22, Vitest, Node 24.** Static output with build-time prerender — no SSR
+  runtime, no Node process in production (ADR-006). `main.server.ts` and
+  `app.config.server.ts` exist only so the prerenderer can render pages; do not
+  reintroduce `server.ts` or `express`.
+- **Cross-origin by design.** The API lives on a different host in every environment,
+  so never add a dev-server proxy. The base URL comes from `src/environments/`.
+- Site language is Ukrainian only (ADR-010). UI text in Ukrainian, code in English.
+- Routes are numeric: `/category/:id`, `/product/:id` (ADR-012). No slugs.
 
 ## TypeScript Best Practices
 
@@ -28,12 +40,12 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Keep components small and focused on a single responsibility
 - Use `input()` and `output()` functions instead of decorators
 - Use `computed()` for derived state
-- Prefer inline templates for small components
+- Every component is three files — `.ts`, `.html`, `.scss` — scaffolded with `ng generate component <name>`, never hand-written. No inline `template:` or `styles:`, however small the component looks: [LM-17](https://liomebli.atlassian.net/browse/LM-17) gives each component its own stylesheet, and splitting one that already has styles costs more than starting split
 - Prefer Signal Forms (`@angular/forms/signals`) for new forms. They are stable in Angular v22+ and provide signal-based state, type-safe field access, and schema-based validation
 - When not using Signal Forms, prefer Reactive forms instead of Template-driven ones
 - Do NOT use `ngClass`, use `class` bindings instead
 - Do NOT use `ngStyle`, use `style` bindings instead
-- When using external templates/styles, use paths relative to the component TS file.
+- Template and style paths are relative to the component TS file — `./product-page.html`, never a `src/`-rooted one
 
 ## State Management
 
