@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /bazel-out
+/.catalog-manifest.json
 
 # Node
 /node_modules

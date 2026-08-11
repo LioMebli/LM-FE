@@ -1,0 +1,8 @@
+<h1>Каталог</h1>
+<ul>
+  @for (category of categories(); track category.id) {
+    <li>
+      <a [routerLink]="['/category', category.id]">{{ category.name }}</a>
+    </li>
+  }
+</ul>

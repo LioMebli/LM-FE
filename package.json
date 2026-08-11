@@ -6,8 +6,11 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "build:prod": "ng build --configuration production"
+    "test": "ng test && vitest run --config vitest.tools.config.mts",
+    "build:manifest": "node tools/catalog-manifest.mjs",
+    "build:artifacts": "node tools/site-artifacts.mjs",
+    "build:checks": "node tools/site-checks.mjs",
+    "build:site": "npm run build:manifest && npm run build && npm run build:artifacts && npm run build:checks"
   },
   "private": true,
   "packageManager": "npm@12.0.1",

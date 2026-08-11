@@ -1,0 +1,16 @@
+@if (category(); as view) {
+  <h1>{{ view.category.name }}</h1>
+  @if (view.products.length) {
+    <ul>
+      @for (product of view.products; track product.id) {
+        <li>
+          <a [routerLink]="['/product', product.id]">{{ product.name }}</a>
+        </li>
+      }
+    </ul>
+  } @else {
+    <p>У цьому розділі поки немає товарів.</p>
+  }
+} @else {
+  <app-not-found-page />
+}

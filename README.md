@@ -81,9 +81,35 @@ CORS тримає бекенд, а не збірка фронтенду.
 
 ```powershell
 npm test              # модульні тести, Vitest
-npm run build         # продова збірка у dist/LM-FE/browser
+npm run build:site    # повний випуск: чотири етапи нижче, по черзі
 npm run watch         # збірка в режимі development з перезбіркою
 npx ng generate component <назва>
+```
+
+### Випуск — це чотири етапи, і порядок обовʼязковий
+
+```powershell
+npm run build:manifest    # 1. читає каталог з API один раз → .catalog-manifest.json
+npm run build             # 2. збирає сайт, сторінки бере з переліку
+npm run build:artifacts   # 3. sitemap.xml, robots.txt, 404.html
+npm run build:checks      # 4. перевіряє випуск і зупиняє його, якщо щось не так
+```
+
+`npm run build:site` виконує їх через `&&`, тому перша ж помилка зупиняє ланцюг.
+
+> **`npm run build` сам по собі — не «продова збірка», і без етапу 1 він падає:**
+> `Prerender failed: .catalog-manifest.json could not be read`. Сторінки товарів і
+> розділів беруться з переліку, прочитаного на етапі 1, тож без нього збирати нічого.
+
+**Проти локального бекенда** етап 2 запускається окремо, з іншою конфігурацією —
+адреса API вшивається у збірку, а не читається зі змінної:
+
+```powershell
+$env:LM_API_BASE_URL = 'http://localhost:8080'
+npm run build:manifest
+npx ng build --configuration container
+npm run build:artifacts
+npm run build:checks
 ```
 
 Тести — **Vitest** через білдер `@angular/build:unit-test`, рідний для
