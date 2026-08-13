@@ -14,8 +14,10 @@ export function isProductionOrigin(origin) {
   return origin === PRODUCTION_SITE_ORIGIN;
 }
 
-// A Dockerfile ARG declared without a value reaches the build as an empty string, not as an
-// absent variable, so `??` alone would hand an empty address to every stage downstream.
+// A CI runner sets these from repository variables, and an undefined variable expands to an
+// empty string rather than to nothing — `env: LM_API_BASE_URL: ${{ vars.LM_API_BASE_URL }}`
+// with no such variable arrives here as ''. Without this, `??` would hand that empty address
+// to every stage downstream.
 function supplied(value) {
   return value === undefined || value === '' ? undefined : value;
 }

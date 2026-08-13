@@ -7,8 +7,6 @@ RUN npm ci
 # Declared after the dependency layers so that changing an address does not reinstall them.
 ARG LM_API_BASE_URL
 ARG LM_SITE_ORIGIN
-ENV LM_API_BASE_URL=${LM_API_BASE_URL}
-ENV LM_SITE_ORIGIN=${LM_SITE_ORIGIN}
 
 COPY . .
 RUN node tools/site-environment.mjs

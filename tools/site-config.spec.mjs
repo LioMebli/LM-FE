@@ -21,7 +21,7 @@ describe('resolveApiBaseUrl', () => {
     );
   });
 
-  it('falls back when the variable is present but empty, as an unset Docker ARG arrives', () => {
+  it('falls back when the variable is present but empty, as an undefined CI variable arrives', () => {
     expect(resolveApiBaseUrl({ LM_API_BASE_URL: '' })).toBe(DEFAULT_API_BASE_URL);
   });
 });

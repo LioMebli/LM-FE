@@ -4,14 +4,14 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run build:env && ng serve",
-    "build": "ng build",
+    "build": "npm run build:env && ng build",
     "watch": "npm run build:env && ng build --watch --configuration development",
     "test": "npm run build:env && ng test && vitest run --config vitest.tools.config.mts",
     "build:env": "node tools/site-environment.mjs",
     "build:manifest": "node tools/catalog-manifest.mjs",
     "build:artifacts": "node tools/site-artifacts.mjs",
     "build:checks": "node tools/site-checks.mjs",
-    "build:site": "npm run build:env && npm run build:manifest && npm run build && npm run build:artifacts && npm run build:checks"
+    "build:site": "npm run build:manifest && npm run build && npm run build:artifacts && npm run build:checks"
   },
   "private": true,
   "packageManager": "npm@12.0.1",
