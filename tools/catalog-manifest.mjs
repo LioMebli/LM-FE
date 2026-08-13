@@ -1,6 +1,7 @@
 import { writeFile } from 'node:fs/promises';
 
-const DEFAULT_API_BASE_URL = 'https://api.liomebli.com.ua';
+import { resolveApiBaseUrl } from './site-config.mjs';
+
 const MANIFEST_PATH = '.catalog-manifest.json';
 
 export async function buildManifest({ apiBaseUrl, fetch }) {
@@ -34,7 +35,7 @@ async function readList(apiBaseUrl, fetch, path) {
 }
 
 if (import.meta.main) {
-  const apiBaseUrl = process.env.LM_API_BASE_URL ?? DEFAULT_API_BASE_URL;
+  const apiBaseUrl = resolveApiBaseUrl();
 
   try {
     const manifest = await buildManifest({ apiBaseUrl, fetch: globalThis.fetch });

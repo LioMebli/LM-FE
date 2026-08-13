@@ -1,13 +1,18 @@
 FROM node:24-alpine AS build
 WORKDIR /build
 
-ARG NG_CONFIGURATION=production
-
 COPY package.json package-lock.json ./
 RUN npm ci
 
+# Declared after the dependency layers so that changing an address does not reinstall them.
+ARG LM_API_BASE_URL
+ARG LM_SITE_ORIGIN
+ENV LM_API_BASE_URL=${LM_API_BASE_URL}
+ENV LM_SITE_ORIGIN=${LM_SITE_ORIGIN}
+
 COPY . .
-RUN npx ng build --configuration=${NG_CONFIGURATION}
+RUN node tools/site-environment.mjs
+RUN npx ng build
 RUN node tools/site-artifacts.mjs
 
 FROM nginx:1.29-alpine AS runtime

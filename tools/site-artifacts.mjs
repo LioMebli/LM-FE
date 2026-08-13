@@ -1,7 +1,8 @@
 import { copyFile, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-const DEFAULT_SITE_ORIGIN = 'https://liomebli.com.ua';
+import { resolveSiteOrigin } from './site-config.mjs';
+
 const MANIFEST_PATH = '.catalog-manifest.json';
 const OUTPUT_DIR = 'dist/LM-FE/browser';
 
@@ -47,7 +48,7 @@ export async function writeSiteArtifacts({ manifestPath, outputDir, siteOrigin }
 }
 
 if (import.meta.main) {
-  const siteOrigin = process.env.LM_SITE_ORIGIN ?? DEFAULT_SITE_ORIGIN;
+  const siteOrigin = resolveSiteOrigin();
 
   try {
     await writeSiteArtifacts({ manifestPath: MANIFEST_PATH, outputDir: OUTPUT_DIR, siteOrigin });

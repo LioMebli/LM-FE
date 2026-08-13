@@ -6,6 +6,7 @@
 /out-tsc
 /bazel-out
 /.catalog-manifest.json
+/src/environments/environment.ts
 
 # Node
 /node_modules

@@ -2,7 +2,8 @@ import { readFile, readdir } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
 import { gzipSync } from 'node:zlib';
 
-const DEFAULT_SITE_ORIGIN = 'https://liomebli.com.ua';
+import { resolveSiteOrigin } from './site-config.mjs';
+
 const MANIFEST_PATH = '.catalog-manifest.json';
 const OUTPUT_DIR = 'dist/LM-FE/browser';
 const SHELL_INDEX_PATH = 'src/index.html';
@@ -341,7 +342,7 @@ function escapeHtmlText(text) {
 }
 
 if (import.meta.main) {
-  const siteOrigin = process.env.LM_SITE_ORIGIN ?? DEFAULT_SITE_ORIGIN;
+  const siteOrigin = resolveSiteOrigin();
 
   try {
     const { failures, notes } = await runSiteChecks({
