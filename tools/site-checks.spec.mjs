@@ -5,9 +5,14 @@ import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import { runSiteChecks } from './site-checks.mjs';
+import { PRODUCTION_SITE_ORIGIN } from './site-config.mjs';
 
-const SITE_ORIGIN = 'https://liomebli.com.ua';
+const SITE_ORIGIN = PRODUCTION_SITE_ORIGIN;
+const DEV_SITE_ORIGIN = 'https://dev.liomebli.com.ua';
 const SHELL_TITLE = 'LioMebli — меблева фурнітура';
+
+const CLOSED_ROBOTS = 'User-agent: *\nDisallow: /\n';
+const NOINDEX_HEADERS = '/*\n  X-Robots-Tag: noindex\n';
 
 const CATEGORIES = [{ id: 1, name: 'Ручки меблеві' }];
 const PRODUCTS = [{ id: 1042, categoryId: 1, name: 'Ручка «Класика» & Co' }];
@@ -213,6 +218,89 @@ describe('runSiteChecks', () => {
     );
   });
 
+  it('fails when a production release forbids indexing the public site', async () => {
+    await writeToOutput('_headers', NOINDEX_HEADERS);
+
+    const { failures } = await runSiteChecks(inputs);
+
+    expect(failures).toContainEqual(
+      expect.stringContaining('exists in a production build — it would forbid indexing'),
+    );
+  });
+
+  describe('a release built for an origin that is not production', () => {
+    beforeEach(async () => {
+      await givenAGoodNonProductionRelease();
+    });
+
+    it('passes when it is closed in both files and offers no address list', async () => {
+      const { failures } = await runSiteChecks(inputs);
+
+      expect(failures).toEqual([]);
+    });
+
+    it('fails when it publishes an address list anyway', async () => {
+      await writeToOutput('sitemap.xml', sitemapOf(publishedLocations(DEV_SITE_ORIGIN)));
+
+      const { failures } = await runSiteChecks(inputs);
+
+      expect(failures).toContainEqual(
+        expect.stringContaining('a closed site offers no address list'),
+      );
+    });
+
+    it('fails when robots.txt invites a crawler in', async () => {
+      await writeToOutput('robots.txt', 'User-agent: *\nAllow: /\n');
+
+      const { failures } = await runSiteChecks(inputs);
+
+      expect(failures).toContainEqual(expect.stringContaining('must not invite a crawler'));
+    });
+
+    it('fails when robots.txt names a sitemap it does not publish', async () => {
+      await writeToOutput(
+        'robots.txt',
+        `${CLOSED_ROBOTS}\nSitemap: ${DEV_SITE_ORIGIN}/sitemap.xml\n`,
+      );
+
+      const { failures } = await runSiteChecks(inputs);
+
+      expect(failures).toContainEqual(expect.stringContaining('publishes no address list'));
+    });
+
+    it('fails when the indexing ban is missing altogether', async () => {
+      await removeFromOutput('_headers');
+
+      const { failures } = await runSiteChecks(inputs);
+
+      expect(failures).toContainEqual(expect.stringContaining('is not told to skip indexing'));
+    });
+
+    it('fails when the ban covers some addresses instead of every one', async () => {
+      await writeToOutput('_headers', '/admin/*\n  X-Robots-Tag: noindex\n');
+
+      const { failures } = await runSiteChecks(inputs);
+
+      expect(failures).toContainEqual(
+        expect.stringContaining('does not apply "X-Robots-Tag: noindex" to every address'),
+      );
+    });
+
+    async function givenAGoodNonProductionRelease() {
+      inputs.siteOrigin = DEV_SITE_ORIGIN;
+
+      await writePage(CATALOG_ROUTE, catalogPage({ origin: DEV_SITE_ORIGIN }));
+      await writePage(NOT_FOUND_ROUTE, notFoundPage({ origin: DEV_SITE_ORIGIN }));
+      await writePage(CATEGORY_ROUTE, categoryPage({ origin: DEV_SITE_ORIGIN }));
+      await writePage(PRODUCT_ROUTE, productPage({ origin: DEV_SITE_ORIGIN }));
+
+      await writeToOutput('404.html', notFoundPage({ origin: DEV_SITE_ORIGIN }));
+      await writeToOutput('robots.txt', CLOSED_ROBOTS);
+      await writeToOutput('_headers', NOINDEX_HEADERS);
+      await removeFromOutput('sitemap.xml');
+    }
+  });
+
   it('fails when a page kept the app shell title instead of writing its own', async () => {
     await writePage(CATEGORY_ROUTE, categoryPage({ title: SHELL_TITLE }));
 
@@ -356,34 +444,39 @@ describe('runSiteChecks', () => {
   }
 });
 
-function catalogPage() {
+function catalogPage({ origin = SITE_ORIGIN } = {}) {
   return page({
     title: 'Каталог — LioMebli',
-    canonical: `${SITE_ORIGIN}/`,
+    canonical: `${origin}/`,
     head: MODULEPRELOAD,
     body: `<h1>Каталог</h1>${SCRIPT}`,
   });
 }
 
 function categoryPage({
+  origin = SITE_ORIGIN,
   title = 'Ручки меблеві — LioMebli',
-  canonical = `${SITE_ORIGIN}${CATEGORY_ROUTE}`,
+  canonical = `${origin}${CATEGORY_ROUTE}`,
 } = {}) {
   return page({ title, canonical, body: '<h1>Ручки меблеві</h1>' });
 }
 
-function productPage({ name = ESCAPED_PRODUCT_NAME, availability = 'В наявності' } = {}) {
+function productPage({
+  origin = SITE_ORIGIN,
+  name = ESCAPED_PRODUCT_NAME,
+  availability = 'В наявності',
+} = {}) {
   return page({
     title: `${name} — LioMebli`,
-    canonical: `${SITE_ORIGIN}${PRODUCT_ROUTE}`,
+    canonical: `${origin}${PRODUCT_ROUTE}`,
     body: `<h1>${name}</h1><p>${availability}</p>`,
   });
 }
 
-function notFoundPage({ noindex = NOINDEX } = {}) {
+function notFoundPage({ origin = SITE_ORIGIN, noindex = NOINDEX } = {}) {
   return page({
     title: 'Сторінку не знайдено — LioMebli',
-    canonical: `${SITE_ORIGIN}${NOT_FOUND_ROUTE}`,
+    canonical: `${origin}${NOT_FOUND_ROUTE}`,
     head: noindex,
     body: '<h1>Сторінку не знайдено</h1>',
   });
@@ -398,8 +491,8 @@ function page({ title, canonical, head = '', body = '' }) {
   );
 }
 
-function publishedLocations() {
-  return [`${SITE_ORIGIN}/`, `${SITE_ORIGIN}${CATEGORY_ROUTE}`, `${SITE_ORIGIN}${PRODUCT_ROUTE}`];
+function publishedLocations(origin = SITE_ORIGIN) {
+  return [`${origin}/`, `${origin}${CATEGORY_ROUTE}`, `${origin}${PRODUCT_ROUTE}`];
 }
 
 function sitemapOf(locations) {

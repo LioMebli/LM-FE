@@ -2,7 +2,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
 import { gzipSync } from 'node:zlib';
 
-import { resolveSiteOrigin } from './site-config.mjs';
+import { isProductionOrigin, resolveSiteOrigin } from './site-config.mjs';
 
 const MANIFEST_PATH = '.catalog-manifest.json';
 const OUTPUT_DIR = 'dist/LM-FE/browser';
@@ -11,6 +11,9 @@ const SHELL_INDEX_PATH = 'src/index.html';
 const CATALOG_ROOT_ROUTE = '/';
 const NOT_FOUND_ROUTE = '/404';
 const ROUTES_OUTSIDE_THE_CATALOG = [CATALOG_ROOT_ROUTE, NOT_FOUND_ROUTE];
+
+const CRAWLING_FORBIDDEN = 'Disallow: /';
+const INDEXING_FORBIDDEN = 'X-Robots-Tag: noindex';
 
 const MAX_INITIAL_SCRIPT_BYTES = 250_000;
 const AVAILABILITY_LABELS = ['В наявності', 'Під замовлення', 'Знято з виробництва'];
@@ -48,6 +51,7 @@ export async function runSiteChecks({ manifestPath, outputDir, shellIndexPath, s
       ...(await checkNotFoundCopy(outputDir, pages)),
       ...(await checkSitemap(outputDir, pages, siteOrigin)),
       ...(await checkRobots(outputDir, siteOrigin)),
+      ...(await checkHeaders(outputDir, siteOrigin)),
       ...checkTitles(pages, shellTitle),
       ...checkCanonicals(pages, siteOrigin),
       ...initialScripts.failures,
@@ -138,6 +142,14 @@ async function checkSitemap(outputDir, pages, siteOrigin) {
   const sitemapPath = join(outputDir, 'sitemap.xml');
   const sitemap = await readIfPresent(sitemapPath);
 
+  if (!isProductionOrigin(siteOrigin)) {
+    return sitemap === undefined
+      ? []
+      : [
+          `${sitemapPath} exists in a build for ${siteOrigin} — a closed site offers no address list`,
+        ];
+  }
+
   if (sitemap === undefined) {
     return [`${sitemapPath} is missing — a crawler has no address list to read`];
   }
@@ -175,12 +187,57 @@ async function checkRobots(outputDir, siteOrigin) {
   const robots = await readIfPresent(robotsPath);
 
   if (robots === undefined) {
-    return [`${robotsPath} is missing — a crawler is not told where the address list is`];
+    return [`${robotsPath} is missing — a crawler is told nothing about this site`];
   }
 
-  const sitemapLine = `Sitemap: ${siteOrigin}/sitemap.xml`;
+  if (isProductionOrigin(siteOrigin)) {
+    const sitemapLine = `Sitemap: ${siteOrigin}/sitemap.xml`;
 
-  return robots.includes(sitemapLine) ? [] : [`${robotsPath} does not carry "${sitemapLine}"`];
+    return robots.includes(sitemapLine) ? [] : [`${robotsPath} does not carry "${sitemapLine}"`];
+  }
+
+  const failures = [];
+
+  if (!robots.includes(CRAWLING_FORBIDDEN)) {
+    failures.push(
+      `${robotsPath} does not carry "${CRAWLING_FORBIDDEN}" — a build for ${siteOrigin} must not invite a crawler`,
+    );
+  }
+
+  if (robots.includes('Sitemap:')) {
+    failures.push(
+      `${robotsPath} names a sitemap — a build for ${siteOrigin} publishes no address list`,
+    );
+  }
+
+  return failures;
+}
+
+async function checkHeaders(outputDir, siteOrigin) {
+  const headersPath = join(outputDir, '_headers');
+  const headers = await readIfPresent(headersPath);
+
+  if (isProductionOrigin(siteOrigin)) {
+    return headers === undefined
+      ? []
+      : [`${headersPath} exists in a production build — it would forbid indexing the public site`];
+  }
+
+  if (headers === undefined) {
+    return [
+      `${headersPath} is missing — a crawler that fetched anyway is not told to skip indexing`,
+    ];
+  }
+
+  return forbidsIndexingEverywhere(headers)
+    ? []
+    : [`${headersPath} does not apply "${INDEXING_FORBIDDEN}" to every address`];
+}
+
+function forbidsIndexingEverywhere(headers) {
+  const [scope, ...rules] = headers.trim().split('\n');
+
+  return scope === '/*' && rules.some((rule) => rule.trim() === INDEXING_FORBIDDEN);
 }
 
 function checkTitles(pages, shellTitle) {

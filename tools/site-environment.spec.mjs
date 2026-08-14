@@ -17,13 +17,12 @@ describe('renderEnvironment', () => {
     expect(source).toContain(`siteOrigin: "${SITE_ORIGIN}"`);
   });
 
-  it('marks a build as production only when its origin is the public one', () => {
-    expect(
-      renderEnvironment({ apiBaseUrl: API_BASE_URL, siteOrigin: PRODUCTION_SITE_ORIGIN }),
-    ).toContain('production: true');
-    expect(renderEnvironment({ apiBaseUrl: API_BASE_URL, siteOrigin: SITE_ORIGIN })).toContain(
-      'production: false',
-    );
+  it('carries the two addresses and nothing else the app would have to interpret', () => {
+    const fields = renderEnvironment({ apiBaseUrl: API_BASE_URL, siteOrigin: SITE_ORIGIN })
+      .match(/^ {2}(\w+):/gm)
+      .map((field) => field.trim());
+
+    expect(fields).toEqual(['apiBaseUrl:', 'siteOrigin:']);
   });
 
   it('says the file is generated, so nobody edits it and loses the edit', () => {
@@ -33,7 +32,7 @@ describe('renderEnvironment', () => {
   });
 
   it('keeps an address inside its string literal, whatever the address contains', () => {
-    const hostile = 'http://localhost:8080/\'; export const stolen = 1; //';
+    const hostile = "http://localhost:8080/'; export const stolen = 1; //";
 
     const source = renderEnvironment({ apiBaseUrl: hostile, siteOrigin: SITE_ORIGIN });
 
@@ -74,7 +73,7 @@ describe('writeEnvironment', () => {
     await writeEnvironment({ environmentPath, apiBaseUrl: API_BASE_URL, siteOrigin: SITE_ORIGIN });
 
     const written = await readFile(environmentPath, 'utf8');
-    expect(written).not.toContain('production: true');
+    expect(written).not.toContain(PRODUCTION_SITE_ORIGIN);
     expect(written).toContain(`apiBaseUrl: "${API_BASE_URL}"`);
   });
 });

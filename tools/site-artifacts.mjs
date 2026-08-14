@@ -1,7 +1,7 @@
-import { copyFile, readFile, writeFile } from 'node:fs/promises';
+import { copyFile, readFile, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-import { resolveSiteOrigin } from './site-config.mjs';
+import { isProductionOrigin, resolveSiteOrigin } from './site-config.mjs';
 
 const MANIFEST_PATH = '.catalog-manifest.json';
 const OUTPUT_DIR = 'dist/LM-FE/browser';
@@ -23,7 +23,13 @@ export function renderSitemap({ siteOrigin, categories, products }) {
 }
 
 export function renderRobots(siteOrigin) {
-  return `User-agent: *\nAllow: /\n\nSitemap: ${siteOrigin}/sitemap.xml\n`;
+  return isProductionOrigin(siteOrigin)
+    ? `User-agent: *\nAllow: /\n\nSitemap: ${siteOrigin}/sitemap.xml\n`
+    : 'User-agent: *\nDisallow: /\n';
+}
+
+export function renderHeaders() {
+  return '/*\n  X-Robots-Tag: noindex\n';
 }
 
 export async function writeSiteArtifacts({ manifestPath, outputDir, siteOrigin }) {
@@ -39,11 +45,17 @@ export async function writeSiteArtifacts({ manifestPath, outputDir, siteOrigin }
     );
   }
 
-  await writeFile(
-    join(outputDir, 'sitemap.xml'),
-    renderSitemap({ siteOrigin, categories, products }),
-    'utf8',
-  );
+  const sitemapPath = join(outputDir, 'sitemap.xml');
+  const headersPath = join(outputDir, '_headers');
+
+  if (isProductionOrigin(siteOrigin)) {
+    await writeFile(sitemapPath, renderSitemap({ siteOrigin, categories, products }), 'utf8');
+    await rm(headersPath, { force: true });
+  } else {
+    await writeFile(headersPath, renderHeaders(), 'utf8');
+    await rm(sitemapPath, { force: true });
+  }
+
   await writeFile(join(outputDir, 'robots.txt'), renderRobots(siteOrigin), 'utf8');
 }
 
@@ -53,7 +65,9 @@ if (import.meta.main) {
   try {
     await writeSiteArtifacts({ manifestPath: MANIFEST_PATH, outputDir: OUTPUT_DIR, siteOrigin });
     console.log(
-      `Wrote sitemap.xml, robots.txt and 404.html into ${OUTPUT_DIR}, addressed at ${siteOrigin}`,
+      isProductionOrigin(siteOrigin)
+        ? `Wrote sitemap.xml, robots.txt and 404.html into ${OUTPUT_DIR}, addressed at ${siteOrigin}`
+        : `Wrote _headers, robots.txt and 404.html into ${OUTPUT_DIR}, closed to crawlers at ${siteOrigin}`,
     );
   } catch (failure) {
     console.error(failure.message);
