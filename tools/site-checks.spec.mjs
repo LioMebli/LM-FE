@@ -228,6 +228,19 @@ describe('runSiteChecks', () => {
     );
   });
 
+  it('fails when a production robots.txt turns crawlers away while naming the address list', async () => {
+    await writeToOutput(
+      'robots.txt',
+      `User-agent: *\nDisallow: /\n\nSitemap: ${SITE_ORIGIN}/sitemap.xml\n`,
+    );
+
+    const { failures } = await runSiteChecks(inputs);
+
+    expect(failures).toContainEqual(
+      expect.stringContaining('the public site would be kept out of the index'),
+    );
+  });
+
   describe('a release built for an origin that is not production', () => {
     beforeEach(async () => {
       await givenAGoodNonProductionRelease();
@@ -284,6 +297,30 @@ describe('runSiteChecks', () => {
       expect(failures).toContainEqual(
         expect.stringContaining('does not apply "X-Robots-Tag: noindex" to every address'),
       );
+    });
+
+    it('fails when the ban sits under a narrower section further down the file', async () => {
+      await writeToOutput(
+        '_headers',
+        '/*\n  X-Frame-Options: DENY\n/admin/*\n  X-Robots-Tag: noindex\n',
+      );
+
+      const { failures } = await runSiteChecks(inputs);
+
+      expect(failures).toContainEqual(
+        expect.stringContaining('does not apply "X-Robots-Tag: noindex" to every address'),
+      );
+    });
+
+    it('passes when the section covering every address is not the first one', async () => {
+      await writeToOutput(
+        '_headers',
+        '/admin/*\n  X-Frame-Options: DENY\n/*\n  X-Robots-Tag: noindex\n',
+      );
+
+      const { failures } = await runSiteChecks(inputs);
+
+      expect(failures).toEqual([]);
     });
 
     async function givenAGoodNonProductionRelease() {

@@ -12,6 +12,7 @@ const CATALOG_ROOT_ROUTE = '/';
 const NOT_FOUND_ROUTE = '/404';
 const ROUTES_OUTSIDE_THE_CATALOG = [CATALOG_ROOT_ROUTE, NOT_FOUND_ROUTE];
 
+const EVERY_ADDRESS = '/*';
 const CRAWLING_FORBIDDEN = 'Disallow: /';
 const INDEXING_FORBIDDEN = 'X-Robots-Tag: noindex';
 
@@ -192,8 +193,19 @@ async function checkRobots(outputDir, siteOrigin) {
 
   if (isProductionOrigin(siteOrigin)) {
     const sitemapLine = `Sitemap: ${siteOrigin}/sitemap.xml`;
+    const failures = [];
 
-    return robots.includes(sitemapLine) ? [] : [`${robotsPath} does not carry "${sitemapLine}"`];
+    if (!robots.includes(sitemapLine)) {
+      failures.push(`${robotsPath} does not carry "${sitemapLine}"`);
+    }
+
+    if (robots.includes(CRAWLING_FORBIDDEN)) {
+      failures.push(
+        `${robotsPath} carries "${CRAWLING_FORBIDDEN}" — the public site would be kept out of the index`,
+      );
+    }
+
+    return failures;
   }
 
   const failures = [];
@@ -235,9 +247,20 @@ async function checkHeaders(outputDir, siteOrigin) {
 }
 
 function forbidsIndexingEverywhere(headers) {
-  const [scope, ...rules] = headers.trim().split('\n');
+  const lines = headers.trim().split('\n');
+  const everything = lines.findIndex((line) => line.trim() === EVERY_ADDRESS);
 
-  return scope === '/*' && rules.some((rule) => rule.trim() === INDEXING_FORBIDDEN);
+  if (everything === -1) {
+    return false;
+  }
+
+  return rulesUnder(lines.slice(everything + 1)).includes(INDEXING_FORBIDDEN);
+}
+
+function rulesUnder(lines) {
+  const nextScope = lines.findIndex((line) => !line.startsWith(' '));
+
+  return (nextScope === -1 ? lines : lines.slice(0, nextScope)).map((rule) => rule.trim());
 }
 
 function checkTitles(pages, shellTitle) {
