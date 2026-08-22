@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  max-inline-size: 100%;
+}
+
+/* Rule C6 — text over a photograph sits on a solid panel rather than on the image itself.
+   The panel is the ink colour at 88 %, so it follows --lm-color-ink instead of being a
+   seventh colour; 88 % occurs once and stays a literal (FR-013). */
+.badge {
+  display: block;
+  overflow: hidden;
+  padding: var(--lm-space-xs) var(--lm-space-sm);
+  /* One line, never two. Wrapped, this badge covered 44–51 % of a 148×101 photograph, and
+     how much it hid was decided by the label's length against the padding rather than by
+     anyone — which is also why the label reads «Варіантів: N» and not a sentence. */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  /* 4px has a name in the space group and none in the radius group: as a radius it occurs
+     once, and FR-013 forbids a name for a use that does not exist. */
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--lm-color-ink) 88%, transparent);
+  color: var(--lm-color-on-dark);
+  font-size: var(--lm-text-sm);
+  line-height: var(--lm-leading-body);
+}

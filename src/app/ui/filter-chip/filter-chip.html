@@ -1,0 +1,11 @@
+<span class="chip">
+  <span class="chip__text">{{ label() }}</span>
+  <button
+    type="button"
+    class="chip__remove"
+    [attr.aria-label]="removeLabel()"
+    (click)="removed.emit()"
+  >
+    ×
+  </button>
+</span>

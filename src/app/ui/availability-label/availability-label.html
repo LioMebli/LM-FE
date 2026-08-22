@@ -1,0 +1,7 @@
+<span
+  class="label"
+  [class.label--in-stock]="availability() === 'IN_STOCK'"
+  [class.label--made-to-order]="availability() === 'MADE_TO_ORDER'"
+  [class.label--discontinued]="availability() === 'DISCONTINUED'"
+  >{{ text() }}</span
+>

@@ -15,6 +15,7 @@ const ESCAPED_PRODUCT_NAME = 'Ручка «Класика» &amp; Co';
 
 const CATALOG_ROUTE = '/';
 const NOT_FOUND_ROUTE = '/404';
+const SHOWCASE_ROUTE = '/design-system';
 const CATEGORY_ROUTE = '/category/1';
 const PRODUCT_ROUTE = '/product/1042';
 
@@ -160,6 +161,40 @@ describe('runSiteChecks', () => {
     const { failures } = await runSiteChecks(inputs);
 
     expect(failures).toContainEqual(expect.stringContaining('does not carry <meta name="robots"'));
+  });
+
+  it('fails when the design-system showcase may be indexed', async () => {
+    await writePage(SHOWCASE_ROUTE, showcasePage({ noindex: '' }));
+
+    const { failures } = await runSiteChecks(inputs);
+
+    expect(failures).toContainEqual(
+      `${SHOWCASE_ROUTE} does not carry <meta name="robots" content="noindex">`,
+    );
+  });
+
+  it('fails when the address list offers the design-system showcase to a crawler', async () => {
+    await writeToOutput(
+      'sitemap.xml',
+      sitemapOf([...publishedLocations(), `${SITE_ORIGIN}${SHOWCASE_ROUTE}`]),
+    );
+
+    const { failures } = await runSiteChecks(inputs);
+
+    expect(failures).toContainEqual(
+      expect.stringContaining('the design-system showcase is never offered to a crawler'),
+    );
+  });
+
+  it('fails once, not twice, when the release did not produce the showcase at all', async () => {
+    await removePage(SHOWCASE_ROUTE);
+    await writeToOutput('sitemap.xml', sitemapOf(publishedLocations()));
+
+    const { failures } = await runSiteChecks(inputs);
+
+    expect(failures.filter((failure) => failure.includes(SHOWCASE_ROUTE))).toEqual([
+      `No page was produced for ${SHOWCASE_ROUTE}, which the catalog names`,
+    ]);
   });
 
   it('fails when the address list omits a page the release produced', async () => {
@@ -318,6 +353,7 @@ describe('runSiteChecks', () => {
 
     await writePage(CATALOG_ROUTE, catalogPage());
     await writePage(NOT_FOUND_ROUTE, notFoundPage());
+    await writePage(SHOWCASE_ROUTE, showcasePage());
     await writePage(CATEGORY_ROUTE, categoryPage());
     await writePage(PRODUCT_ROUTE, productPage());
 
@@ -377,6 +413,15 @@ function productPage({ name = ESCAPED_PRODUCT_NAME, availability = 'В наяв�
     title: `${name} — LioMebli`,
     canonical: `${SITE_ORIGIN}${PRODUCT_ROUTE}`,
     body: `<h1>${name}</h1><p>${availability}</p>`,
+  });
+}
+
+function showcasePage({ noindex = NOINDEX } = {}) {
+  return page({
+    title: 'Дизайн-система — LioMebli',
+    canonical: `${SITE_ORIGIN}${SHOWCASE_ROUTE}`,
+    head: noindex,
+    body: '<h1>Дизайн-система</h1>',
   });
 }
 
