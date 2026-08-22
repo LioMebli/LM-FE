@@ -1,0 +1,33 @@
+:host {
+  display: block;
+}
+
+/* Full-width and contiguous with the row above and below it, at a 44 px pitch. That is what
+   puts these rows inside rule M1's Bound and exempts them from the 8 px gap between adjacent
+   tap targets — a row that stops being full-width leaves the exception, and the 0 px gap that
+   is correct here becomes a finding. */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-block-size: 44px;
+  cursor: pointer;
+}
+
+/* 22px is the box the reference screen drew and it occurs once, so it has no name.
+
+   `margin: 0` because the browser's own default gives a checkbox 4px on the inline start, and
+   that is an edge nobody chose: inside the filter sheet it put the facet column — the one
+   column a visitor scans straight down — 4px off the axis every other element in that sheet
+   uses. Rule L2 names exactly this case. */
+.row__box {
+  flex-shrink: 0;
+  inline-size: 22px;
+  block-size: 22px;
+  margin: 0;
+  accent-color: var(--lm-color-primary);
+}
+
+.row__text {
+  font-size: var(--lm-text-md);
+}

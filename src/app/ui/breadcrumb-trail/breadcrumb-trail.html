@@ -1,0 +1,13 @@
+<nav [attr.aria-label]="label()">
+  <ol class="trail">
+    @for (step of steps(); track step.label) {
+      <li class="trail__step">
+        @if (step.link) {
+          <a class="trail__link" [routerLink]="step.link">{{ step.label }}</a>
+        } @else {
+          <span aria-current="page">{{ step.label }}</span>
+        }
+      </li>
+    }
+  </ol>
+</nav>

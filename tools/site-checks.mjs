@@ -9,7 +9,19 @@ const SHELL_INDEX_PATH = 'src/index.html';
 
 const CATALOG_ROOT_ROUTE = '/';
 const NOT_FOUND_ROUTE = '/404';
-const ROUTES_OUTSIDE_THE_CATALOG = [CATALOG_ROOT_ROUTE, NOT_FOUND_ROUTE];
+const SHOWCASE_ROUTE = '/design-system';
+const ROUTES_OUTSIDE_THE_CATALOG = [CATALOG_ROOT_ROUTE, NOT_FOUND_ROUTE, SHOWCASE_ROUTE];
+
+/**
+ * Produced, and deliberately kept out of search. This is the only place a route joins that set:
+ * both halves of the guarantee read it — the meta tag on the page, and the page's absence from
+ * the address list — so a third internal page cannot arrive with one half and not the other.
+ * Each carries why, for the report.
+ */
+const UNPUBLISHED_ROUTES = new Map([
+  [NOT_FOUND_ROUTE, 'the not-found page is never offered to a crawler'],
+  [SHOWCASE_ROUTE, 'the design-system showcase is never offered to a crawler'],
+]);
 
 const MAX_INITIAL_SCRIPT_BYTES = 250_000;
 const AVAILABILITY_LABELS = ['В наявності', 'Під замовлення', 'Знято з виробництва'];
@@ -45,6 +57,7 @@ export async function runSiteChecks({ manifestPath, outputDir, shellIndexPath, s
       ...checkCoverage(manifest, pages),
       ...checkProductPages(manifest.products, pages),
       ...(await checkNotFoundCopy(outputDir, pages)),
+      ...checkInternalPagesAreNotIndexed(pages),
       ...(await checkSitemap(outputDir, pages, siteOrigin)),
       ...(await checkRobots(outputDir, siteOrigin)),
       ...checkTitles(pages, shellTitle),
@@ -133,6 +146,24 @@ async function checkNotFoundCopy(outputDir, pages) {
   return failures;
 }
 
+/**
+ * The internal pages are on a public host, so each one says noindex on itself. The other half —
+ * that the address list never names them — is checkSitemap below, off the same map.
+ */
+function checkInternalPagesAreNotIndexed(pages) {
+  return [...UNPUBLISHED_ROUTES.keys()].flatMap((route) => {
+    const html = pages.get(route);
+
+    // Absence is checkCoverage's to report: these routes are in ROUTES_OUTSIDE_THE_CATALOG, so
+    // a release without one already fails there, and saying it twice makes one fault read as two.
+    if (html === undefined || NOINDEX_META.test(html)) {
+      return [];
+    }
+
+    return [`${route} does not carry <meta name="robots" content="noindex">`];
+  });
+}
+
 async function checkSitemap(outputDir, pages, siteOrigin) {
   const sitemapPath = join(outputDir, 'sitemap.xml');
   const sitemap = await readIfPresent(sitemapPath);
@@ -144,17 +175,18 @@ async function checkSitemap(outputDir, pages, siteOrigin) {
   const listed = new Set([...sitemap.matchAll(LOCATION)].map(([, location]) => location));
   const expected = new Set(
     [...pages.keys()]
-      .filter((route) => route !== NOT_FOUND_ROUTE)
+      .filter((route) => !UNPUBLISHED_ROUTES.has(route))
       .map((route) => `${siteOrigin}${route}`),
   );
 
-  const notFoundLocation = `${siteOrigin}${NOT_FOUND_ROUTE}`;
   const failures = [];
 
-  if (listed.delete(notFoundLocation)) {
-    failures.push(
-      `${sitemapPath} lists ${notFoundLocation} — the not-found page is never offered to a crawler`,
-    );
+  for (const [route, reason] of UNPUBLISHED_ROUTES) {
+    const location = `${siteOrigin}${route}`;
+
+    if (listed.delete(location)) {
+      failures.push(`${sitemapPath} lists ${location} — ${reason}`);
+    }
   }
 
   failures.push(

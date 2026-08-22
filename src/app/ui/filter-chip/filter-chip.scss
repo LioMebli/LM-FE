@@ -1,0 +1,54 @@
+:host {
+  display: block;
+}
+
+/* ⚠️ 22 px, where every other control in this library holds a 44 px floor.
+
+   The chip is the one exception to «tap targets ≥ 44 px», decided by the developer on
+   2026-08-22 and recorded where that obligation lives — GLOBAL_DESCRIPTION_LM_PROJECT.md
+   § Frontend, the Mobile-first row. It is referenced here rather than argued here: a rule of
+   that class is withdrawn by whoever set it and by nobody else, so this file must not read as
+   the place the decision was made.
+
+   Written as a number, not var(--lm-space-*), for the same reason the floor is: a size that
+   follows the spacing scale moves when the scale is re-tuned, silently. */
+.chip {
+  display: flex;
+  align-items: center;
+  min-block-size: 22px;
+  padding-inline-start: var(--lm-space-sm);
+  border: var(--lm-border-hairline);
+  border-radius: var(--lm-radius-pill);
+  background: var(--lm-color-surface);
+  font-size: var(--lm-text-sm);
+  /* A chip is a pill and a pill does not wrap: broken over two lines it stops reading as one
+     removable thing, and the remove control drifts away from the label it removes. */
+  white-space: nowrap;
+}
+
+.chip__remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 22px;
+  min-block-size: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--lm-radius-pill);
+  background: none;
+  color: var(--lm-color-ink-muted);
+  font: inherit;
+  font-size: var(--lm-text-lg);
+  /* Centring the box is not enough, which is why line-height and the shift are both here.
+     The `×` glyph's ink sits about 1.5 px below the centre of its own line box, so a
+     perfectly centred box still reads as a low cross. `line-height: 1` removes the leading,
+     and the shift compensates the glyph itself.
+
+     The shift is optical and tied to the font: it was measured on Segoe UI at 18 px, which
+     is what system-ui resolves to on Windows. On Android system-ui is Roboto and the offset
+     may differ — that is one of the things LM-60 checks on a real phone. Reported by the
+     developer on 2026-08-22, twice: flex centring alone was tried first and was not enough. */
+  line-height: 1;
+  transform: translateY(-1.5px);
+  cursor: pointer;
+}

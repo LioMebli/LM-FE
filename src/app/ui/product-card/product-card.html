@@ -1,0 +1,23 @@
+<a class="card__link" [routerLink]="link()">
+  <span class="card__media">
+    @if (image(); as photo) {
+      <img [ngSrc]="photo.src" [alt]="photo.alt" [width]="photo.width" [height]="photo.height" />
+    } @else {
+      <span class="card__media-empty"></span>
+    }
+    @if (variantCount() > 1) {
+      <app-variant-badge class="card__badge" [count]="variantCount()" />
+    }
+  </span>
+
+  <span class="card__body">
+    <span class="card__name">{{ name() }}</span>
+    <span class="card__price">{{ formattedPrice() }}</span>
+    <app-availability-label [availability]="availability()" />
+  </span>
+</a>
+
+<!-- A sibling of the link, never a child of it: a button inside an anchor is invalid markup,
+     and the two are different destinations — the link opens the product, this one adds it to
+     the selection the sticky bar counts. -->
+<button type="button" class="card__add" (click)="addedToSelection.emit()">У підбірку</button>

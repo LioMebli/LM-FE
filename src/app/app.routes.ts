@@ -24,6 +24,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/product/product-page').then((m) => m.ProductPage),
     resolve: { product: productResolver },
   },
+  {
+    path: 'design-system',
+    loadComponent: () =>
+      import('./features/design-system/design-system-page').then((m) => m.DesignSystemPage),
+  },
   { path: '404', loadComponent: notFoundPage },
   { path: '**', loadComponent: notFoundPage },
 ];

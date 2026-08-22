@@ -1,0 +1,201 @@
+<article class="ds">
+  <header class="ds__intro">
+    <h1>Дизайн-система</h1>
+    <p>
+      Службова сторінка. Вона показує ті самі компоненти, з яких зібрано сайт, а не їхні копії:
+      усе нижче — справжні компоненти з <code>src/app/ui/</code>, тож розійтися з сайтом вітрина
+      не може. Значення взяті з <code>src/styles/tokens.css</code>.
+    </p>
+    <p>
+      Товарів тут немає, тому картки ведуть на каталог, а фотографій немає взагалі — картка
+      малює порожню рамку доти, доки не з’явиться конвеєр зображень.
+    </p>
+  </header>
+
+  <section class="ds__section">
+    <h2>Токени</h2>
+
+    @for (group of tokenGroups; track group.title) {
+      <section class="group">
+        <h3 class="group__title">{{ group.title }}</h3>
+        <ul class="group__list">
+          @for (name of group.names; track name) {
+            <li class="token">
+              <code class="token__name">{{ name }}</code>
+              <span class="token__sample">
+                @switch (group.sample) {
+                  @case ('colour') {
+                    <span class="swatch" [style.--sample]="sampleOf(name)"></span>
+                  }
+                  @case ('border') {
+                    <span class="border-sample" [style.--sample]="sampleOf(name)"></span>
+                  }
+                  @case ('space') {
+                    <span class="space-sample" [style.--sample]="sampleOf(name)"></span>
+                  }
+                  @case ('radius') {
+                    <span class="radius-sample" [style.--sample]="sampleOf(name)"></span>
+                  }
+                  @case ('family') {
+                    <span class="family-sample" [style.--sample]="sampleOf(name)"
+                      >Комплектуючі 128</span
+                    >
+                  }
+                  @case ('size') {
+                    <span class="size-sample" [style.--sample]="sampleOf(name)"
+                      >Комплектуючі 128</span
+                    >
+                  }
+                  @case ('weight') {
+                    <span class="weight-sample" [style.--sample]="sampleOf(name)"
+                      >Комплектуючі 128</span
+                    >
+                  }
+                  @default {
+                    <span class="leading-sample" [style.--sample]="sampleOf(name)"
+                      >Комплектуючі для кухні,<br />два рядки поспіль</span
+                    >
+                  }
+                }
+              </span>
+            </li>
+          }
+        </ul>
+      </section>
+    }
+  </section>
+
+  <section class="ds__section">
+    <h2>Компоненти</h2>
+    <p class="ds__note" aria-live="polite">Остання дія: {{ lastAction() }}</p>
+
+    <section class="group">
+      <h3 class="group__title">Хлібні крихти</h3>
+      <app-breadcrumb-trail
+        [steps]="[
+          { label: 'Каталог', link: '/' },
+          { label: 'Меблеві комплектуючі', link: '/' },
+          { label: 'Кухонні комплектуючі' },
+        ]"
+      />
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Картка товару</h3>
+      <p class="group__note">
+        Коротка назва й довга в одному ряду, три стани наявності, ціни від трьох до шести цифр,
+        одна картка зі значком варіантів.
+      </p>
+      <ul class="grid">
+        @for (card of cards; track card.name) {
+          <li>
+            <app-product-card
+              [name]="card.name"
+              [price]="card.price"
+              [availability]="card.availability"
+              [variantCount]="card.variantCount"
+              link="/"
+              (addedToSelection)="record('додано «' + card.name + '» у підбірку')"
+            />
+          </li>
+        }
+      </ul>
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Стан наявності</h3>
+      <ul class="row-list">
+        @for (state of availabilityStates; track state) {
+          <li><app-availability-label [availability]="state" /></li>
+        }
+      </ul>
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Значок варіантів</h3>
+      <p class="group__note">
+        На екрані він лежить на фотографії; тут — на темному тлі, бо фотографій у цьому
+        репозиторії немає.
+      </p>
+      <span class="badge-stage"><app-variant-badge [count]="6" /></span>
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Чипи обраних фільтрів</h3>
+      <ul class="row-list">
+        <li>
+          <app-filter-chip label="Чорний" (removed)="record('знято фільтр «Чорний»')" />
+        </li>
+        <li>
+          <app-filter-chip
+            label="800–5 000 ₴"
+            spokenAs="ціна від 800 до 5 000 гривень"
+            (removed)="record('знято фільтр ціни')"
+          />
+        </li>
+        <li>
+          <app-filter-chip label="В наявності" (removed)="record('знято фільтр «В наявності»')" />
+        </li>
+      </ul>
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Рядок з прапорцем</h3>
+      <ul class="stack">
+        <li><app-checkbox-row label="Граніт" /></li>
+        <li><app-checkbox-row label="Нержавіюча сталь" [checked]="true" /></li>
+        <li><app-checkbox-row label="ДСП" /></li>
+      </ul>
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Посторінкова навігація</h3>
+      <ul class="row-list">
+        <li><app-pagination-link label="1" link="/" /></li>
+        <li><app-pagination-link label="2" [current]="true" /></li>
+        <li><app-pagination-link label="3" link="/" /></li>
+        <li><app-pagination-link label="Далі" link="/" kind="next" /></li>
+      </ul>
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Панель фільтрів</h3>
+      <p class="group__note">
+        Закрита — це кнопка; відкрита — модальна шухляда, яка перекриває сторінку цілком, бо
+        живе в top layer і не зважає на рамку нижче.
+      </p>
+      <app-filter-sheet
+        [activeCount]="4"
+        applyLabel="Показати 128 товарів"
+        (closed)="record('панель фільтрів закрито')"
+      >
+        <div class="range">
+          <label class="range__field">
+            <span class="range__label">Ціна від, ₴</span>
+            <input class="range__input" type="text" inputmode="numeric" autocomplete="off" />
+          </label>
+          <label class="range__field">
+            <span class="range__label">до, ₴</span>
+            <input class="range__input" type="text" inputmode="numeric" autocomplete="off" />
+          </label>
+        </div>
+
+        <app-checkbox-row label="В наявності" [checked]="true" />
+        <app-checkbox-row label="Під замовлення" />
+        <app-checkbox-row label="Знято з виробництва" />
+      </app-filter-sheet>
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Липка панель дії</h3>
+      <p class="group__note">
+        Вона фіксована, тож у рамці нижче вона стоїть на її нижньому краї, а не на краї екрана:
+        рамка має <code>contain: paint</code> і сама стає для неї системою координат.
+      </p>
+      <div class="stage">
+        <p>Низ сторінки розділу. Панель нічого тут не перекриває — сторінка лишає їй місце.</p>
+        <app-sticky-action-bar [selectionCount]="3" selectionLink="/" phone="+380671234567" />
+      </div>
+    </section>
+  </section>
+</article>

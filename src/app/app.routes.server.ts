@@ -21,6 +21,7 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender,
     getPrerenderParams: () => idsFromManifest('products'),
   },
+  { path: 'design-system', renderMode: RenderMode.Prerender },
   { path: '404', renderMode: RenderMode.Prerender },
   { path: '**', renderMode: RenderMode.Client },
 ];

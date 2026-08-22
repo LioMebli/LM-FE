@@ -1,0 +1,79 @@
+/* tokens.css — the names extracted from looks/look-v1.css, the look LM-57 agreed on.
+
+   Extracted, never invented. A value occurring twice or more in the agreed look has a name
+   here; a value occurring once stays a literal where it is (FR-013).
+
+   The occurrence count that admitted each name, and every literal deliberately left behind
+   with its reason, are in specs/LM-51/tasks.md §§ Phase 7 — витягнуті імена / залишені
+   літерали. They are not repeated here: this file is copied verbatim into LM-FE by T050,
+   so a second copy of those numbers would outlive the spec directory and become the one
+   people read — and it had already drifted from the file twice before the review caught it.
+
+   Names are English (Principle VIII) and shaped --lm-<group>-<name>. There is no shadow
+   group: the agreed look draws no shadow at all, which is a fact about v1 rather than an
+   omission — v4 was the variation that carried one, and it lost. */
+
+:root {
+  /* ── colour ──────────────────────────────────────────────────────────────────
+     The neutral ramp is hue 75 with even OKLCH lightness steps of 0.13:
+     0.98 · 0.85 · 0.72 · 0.59 · 0.46 · 0.33 · 0.20 — rule C1. The screen uses five of
+     those seven, so the stops named below are not consecutive; 0.72 is a literal in
+     look-v1.css and 0.59 and 0.33 are unused, because FR-013 forbids a name for a use
+     that does not exist. The two surfaces at 0.99 and 1 sit outside the even spacing on
+     purpose, which is the case rule C1's Bound describes. Chroma stays small and non-zero
+     and the hue sits beside the accent's 62 — rule C4.
+
+     The three availability colours are NOT stops of this ramp, including the grey one.
+     They are semantic, and all three are set by two constraints at once — WCAG AA against
+     the card, and staying apart under colour-vision-deficiency simulation. Their
+     lightnesses answer that pair, not the 0.13 grid. They live as literals in look-v1.css
+     because each occurs exactly once. */
+
+  --lm-color-page: oklch(0.98 0.008 75);
+  --lm-color-surface: oklch(1 0.003 75);
+  --lm-color-ink: oklch(0.20 0.012 75);
+  --lm-color-ink-muted: oklch(0.46 0.014 75);
+  --lm-color-on-dark: oklch(0.99 0.005 75);
+  --lm-color-primary: oklch(0.54 0.09 62);
+
+  /* ── border ──────────────────────────────────────────────────────────────────
+     One name for the whole declaration, because that is what repeats: the same three
+     tokens appear together twelve times and never apart. Naming the width and the colour
+     separately would produce two names used once each inside a third, which is the name
+     for a use that does not exist that FR-013 forbids. */
+
+  --lm-border-hairline: 1px solid oklch(0.85 0.010 75);
+
+  /* ── type ─────────────────────────────────────────────────────────────────── */
+
+  --lm-font-display: Georgia, "Times New Roman", serif;
+
+  --lm-text-sm: 14px;
+  --lm-text-md: 16px;
+  --lm-text-lg: 18px;
+  --lm-text-xl: 24px;
+
+  --lm-leading-body: 1.5;
+  --lm-leading-display: 1.2;
+
+  --lm-weight-regular: 400;
+  --lm-weight-bold: 700;
+
+  /* ── space ───────────────────────────────────────────────────────────────────
+     Three steps, 4 · 8 · 16. The look's own header claimed five; 24 and 32 occur once
+     each and are therefore literals, which is the difference between a scale that was
+     counted and a scale that was declared. */
+
+  --lm-space-xs: 4px;
+  --lm-space-sm: 8px;
+  --lm-space-md: 16px;
+
+  /* ── radius ───────────────────────────────────────────────────────────────────
+     8px is a name here and in the space group; 4px is a name in the space group only,
+     because as a radius it occurs once. Form and density change independently, so one
+     name across both groups would turn one edit into two changes. */
+
+  --lm-radius-md: 8px;
+  --lm-radius-lg: 16px;
+  --lm-radius-pill: 999px;
+}

@@ -1,0 +1,122 @@
+:host {
+  display: block;
+}
+
+.opener {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lm-space-sm);
+  inline-size: 100%;
+  min-block-size: 44px;
+  border: var(--lm-border-hairline);
+  border-radius: var(--lm-radius-md);
+  background: var(--lm-color-surface);
+  color: var(--lm-color-ink);
+  font: inherit;
+  font-size: var(--lm-text-md);
+  cursor: pointer;
+}
+
+.opener__count {
+  padding-inline: var(--lm-space-sm);
+  border-radius: var(--lm-radius-pill);
+  background: var(--lm-color-primary);
+  color: var(--lm-color-on-dark);
+  font-size: var(--lm-text-sm);
+}
+
+/* A bottom sheet, not a sidebar. The default centred dialog box is overridden here.
+
+   85dvh leaves the page visible above the sheet, so what the filters act on is never fully
+   hidden. 480px is the reference screen's frame width, repeated for the same reason the sticky
+   bar repeats it: a fixed element is out of flow and cannot take its width from an ancestor. */
+.sheet {
+  position: fixed;
+  inset: auto 0 0 0;
+  overflow: hidden;
+  inline-size: 100%;
+  max-inline-size: 480px;
+  max-block-size: 85dvh;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-start-start-radius: var(--lm-radius-lg);
+  border-start-end-radius: var(--lm-radius-lg);
+  background: var(--lm-color-page);
+  color: var(--lm-color-ink);
+}
+
+.sheet[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 50 % is the alpha, not a colour of its own, so the backdrop follows --lm-color-ink. It occurs
+   once and stays a literal (FR-013). */
+.sheet::backdrop {
+  background: color-mix(in srgb, var(--lm-color-ink) 50%, transparent);
+}
+
+.sheet__frame {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  max-block-size: 85dvh;
+}
+
+.sheet__head {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: var(--lm-space-md);
+  border-block-end: var(--lm-border-hairline);
+}
+
+.sheet__title {
+  margin: 0;
+  font-family: var(--lm-font-display);
+  font-size: var(--lm-text-xl);
+  font-weight: var(--lm-weight-regular);
+  line-height: var(--lm-leading-display);
+}
+
+.sheet__close {
+  min-block-size: 44px;
+  min-inline-size: 44px;
+  padding-inline: var(--lm-space-md);
+  border: var(--lm-border-hairline);
+  border-radius: var(--lm-radius-pill);
+  background: none;
+  color: var(--lm-color-ink);
+  font: inherit;
+  font-size: var(--lm-text-md);
+  cursor: pointer;
+}
+
+.sheet__body {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: var(--lm-space-md);
+}
+
+.sheet__foot {
+  flex-shrink: 0;
+  padding: var(--lm-space-md);
+  border-block-start: var(--lm-border-hairline);
+}
+
+.sheet__apply {
+  inline-size: 100%;
+  min-block-size: 44px;
+  border: 0;
+  border-radius: var(--lm-radius-pill);
+  background: var(--lm-color-ink);
+  color: var(--lm-color-on-dark);
+  font: inherit;
+  font-size: var(--lm-text-md);
+  font-weight: var(--lm-weight-bold);
+  cursor: pointer;
+}

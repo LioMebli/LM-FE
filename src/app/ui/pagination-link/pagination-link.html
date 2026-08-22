@@ -1,0 +1,7 @@
+@if (current()) {
+  <span class="page page--current" [class.page--next]="kind() === 'next'" aria-current="page">{{
+    label()
+  }}</span>
+} @else {
+  <a class="page" [class.page--next]="kind() === 'next'" [routerLink]="link()">{{ label() }}</a>
+}

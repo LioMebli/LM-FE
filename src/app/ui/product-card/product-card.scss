@@ -1,0 +1,107 @@
+/* The box is the card, not the link inside it, so that «У підбірку» sits inside the card
+   rather than under it. `overflow: hidden` clips the photograph to the card's radius. */
+:host {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: var(--lm-border-hairline);
+  border-radius: var(--lm-radius-md);
+  background: var(--lm-color-surface);
+}
+
+/* `align-items: stretch` is written out rather than left to the cascade: the app shell styles
+   every `a` as a centred inline-flex box, and inherited that way a column card would centre
+   its own contents instead of filling its width. */
+.card__link {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-grow: 1;
+  inline-size: 100%;
+  color: var(--lm-color-ink);
+  text-decoration: none;
+}
+
+.card__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 365 / 250;
+  overflow: hidden;
+}
+
+.card__media img,
+.card__media-empty {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+/* Drawn until the media pipeline lands. It is the page colour rather than a placeholder grey
+   of its own: an empty frame should read as absence, not as a component with a state. */
+.card__media-empty {
+  background: var(--lm-color-page);
+}
+
+.card__badge {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  margin: var(--lm-space-sm);
+}
+
+.card__body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: var(--lm-space-sm);
+  padding: var(--lm-space-md);
+}
+
+.card__name {
+  display: block;
+  font-size: var(--lm-text-md);
+  line-height: var(--lm-leading-body);
+}
+
+/* Price and availability sit on the card's bottom edge, so they line up across a row whatever
+   the names above them do.
+
+   What that does not survive is the label *below* the price wrapping: «Знято з виробництва»
+   takes two lines where «Під замовлення» takes one, and the taller label pushes its price up by
+   a line. Measured on the built showcase at 360 px: 3131/3131 in a row of one-line labels,
+   3526/3547 in a row where one wrapped. Accepted rather than fixed — the alternatives are
+   truncating the label or reserving two lines for it always, and both redraw a screen that was
+   agreed with no further edits. Recorded in specs/LM-51/tasks.md § Phase 8.
+
+   The cost is recorded rather than argued away: a grid row stretches every card to the
+   tallest, so on a short-named card the space this opens between the name and the price can
+   exceed the gap between two cards, which is what rule P1 measures. It is accepted because the
+   alternative fails a rule too — prices at four different heights across one row is a second
+   alignment axis nobody chose (rule L2), and comparing prices is what a listing is for. The
+   card's own box is what carries the grouping in its place, which rule L3 allows. */
+.card__price {
+  display: block;
+  margin-block-start: auto;
+  /* 1.4 occurs once and therefore has no name; it is not --lm-leading-body, which is 1.5. */
+  line-height: 1.4;
+  font-size: var(--lm-text-lg);
+  font-weight: var(--lm-weight-bold);
+}
+
+/* Quiet on purpose. Rule P2 says the most prominent thing on a listing is the route into a
+   product, and twelve filled buttons would take that place from the twelve cards.
+
+   Full-width and contiguous with the card body above it, which is the case rule M1's Bound
+   exempts from the 8 px gap. */
+.card__add {
+  min-block-size: 44px;
+  margin: 0 var(--lm-space-md) var(--lm-space-md);
+  border: var(--lm-border-hairline);
+  border-radius: var(--lm-radius-pill);
+  background: none;
+  color: var(--lm-color-ink);
+  font: inherit;
+  font-size: var(--lm-text-md);
+  cursor: pointer;
+}

@@ -1,0 +1,25 @@
+<button type="button" class="opener" aria-haspopup="dialog" (click)="open()">
+  {{ heading() }}
+  @if (activeCount() > 0) {
+    <span class="opener__count">{{ activeCount() }}</span>
+  }
+</button>
+
+<!-- Named by aria-label rather than by aria-labelledby: the heading would need an id, and an id
+     inside a component is a name that collides the moment the component is used twice. -->
+<dialog #sheet class="sheet" [attr.aria-label]="heading()" (close)="closed.emit()">
+  <div class="sheet__frame">
+    <header class="sheet__head">
+      <h2 class="sheet__title">{{ heading() }}</h2>
+      <button type="button" class="sheet__close" (click)="close()">Закрити</button>
+    </header>
+
+    <div class="sheet__body">
+      <ng-content />
+    </div>
+
+    <footer class="sheet__foot">
+      <button type="button" class="sheet__apply" (click)="close()">{{ applyLabel() }}</button>
+    </footer>
+  </div>
+</dialog>

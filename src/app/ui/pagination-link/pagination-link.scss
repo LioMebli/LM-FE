@@ -1,0 +1,30 @@
+:host {
+  display: block;
+}
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* The pointer table's floor, kept as a number — see the same comment in filter-chip.scss. */
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  border: var(--lm-border-hairline);
+  border-radius: var(--lm-radius-md);
+  background: var(--lm-color-surface);
+  color: var(--lm-color-ink);
+  font-size: var(--lm-text-md);
+  text-decoration: none;
+}
+
+.page--current {
+  border-color: var(--lm-color-ink);
+  background: var(--lm-color-ink);
+  color: var(--lm-color-on-dark);
+}
+
+/* A word needs room a digit does not. 12px occurs once on the reference screen, so it has no
+   name (FR-013). */
+.page--next {
+  padding-inline: 12px;
+}
