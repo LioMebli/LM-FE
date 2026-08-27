@@ -5,9 +5,15 @@
 
    The occurrence count that admitted each name, and every literal deliberately left behind
    with its reason, are in specs/LM-51/tasks.md §§ Phase 7 — витягнуті імена / залишені
-   літерали. They are not repeated here: this file is copied verbatim into LM-FE by T050,
-   so a second copy of those numbers would outlive the spec directory and become the one
-   people read — and it had already drifted from the file twice before the review caught it.
+   літерали. They are not repeated here: a second copy of those numbers would outlive the spec
+   directory and become the one people read — and it had already drifted from the file twice
+   before the review caught it. The same rule governs every measurement below.
+
+   ⚠️ This file is the live one; specs/LM-51/mockup/tokens.css is the extraction it started from
+   and is now behind it. LM-51 copied one into the other and three documents went on calling them
+   verbatim copies; LM-19 added --lm-color-link here and not there, which made that false. The
+   mockup copy is frozen on purpose — it is what audit.js measures and what LM-57 agreed to — so
+   a name admitted by a later use belongs here alone.
 
    Names are English (Principle VIII) and shaped --lm-<group>-<name>. There is no shadow
    group: the agreed look draws no shadow at all, which is a fact about v1 rather than an
@@ -37,12 +43,10 @@
   --lm-color-primary: oklch(0.54 0.09 62);
 
   /* Link text and the focus outline. Not extracted from the agreed screen, which carried no
-     inline link — admitted by the same rule read forward: a name exists where a use exists, and
-     the shell reads this one twice. --lm-color-primary is not it and the difference is not
-     stylistic: the accent is a background and an accent-color everywhere it appears, and as text
-     on the page it measures 4.89 against this one's 6.16. Hue 250 keeps the blue the site
-     already paints; the lightness is within 0.002 of it, so converting the shell moves nothing
-     the eye can find. specs/LM-19/research.md D5 carries the measurements. */
+     inline link — admitted by the rule above read forward: a name exists where a use exists, and
+     the shell reads this one twice. --lm-color-primary is not it, and the difference is not
+     stylistic: the accent is a background and an accent-color everywhere the look uses it, never
+     text. specs/LM-19/research.md D5 has the contrast figures for both. */
   --lm-color-link: oklch(0.48 0.12 250);
 
   /* ── border ──────────────────────────────────────────────────────────────────

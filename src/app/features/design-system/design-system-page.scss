@@ -3,18 +3,16 @@
    Every value it does spend comes from tokens.css, so the page is also its own smallest test
    that the names resolve. */
 
-/* The ground the agreed look chose, not the app shell's white.
+/* The ground is set here as well as on the shell, and that is not redundancy waiting to be
+   deleted: --lm-color-page against --lm-color-surface, 0.98 against 1.0, plus the hairline is the
+   whole of a card's separation from the page — on the one page anyone judges card separation
+   from, including the copy uploaded to Claude Design as what LM-FE renders. Declaring it here is
+   what stops that judgement depending on a rule in another file.
 
-   This matters more than a background usually does: --lm-color-page is 0.98 and
-   --lm-color-surface is 1.0, and that pair plus the hairline is the whole of a card's
-   separation from the page. Rendered on LM-11's #ffffff the pair does nothing and the cards sit
-   white on white — on the one page anyone judges card separation from, including the copy
-   uploaded to Claude Design as what LM-FE renders.
-
-   The negative margin cancels the app shell's gutter so the ground reaches the viewport edge
-   rather than leaving a white frame around it. It names --lm-space-md because that is what the
-   shell's `main` padding now is: the value being undone is that rule's, so reading the same name
-   is what keeps the two in step. It was --lm-gutter until LM-19 converted the shell. */
+   The negative margin cancels the shell's gutter so the ground reaches the viewport edge rather
+   than leaving a framed strip around it. It names --lm-space-md because that is what the shell's
+   `main` padding is: the value being undone is that rule's, so reading the same name is what
+   keeps the two in step. */
 :host {
   /* The reference screen's frame width, declared once for the three in-flow boxes below that
      stand in for a phone. The sticky bar and the filter sheet repeat the number instead of

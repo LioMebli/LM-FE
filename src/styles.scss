@@ -1,7 +1,5 @@
-// The design system extracted in LM-51, copied verbatim from specs/LM-51/mockup/tokens.css.
-// It is loaded first so a component may reference --lm-* names without importing anything, and
-// it is now the only vocabulary in the application: LM-19 removed the six values LM-11 declared
-// here beside it, and src/app/ui/design-vocabulary.spec.ts went with them.
+// The design system, and the only vocabulary in the application. Loaded first so a component may
+// reference --lm-* names without importing anything.
 @use './styles/tokens.css';
 
 *,
@@ -42,10 +40,8 @@ ul {
 a {
   display: inline-flex;
   align-items: center;
-  // 44px is written literally here because the nine components in src/app/ui/ already write it
-  // literally in eleven places. Naming it in this one file would make a twelfth spelling of one
-  // rule rather than a single source for it; doing that properly is its own ticket, and
-  // specs/LM-19/research.md D7 carries the argument on both sides.
+  // Literal, matching the eleven under src/app/ui/: naming it in this one file makes a twelfth
+  // spelling of one rule, not a single source for it. Whether it gets one is LM-91.
   min-height: 44px;
   min-width: 44px;
   color: var(--lm-color-link);
