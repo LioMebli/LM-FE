@@ -11,11 +11,6 @@ import { declaredTokenNames, referencedTokenNamesIn } from '../../testing/tokens
  * slightly wrong, and no test, no linter and no release check says anything. That is the whole
  * subject here, and it is why `docs/ARCHITECTURE.md` §4.1 gives this file as the first reason
  * new presentational components go in `ui/` rather than a `layout/` of their own.
- *
- * It replaces `design-vocabulary.spec.ts`, which LM-19 deleted, and it is deliberately narrower.
- * That file did two jobs: this one, and catching a component that reached for the second
- * vocabulary LM-11 declared beside the design system. The second job ended when LM-19 deleted
- * that vocabulary; the first never depended on it.
  */
 const UI_DIR = 'src/app/ui';
 
