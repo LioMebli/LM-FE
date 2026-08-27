@@ -56,12 +56,14 @@
 
      Error is the darker of the two, and that is load-bearing rather than a matter of tone. The
      pair has to stay apart for a reader who does not separate red from green, and red loses far
-     more luminance under protanopia than green does — so seating the red at the dark end keeps
-     the two simulations disagreeing about which is darker while never disagreeing that they
-     differ at all. Swapping the lightnesses collapses the pair to roughly one just-noticeable
-     difference, which is to say one colour.
+     more luminance under protanopia than green does. Seating the red at the dark end therefore
+     makes protanopia push the two further apart than normal vision does. Seating it at the light
+     end makes protanopia drag the red down through the green instead: the lightness difference
+     passes through zero, and where it crosses there is nothing left to see — the swapped pair
+     measures roughly one just-noticeable difference, which is to say one colour.
 
-     Success carries the least contrast headroom of anything here. It passes AA on both surfaces,
+     Success carries the least contrast headroom of any name here meant to be read as text — the
+     accent measures lower still and is never text. It passes AA on both surfaces,
      and the lightness that buys the separation is the same lightness that spends the contrast —
      so if success is ever wanted at a smaller size or a lighter weight, this is the value that
      has to move. specs/LM-19/research.md D3 has the sweep and the measurements, D4 the distance
