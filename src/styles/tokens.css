@@ -49,6 +49,26 @@
      text. specs/LM-19/research.md D5 has the contrast figures for both. */
   --lm-color-link: oklch(0.48 0.12 250);
 
+  /* The two verdicts a form can report. Neither was extracted from the agreed screen, which
+     carried no form — admitted by the same rule as the link above: a name exists where a use
+     exists, and this use is named rather than anticipated. LM-20 builds the field in its error
+     state, LM-4 the callback form, LM-6 the import report.
+
+     Error is the darker of the two, and that is load-bearing rather than a matter of tone. The
+     pair has to stay apart for a reader who does not separate red from green, and red loses far
+     more luminance under protanopia than green does — so seating the red at the dark end keeps
+     the two simulations disagreeing about which is darker while never disagreeing that they
+     differ at all. Swapping the lightnesses collapses the pair to roughly one just-noticeable
+     difference, which is to say one colour.
+
+     Success carries the least contrast headroom of anything here. It passes AA on both surfaces,
+     and the lightness that buys the separation is the same lightness that spends the contrast —
+     so if success is ever wanted at a smaller size or a lighter weight, this is the value that
+     has to move. specs/LM-19/research.md D3 has the sweep and the measurements, D4 the distance
+     from the three availability colours and why the smallest one is accepted rather than fixed. */
+  --lm-color-error: oklch(0.40 0.15 25);
+  --lm-color-success: oklch(0.52 0.11 152);
+
   /* ── border ──────────────────────────────────────────────────────────────────
      One name for the whole declaration, because that is what repeats: the same three
      tokens appear together twelve times and never apart. Naming the width and the colour
