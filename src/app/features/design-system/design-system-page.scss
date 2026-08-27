@@ -12,10 +12,9 @@
    uploaded to Claude Design as what LM-FE renders.
 
    The negative margin cancels the app shell's gutter so the ground reaches the viewport edge
-   rather than leaving a white frame around it. --lm-gutter is LM-11's own name on purpose: the
-   value being undone is that rule's, so naming it is what keeps the two in step.
-
-   Converting the shell itself is LM-19's, for the reason in styles.scss. */
+   rather than leaving a white frame around it. It names --lm-space-md because that is what the
+   shell's `main` padding now is: the value being undone is that rule's, so reading the same name
+   is what keeps the two in step. It was --lm-gutter until LM-19 converted the shell. */
 :host {
   /* The reference screen's frame width, declared once for the three in-flow boxes below that
      stand in for a phone. The sticky bar and the filter sheet repeat the number instead of
@@ -25,8 +24,8 @@
 
   display: block;
   min-block-size: 100dvh;
-  margin: calc(var(--lm-gutter) * -1);
-  padding: var(--lm-gutter);
+  margin: calc(var(--lm-space-md) * -1);
+  padding: var(--lm-space-md);
   background: var(--lm-color-page);
 }
 

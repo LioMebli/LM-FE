@@ -36,6 +36,15 @@
   --lm-color-on-dark: oklch(0.99 0.005 75);
   --lm-color-primary: oklch(0.54 0.09 62);
 
+  /* Link text and the focus outline. Not extracted from the agreed screen, which carried no
+     inline link — admitted by the same rule read forward: a name exists where a use exists, and
+     the shell reads this one twice. --lm-color-primary is not it and the difference is not
+     stylistic: the accent is a background and an accent-color everywhere it appears, and as text
+     on the page it measures 4.89 against this one's 6.16. Hue 250 keeps the blue the site
+     already paints; the lightness is within 0.002 of it, so converting the shell moves nothing
+     the eye can find. specs/LM-19/research.md D5 carries the measurements. */
+  --lm-color-link: oklch(0.48 0.12 250);
+
   /* ── border ──────────────────────────────────────────────────────────────────
      One name for the whole declaration, because that is what repeats: the same three
      tokens appear together twelve times and never apart. Naming the width and the colour

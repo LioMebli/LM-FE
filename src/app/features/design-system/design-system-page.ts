@@ -50,6 +50,7 @@ export const TOKEN_GROUPS: readonly TokenGroup[] = [
       '--lm-color-ink-muted',
       '--lm-color-on-dark',
       '--lm-color-primary',
+      '--lm-color-link',
     ],
   },
   { title: 'Рамка', sample: 'border', names: ['--lm-border-hairline'] },
