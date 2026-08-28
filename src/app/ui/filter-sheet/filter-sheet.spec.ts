@@ -2,13 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterSheet } from './filter-sheet';
 
-/**
- * jsdom parses `<dialog>` and reflects its `open` attribute, but implements neither
- * `showModal()` nor `close()`. These stand-ins do exactly what the specification says those two
- * do to the element, so what the tests below observe is the component's wiring — which control
- * calls which method — and not the browser's. The modal behaviour itself is the browser's to
- * demonstrate, and it is what the design review reads out of a real one.
- */
 function giveJsdomTheDialogMethods(): void {
   const dialog = HTMLDialogElement.prototype as HTMLDialogElement;
 

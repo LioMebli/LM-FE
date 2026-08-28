@@ -1,23 +1,4 @@
-/* The showcase's own chrome. It is deliberately plain: anything styled here competes with the
-   components it is meant to display, and the page exists to be looked through rather than at.
-   Every value it does spend comes from tokens.css, so the page is also its own smallest test
-   that the names resolve. */
-
-/* The ground is set here as well as on the shell, and that is not redundancy waiting to be
-   deleted: --lm-color-page against --lm-color-surface, 0.98 against 1.0, plus the hairline is the
-   whole of a card's separation from the page — on the one page anyone judges card separation
-   from, including the copy uploaded to Claude Design as what LM-FE renders. Declaring it here is
-   what stops that judgement depending on a rule in another file.
-
-   The negative margin cancels the shell's gutter so the ground reaches the viewport edge rather
-   than leaving a framed strip around it. It names --lm-space-md because that is what the shell's
-   `main` padding is: the value being undone is that rule's, so reading the same name is what
-   keeps the two in step. */
 :host {
-  /* The reference screen's frame width, declared once for the three in-flow boxes below that
-     stand in for a phone. The sticky bar and the filter sheet repeat the number instead of
-     reading this, and that is not the same omission: both are fixed, out of flow, and cannot
-     inherit a width from an ancestor at all. */
   --showcase-frame: 480px;
 
   display: block;
@@ -27,14 +8,6 @@
   background: var(--lm-color-page);
 }
 
-/* The page's own headings come from the extracted scale, not from the browser's defaults.
-   Unstyled they were 32 px and 24 px at a 1.5 ratio, which put two sizes on the page that the
-   scale does not contain and made the leading rise with the size instead of falling — on the
-   one page whose subject is that scale. Three heading levels out of two sizes, with weight and
-   the display face carrying the rest of the separation, which is what rule T4 asks for. */
-/* The margins are set here too, and not left to the browser. Unset, every heading sat further
-   from its own body than from the section above it — the ratio ran 0.83–0.87 where rule P1 asks
-   for 1.5 — so on spacing alone each heading belonged to the section it had just ended. */
 .ds h1,
 .ds__section h2,
 .group__title {
@@ -55,13 +28,9 @@
   line-height: var(--lm-leading-display);
 }
 
-/* A monospace element keeps the browser's own default size — about 0.83 of the surrounding
-   text — which put a fifth and a sixth size on the page for the sake of a few inline paths.
-
-   It takes an absolute length to move it. Chrome keeps the monospace default through anything
-   that is not one: `1em` and `inherit` were both tried and both measured 13 px, because the
-   quirk is applied after inheritance. --lm-text-md is what the prose around it is set in. */
 .ds code {
+  /* An absolute length, because Chrome applies its monospace default after inheritance: `1em`
+     and `inherit` both measure 13px here. */
   font-size: var(--lm-text-md);
 }
 
@@ -91,8 +60,6 @@
   line-height: var(--lm-leading-display);
 }
 
-/* No top margin of its own: added to the 8 px below the heading it made the gap inside a group
-   14 px against the 16 px between groups, so the heading read as belonging to the group above. */
 .group__note {
   max-inline-size: 60ch;
   margin-block-start: 0;
@@ -109,10 +76,6 @@
   list-style: none;
 }
 
-/* These rows hold adjacent tap targets — chips and pagination links — so the gap is rule M1's
-   floor written as a number, the same as in sticky-action-bar.scss and checkbox-row.scss. It
-   read var(--lm-space-sm) until the phase review: the two are 8px today and are not obliged to
-   stay equal, and re-tuning the scale must not sink a tap-target gap under the floor. */
 .row-list {
   display: flex;
   flex-wrap: wrap;
@@ -120,7 +83,6 @@
   gap: 8px;
 }
 
-/* Two across, as the reference screen draws it — the arity the whole comparison was held at. */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -128,20 +90,10 @@
   max-inline-size: var(--showcase-frame);
 }
 
-/* The list item stretches to the row's height by default; the card inside it does not, and
-   without this the two cards in a row end at different depths and their prices stop lining up —
-   which is the one thing pinning the price to the card's bottom edge was for. */
 .grid > li {
   display: grid;
 }
 
-/* ── tokens ─────────────────────────────────────────────────────────────────────
-   Every sample takes its value through one binding, --sample, and each kind of sample
-   pours it into the one property it is about. One binding and seven readers, rather than
-   seven bindings — the alternative writes the token name into the template twice. */
-
-/* Name above sample, stacked. Side by side, a token name is 17 characters against a 360 px
-   screen already spending 224 px on the sample, and every name broke over three lines. */
 .token {
   display: flex;
   flex-direction: column;
@@ -156,17 +108,11 @@
   min-block-size: 32px;
 }
 
-/* Qualified by .ds so it outranks the code rule above, which is what stops a token name from
-   being pulled up to the surrounding text's size. */
 .ds .token__name {
   color: var(--lm-color-ink-muted);
   font-size: var(--lm-text-sm);
 }
 
-/* The price range the filter sheet carries on the real screen. It is the caller's content, not
-   a tenth component — but without a field in it, the sheet demonstrates nothing about the one
-   property the top layer buys it: that the fixed action bar cannot come to rest over the input
-   being typed into. Rule M5 has no subject on a screen with no field. */
 .range {
   display: flex;
   gap: 8px;
@@ -224,10 +170,6 @@
   background: var(--lm-color-surface);
 }
 
-/* One class per typographic kind rather than one element reading --sample into all four
-   properties: a size poured into line-height as well would silently set the leading to the
-   font size, and the sample would stop showing what its group is about. */
-
 .family-sample {
   font-family: var(--sample);
   font-size: var(--lm-text-lg);
@@ -246,8 +188,6 @@
   line-height: var(--sample);
 }
 
-/* ── component stages ───────────────────────────────────────────────────────── */
-
 .badge-stage {
   display: inline-block;
   padding: var(--lm-space-md);
@@ -259,10 +199,6 @@
   max-inline-size: var(--showcase-frame);
 }
 
-/* `contain: paint` makes this box the containing block for the fixed action bar inside it, so
-   the bar can be shown in place instead of pinned to the bottom of the whole showcase. The
-   96 px of clearance is what a page owes the bar, and it is the same number the reference
-   screen spends. */
 .stage {
   position: relative;
   contain: paint;

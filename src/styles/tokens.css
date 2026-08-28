@@ -1,40 +1,4 @@
-/* tokens.css — the names extracted from looks/look-v1.css, the look LM-57 agreed on.
-
-   Extracted, never invented. A value occurring twice or more in the agreed look has a name
-   here; a value occurring once stays a literal where it is (FR-013).
-
-   The occurrence count that admitted each name, and every literal deliberately left behind
-   with its reason, are in specs/LM-51/tasks.md §§ Phase 7 — витягнуті імена / залишені
-   літерали. They are not repeated here: a second copy of those numbers would outlive the spec
-   directory and become the one people read — and it had already drifted from the file twice
-   before the review caught it. The same rule governs every measurement below.
-
-   ⚠️ This file is the live one; specs/LM-51/mockup/tokens.css is the extraction it started from
-   and is now behind it. LM-51 copied one into the other and three documents went on calling them
-   verbatim copies; LM-19 added --lm-color-link here and not there, which made that false. The
-   mockup copy is frozen on purpose — it is what audit.js measures and what LM-57 agreed to — so
-   a name admitted by a later use belongs here alone.
-
-   Names are English (Principle VIII) and shaped --lm-<group>-<name>. There is no shadow
-   group: the agreed look draws no shadow at all, which is a fact about v1 rather than an
-   omission — v4 was the variation that carried one, and it lost. */
-
 :root {
-  /* ── colour ──────────────────────────────────────────────────────────────────
-     The neutral ramp is hue 75 with even OKLCH lightness steps of 0.13:
-     0.98 · 0.85 · 0.72 · 0.59 · 0.46 · 0.33 · 0.20 — rule C1. The screen uses five of
-     those seven, so the stops named below are not consecutive; 0.72 is a literal in
-     look-v1.css and 0.59 and 0.33 are unused, because FR-013 forbids a name for a use
-     that does not exist. The two surfaces at 0.99 and 1 sit outside the even spacing on
-     purpose, which is the case rule C1's Bound describes. Chroma stays small and non-zero
-     and the hue sits beside the accent's 62 — rule C4.
-
-     The three availability colours are NOT stops of this ramp, including the grey one.
-     They are semantic, and all three are set by two constraints at once — WCAG AA against
-     the card, and staying apart under colour-vision-deficiency simulation. Their
-     lightnesses answer that pair, not the 0.13 grid. They live as literals in look-v1.css
-     because each occurs exactly once. */
-
   --lm-color-page: oklch(0.98 0.008 75);
   --lm-color-surface: oklch(1 0.003 75);
   --lm-color-ink: oklch(0.20 0.012 75);
@@ -42,44 +6,12 @@
   --lm-color-on-dark: oklch(0.99 0.005 75);
   --lm-color-primary: oklch(0.54 0.09 62);
 
-  /* Link text and the focus outline. Not extracted from the agreed screen, which carried no
-     inline link — admitted by the rule above read forward: a name exists where a use exists, and
-     the shell reads this one twice. --lm-color-primary is not it, and the difference is not
-     stylistic: the accent is a background and an accent-color everywhere the look uses it, never
-     text. specs/LM-19/research.md D5 has the contrast figures for both. */
   --lm-color-link: oklch(0.48 0.12 250);
 
-  /* The two verdicts a form can report. Neither was extracted from the agreed screen, which
-     carried no form — admitted by the same rule as the link above: a name exists where a use
-     exists, and this use is named rather than anticipated. LM-20 builds the field in its error
-     state, LM-4 the callback form, LM-6 the import report.
-
-     Error is the darker of the two, and that is load-bearing rather than a matter of tone. The
-     pair has to stay apart for a reader who does not separate red from green, and red loses far
-     more luminance under protanopia than green does. Seating the red at the dark end therefore
-     makes protanopia push the two further apart than normal vision does. Seating it at the light
-     end makes protanopia drag the red down through the green instead: the lightness difference
-     passes through zero, and where it crosses there is nothing left to see — the swapped pair
-     measures roughly one just-noticeable difference, which is to say one colour.
-
-     Success carries the least contrast headroom of any name here meant to be read as text — the
-     accent measures lower still and is never text. It passes AA on both surfaces,
-     and the lightness that buys the separation is the same lightness that spends the contrast —
-     so if success is ever wanted at a smaller size or a lighter weight, this is the value that
-     has to move. specs/LM-19/research.md D3 has the sweep and the measurements, D4 the distance
-     from the three availability colours and why the smallest one is accepted rather than fixed. */
   --lm-color-error: oklch(0.40 0.15 25);
   --lm-color-success: oklch(0.52 0.11 152);
 
-  /* ── border ──────────────────────────────────────────────────────────────────
-     One name for the whole declaration, because that is what repeats: the same three
-     tokens appear together twelve times and never apart. Naming the width and the colour
-     separately would produce two names used once each inside a third, which is the name
-     for a use that does not exist that FR-013 forbids. */
-
   --lm-border-hairline: 1px solid oklch(0.85 0.010 75);
-
-  /* ── type ─────────────────────────────────────────────────────────────────── */
 
   --lm-font-display: Georgia, "Times New Roman", serif;
 
@@ -94,19 +26,9 @@
   --lm-weight-regular: 400;
   --lm-weight-bold: 700;
 
-  /* ── space ───────────────────────────────────────────────────────────────────
-     Three steps, 4 · 8 · 16. The look's own header claimed five; 24 and 32 occur once
-     each and are therefore literals, which is the difference between a scale that was
-     counted and a scale that was declared. */
-
   --lm-space-xs: 4px;
   --lm-space-sm: 8px;
   --lm-space-md: 16px;
-
-  /* ── radius ───────────────────────────────────────────────────────────────────
-     8px is a name here and in the space group; 4px is a name in the space group only,
-     because as a radius it occurs once. Form and density change independently, so one
-     name across both groups would turn one edit into two changes. */
 
   --lm-radius-md: 8px;
   --lm-radius-lg: 16px;

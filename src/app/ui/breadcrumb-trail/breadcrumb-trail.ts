@@ -3,7 +3,6 @@ import { RouterLink } from '@angular/router';
 
 export interface BreadcrumbStep {
   label: string;
-  /** Absent on the last step — the page a visitor is already on is not a link to itself. */
   link?: string;
 }
 

@@ -1,5 +1,3 @@
-// The design system, and the only vocabulary in the application. Loaded first so a component may
-// reference --lm-* names without importing anything.
 @use './styles/tokens.css';
 
 *,
@@ -18,8 +16,6 @@ body {
 }
 
 main {
-  // 60rem occurs once in the application, so it stays a literal: tokens.css names a value that
-  // repeats, and a name used once is the invented-not-extracted case that rule exists to refuse.
   max-width: 60rem;
   margin: 0 auto;
   padding: var(--lm-space-md);
@@ -40,8 +36,6 @@ ul {
 a {
   display: inline-flex;
   align-items: center;
-  // Literal, matching the eleven under src/app/ui/: naming it in this one file makes a twelfth
-  // spelling of one rule, not a single source for it. Whether it gets one is LM-91.
   min-height: 44px;
   min-width: 44px;
   color: var(--lm-color-link);

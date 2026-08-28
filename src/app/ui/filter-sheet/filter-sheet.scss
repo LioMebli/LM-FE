@@ -26,11 +26,6 @@
   font-size: var(--lm-text-sm);
 }
 
-/* A bottom sheet, not a sidebar. The default centred dialog box is overridden here.
-
-   85dvh leaves the page visible above the sheet, so what the filters act on is never fully
-   hidden. 480px is the reference screen's frame width, repeated for the same reason the sticky
-   bar repeats it: a fixed element is out of flow and cannot take its width from an ancestor. */
 .sheet {
   position: fixed;
   inset: auto 0 0 0;
@@ -52,8 +47,6 @@
   flex-direction: column;
 }
 
-/* 50 % is the alpha, not a colour of its own, so the backdrop follows --lm-color-ink. It occurs
-   once and stays a literal (FR-013). */
 .sheet::backdrop {
   background: color-mix(in srgb, var(--lm-color-ink) 50%, transparent);
 }

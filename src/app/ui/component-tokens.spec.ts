@@ -3,15 +3,6 @@ import { join } from 'node:path';
 
 import { declaredTokenNames, referencedTokenNamesIn } from '../../testing/tokens-css';
 
-/**
- * A component under `src/app/ui/` names only values `tokens.css` declares.
- *
- * An undeclared name is silent in every other instrument: `var(--lm-colour-ink)` compiles, the
- * build succeeds, and the property falls back to its initial value — so the component renders,
- * slightly wrong, and no test, no linter and no release check says anything. That is the whole
- * subject here, and it is why `docs/ARCHITECTURE.md` §4.1 gives this file as the first reason
- * new presentational components go in `ui/` rather than a `layout/` of their own.
- */
 const UI_DIR = 'src/app/ui';
 
 function componentStylesheets(): { path: string; source: string }[] {

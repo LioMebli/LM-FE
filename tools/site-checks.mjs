@@ -12,18 +12,17 @@ const NOT_FOUND_ROUTE = '/404';
 const SHOWCASE_ROUTE = '/design-system';
 const ROUTES_OUTSIDE_THE_CATALOG = [CATALOG_ROOT_ROUTE, NOT_FOUND_ROUTE, SHOWCASE_ROUTE];
 
-/**
- * Produced, and deliberately kept out of search. This is the only place a route joins that set:
- * both halves of the guarantee read it — the meta tag on the page, and the page's absence from
- * the address list — so a third internal page cannot arrive with one half and not the other.
- * Each carries why, for the report.
- */
 const UNPUBLISHED_ROUTES = new Map([
   [NOT_FOUND_ROUTE, 'the not-found page is never offered to a crawler'],
   [SHOWCASE_ROUTE, 'the design-system showcase is never offered to a crawler'],
 ]);
 
 const MAX_INITIAL_SCRIPT_BYTES = 250_000;
+
+const SOURCE_DIRS = ['src', 'tools'];
+const SOURCE_EXTENSIONS = ['.ts', '.mjs', '.scss', '.css', '.html'];
+
+const MAX_COMMENT_LINES = 9;
 const AVAILABILITY_LABELS = ['В наявності', 'Під замовлення', 'Знято з виробництва'];
 
 const ESCAPED_TEXT = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '\u00A0': '&nbsp;' };
@@ -146,16 +145,10 @@ async function checkNotFoundCopy(outputDir, pages) {
   return failures;
 }
 
-/**
- * The internal pages are on a public host, so each one says noindex on itself. The other half —
- * that the address list never names them — is checkSitemap below, off the same map.
- */
 function checkInternalPagesAreNotIndexed(pages) {
   return [...UNPUBLISHED_ROUTES.keys()].flatMap((route) => {
     const html = pages.get(route);
 
-    // Absence is checkCoverage's to report: these routes are in ROUTES_OUTSIDE_THE_CATALOG, so
-    // a release without one already fails there, and saying it twice makes one fault read as two.
     if (html === undefined || NOINDEX_META.test(html)) {
       return [];
     }
@@ -293,6 +286,67 @@ async function checkInitialScripts(outputDir, catalogRoot) {
   };
 }
 
+export async function checkCommentBudget(sourceDirs, ceiling = MAX_COMMENT_LINES) {
+  const counted = [];
+
+  for (const sourceDir of sourceDirs) {
+    for (const file of await sourceFiles(sourceDir)) {
+      const lines = commentLinesIn(await readFile(file, 'utf8'));
+
+      if (lines > 0) {
+        counted.push({ file: relative('.', file).split(sep).join('/'), lines });
+      }
+    }
+  }
+
+  const total = counted.reduce((sum, { lines }) => sum + lines, 0);
+  const failures =
+    total > ceiling
+      ? [
+          `${total} comment lines in ${sourceDirs.join(', ')}, above the ceiling of ${ceiling}: ` +
+            counted
+              .sort((a, b) => b.lines - a.lines)
+              .map(({ file, lines }) => `${file} (${lines})`)
+              .join(', '),
+        ]
+      : [];
+
+  return {
+    failures,
+    notes: [`Comment lines in ${sourceDirs.join(', ')}: ${total}, ceiling ${ceiling}`],
+  };
+}
+
+async function sourceFiles(directory) {
+  const entries = await readdir(directory, { withFileTypes: true, recursive: true });
+
+  return entries
+    .filter((entry) => entry.isFile() && SOURCE_EXTENSIONS.some((ext) => entry.name.endsWith(ext)))
+    .map((entry) => join(entry.parentPath, entry.name));
+}
+
+function commentLinesIn(source) {
+  let open = false;
+  let lines = 0;
+
+  for (const raw of source.split('\n')) {
+    const text = raw.trim();
+
+    if (open) {
+      lines += 1;
+      open = !(text.includes('*/') || text.includes('-->'));
+      continue;
+    }
+
+    if (text.startsWith('//') || text.startsWith('/*') || text.startsWith('<!--')) {
+      lines += 1;
+      open = text.startsWith('//') ? false : !(text.includes('*/') || text.includes('-->'));
+    }
+  }
+
+  return lines;
+}
+
 function initialScriptSources(html) {
   const scripts = [...html.matchAll(OPENING_SCRIPT_TAG)].map(([tag]) => SRC.exec(tag)?.[1]);
   const preloads = [...html.matchAll(LINK_TAG)]
@@ -376,12 +430,15 @@ if (import.meta.main) {
   const siteOrigin = process.env.LM_SITE_ORIGIN ?? DEFAULT_SITE_ORIGIN;
 
   try {
-    const { failures, notes } = await runSiteChecks({
+    const release = await runSiteChecks({
       manifestPath: MANIFEST_PATH,
       outputDir: OUTPUT_DIR,
       shellIndexPath: SHELL_INDEX_PATH,
       siteOrigin,
     });
+    const comments = await checkCommentBudget(SOURCE_DIRS);
+    const failures = [...release.failures, ...comments.failures];
+    const notes = [...release.notes, ...comments.notes];
 
     for (const note of notes) {
       console.log(note);

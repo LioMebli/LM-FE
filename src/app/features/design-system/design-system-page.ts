@@ -12,7 +12,6 @@ import { ProductCard } from '../../ui/product-card/product-card';
 import { StickyActionBar } from '../../ui/sticky-action-bar/sticky-action-bar';
 import { VariantBadge } from '../../ui/variant-badge/variant-badge';
 
-/** Which property of the sample element the token is poured into. */
 export type TokenSample =
   | 'colour'
   | 'border'
@@ -29,16 +28,6 @@ export interface TokenGroup {
   names: string[];
 }
 
-/**
- * The names this page shows.
- *
- * It is a hand-written list, and the reason it is allowed to be one is that
- * `design-system-page.spec.ts` parses `src/styles/tokens.css` and fails when the two sets
- * differ. Rendering is the projection for the components below; a list of names is not markup,
- * so the same argument does not reach it, and a hand list rots the first time a token is
- * renamed. Deriving the list at build time would be stronger and is more machinery than
- * twenty-two values earn — see specs/LM-51/research.md R7.
- */
 export const TOKEN_GROUPS: readonly TokenGroup[] = [
   {
     title: 'Колір',
@@ -83,15 +72,6 @@ interface ShowcaseCard {
   variantCount: number;
 }
 
-/**
- * Four cards, chosen to hold the states the reference screen proved the card has to survive: a
- * name of one line and a name of four in the same row, all three availability states, prices
- * from three digits to six, and a card with a variant badge beside cards without one.
- *
- * The names are plain descriptions and carry no brand, and no photograph travels with them —
- * the borrowed images stay in specs/LM-51/mockup/photos/ and the repository boundary is what
- * keeps them there (FR-007).
- */
 const SHOWCASE_CARDS: readonly ShowcaseCard[] = [
   { name: 'Змішувач кухонний', price: 980, availability: 'IN_STOCK', variantCount: 1 },
   {
@@ -141,7 +121,6 @@ export class DesignSystemPage {
   protected readonly cards = SHOWCASE_CARDS;
   protected readonly availabilityStates = SHOWCASE_AVAILABILITY;
 
-  /** What the demonstrated controls did, so a visitor can see that they are wired, not drawn. */
   protected readonly lastAction = signal('нічого ще не натиснуто');
 
   private readonly metadata = inject(PageMetadata);
