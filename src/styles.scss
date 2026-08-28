@@ -54,3 +54,7 @@ button {
 body:has(dialog:modal) {
   overflow: hidden;
 }
+
+::placeholder {
+  color: var(--lm-color-ink-muted);
+}
