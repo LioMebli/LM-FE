@@ -109,8 +109,8 @@ const SHOWCASE_CARDS: readonly ShowcaseCard[] = [
 
 const SHOWCASE_DESTINATIONS: readonly NavDestination[] = [
   { label: 'Каталог', link: '/' },
-  { label: 'Доставка й оплата', link: '/' },
-  { label: 'Контакти', link: '/' },
+  { label: 'Доставка й оплата', link: '/dostavka' },
+  { label: 'Контакти', link: '/kontakty' },
 ];
 
 const SHOWCASE_SOCIALS: readonly SocialProfile[] = [

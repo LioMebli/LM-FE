@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 
 import { App } from './app';
+import { SiteFooter } from './ui/site-footer/site-footer';
 import { SiteHeader } from './ui/site-header/site-header';
 
 @Component({ template: '' })
@@ -36,16 +37,14 @@ describe('App', () => {
 
     expect(host.querySelector('app-site-header')).not.toBeNull();
     expect(host.querySelector('main router-outlet')).not.toBeNull();
+    expect(host.querySelector('app-site-footer')).not.toBeNull();
   });
 
-  it('holds one destination list and hands it to the header', async () => {
+  it('holds one destination list and hands the same one to both header and footer', async () => {
     await fixture.whenStable();
 
-    const header = fixture.debugElement.children.find((c) => c.componentInstance instanceof SiteHeader);
-
-    expect((header?.componentInstance as SiteHeader).destinations()).toEqual([
-      { label: 'Каталог', link: '/' },
-    ]);
+    expect(header().destinations()).toEqual([{ label: 'Каталог', link: '/' }]);
+    expect(footer().destinations()).toBe(header().destinations());
   });
 
   it('turns a search into a catalog address carrying the query', async () => {
@@ -64,5 +63,10 @@ describe('App', () => {
   function header(): SiteHeader {
     return fixture.debugElement.query((node) => node.componentInstance instanceof SiteHeader)
       .componentInstance as SiteHeader;
+  }
+
+  function footer(): SiteFooter {
+    return fixture.debugElement.query((node) => node.componentInstance instanceof SiteFooter)
+      .componentInstance as SiteFooter;
   }
 });
