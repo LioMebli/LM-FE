@@ -17,7 +17,7 @@
 .trail__step {
   display: flex;
   align-items: center;
-  min-block-size: 44px;
+  min-block-size: var(--lm-tap-target-min);
 }
 
 .trail__step + .trail__step::before {
@@ -29,7 +29,7 @@
 .trail__link {
   display: flex;
   align-items: center;
-  min-block-size: 44px;
+  min-block-size: var(--lm-tap-target-min);
   color: var(--lm-color-ink-muted);
   text-decoration: none;
 }

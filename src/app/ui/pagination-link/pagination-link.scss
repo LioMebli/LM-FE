@@ -6,8 +6,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-inline-size: 44px;
-  min-block-size: 44px;
+  min-inline-size: var(--lm-tap-target-min);
+  min-block-size: var(--lm-tap-target-min);
   border: var(--lm-border-control);
   border-radius: var(--lm-radius-md);
   background: var(--lm-color-surface);

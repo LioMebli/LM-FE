@@ -36,14 +36,14 @@ ul {
 a {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  min-width: 44px;
+  min-height: var(--lm-tap-target-min);
+  min-width: var(--lm-tap-target-min);
   color: var(--lm-color-link);
 }
 
 button {
-  min-height: 44px;
-  min-width: 44px;
+  min-height: var(--lm-tap-target-min);
+  min-width: var(--lm-tap-target-min);
 }
 
 :focus-visible {

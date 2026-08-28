@@ -131,7 +131,7 @@
 
 .range__input {
   inline-size: 100%;
-  min-block-size: 44px;
+  min-block-size: var(--lm-tap-target-min);
   margin-block-start: var(--lm-space-xs);
   padding-inline: var(--lm-space-md);
   border: var(--lm-border-hairline);

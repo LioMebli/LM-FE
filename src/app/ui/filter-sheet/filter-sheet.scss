@@ -8,7 +8,7 @@
   justify-content: center;
   gap: var(--lm-space-sm);
   inline-size: 100%;
-  min-block-size: 44px;
+  min-block-size: var(--lm-tap-target-min);
   border: var(--lm-border-control);
   border-radius: var(--lm-radius-md);
   background: var(--lm-color-surface);

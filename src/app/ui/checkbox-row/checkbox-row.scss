@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  min-block-size: 44px;
+  min-block-size: var(--lm-tap-target-min);
   cursor: pointer;
 }
 

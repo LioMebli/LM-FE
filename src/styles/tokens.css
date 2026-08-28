@@ -31,6 +31,9 @@
   --lm-space-sm: 8px;
   --lm-space-md: 16px;
 
+  --lm-tap-target-min: 44px;
+  --lm-tap-target-chip: 22px;
+
   --lm-radius-md: 8px;
   --lm-radius-lg: 16px;
   --lm-radius-pill: 999px;

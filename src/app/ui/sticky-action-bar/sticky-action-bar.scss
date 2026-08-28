@@ -24,7 +24,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-block-size: 44px;
+  min-block-size: var(--lm-tap-target-min);
   font-size: var(--lm-text-md);
   text-decoration: none;
 }

@@ -7,8 +7,8 @@
   align-items: center;
   justify-content: center;
   inline-size: 100%;
-  min-inline-size: 44px;
-  min-block-size: 44px;
+  min-inline-size: var(--lm-tap-target-min);
+  min-block-size: var(--lm-tap-target-min);
   padding-inline: var(--lm-space-md);
   border: var(--lm-border-control);
   border-radius: var(--lm-radius-pill);

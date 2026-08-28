@@ -60,6 +60,11 @@ export const TOKEN_GROUPS: readonly TokenGroup[] = [
   { title: 'Накреслення', sample: 'weight', names: ['--lm-weight-regular', '--lm-weight-bold'] },
   { title: 'Відступ', sample: 'space', names: ['--lm-space-xs', '--lm-space-sm', '--lm-space-md'] },
   {
+    title: 'Зона дотику',
+    sample: 'space',
+    names: ['--lm-tap-target-min', '--lm-tap-target-chip'],
+  },
+  {
     title: 'Радіус',
     sample: 'radius',
     names: ['--lm-radius-md', '--lm-radius-lg', '--lm-radius-pill'],
