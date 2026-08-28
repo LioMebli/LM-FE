@@ -8,16 +8,6 @@
   line-height: var(--lm-leading-body);
 }
 
-/* Rule C5. The three states sat on one lightness and were told apart by hue alone, so under
-   deuteranopia at severity 1.0 the in-stock and discontinued labels came out at a luminance
-   ratio of 1.005 — the same colour. The hues are unchanged and the lightnesses are now three
-   steps apart, so the distinction survives the simulation as brightness.
-
-   The three lightnesses are load-bearing, not decorative: a later palette change may move the
-   hues and must not flatten them. None of the three is a token, because each occurs exactly
-   once on the reference screen and FR-013 gives a name only to what repeats — they are also
-   not stops of the neutral ramp, being set by WCAG AA against the card and by staying apart
-   under simulation rather than by the ramp's step. */
 .label--in-stock {
   color: oklch(0.4 0.11 152);
 }

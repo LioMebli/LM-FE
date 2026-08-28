@@ -1,30 +1,4 @@
-// The design system extracted in LM-51, copied verbatim from specs/LM-51/mockup/tokens.css.
-// It is loaded first so a component may reference --lm-* names without importing anything.
 @use './styles/tokens.css';
-
-// LM-11's own values, read by the element rules further down this file. They are a second
-// vocabulary beside the one above and the two do not overlap by name; converting the site onto
-// the design system is LM-19's work, not a rename that can ride along here, because it changes
-// what every existing page renders.
-//
-// One of them has a reader outside this file: --lm-gutter, named on purpose by
-// features/design-system/design-system-page.scss so the showcase cancels the app shell's
-// padding and runs edge to edge. Deleting it during LM-19's conversion takes that page's
-// edge-to-edge background with it, and nothing fails — which is why it is written here rather
-// than left to be discovered. design-vocabulary.spec.ts states the same exclusion from the
-// other side.
-//
-// Three declarations were removed in LM-51: --lm-ink-muted, --lm-placeholder and the
-// .image-slot rule that was the only reader of the second. Nothing in src/ referenced any of
-// them, and they shipped in the stylesheet every visitor downloads.
-:root {
-  --lm-surface: #ffffff;
-  --lm-ink: #1a1a1a;
-  --lm-link: #0b5cad;
-  --lm-page-width: 60rem;
-  --lm-gutter: 1rem;
-  --lm-tap-target: 44px;
-}
 
 *,
 *::before,
@@ -34,17 +8,17 @@
 
 body {
   margin: 0;
-  background: var(--lm-surface);
-  color: var(--lm-ink);
+  background: var(--lm-color-page);
+  color: var(--lm-color-ink);
   font-family: system-ui, sans-serif;
-  line-height: 1.5;
+  line-height: var(--lm-leading-body);
   overflow-wrap: break-word;
 }
 
 main {
-  max-width: var(--lm-page-width);
+  max-width: 60rem;
   margin: 0 auto;
-  padding: var(--lm-gutter);
+  padding: var(--lm-space-md);
 }
 
 img,
@@ -62,17 +36,17 @@ ul {
 a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--lm-tap-target);
-  min-width: var(--lm-tap-target);
-  color: var(--lm-link);
+  min-height: 44px;
+  min-width: 44px;
+  color: var(--lm-color-link);
 }
 
 button {
-  min-height: var(--lm-tap-target);
-  min-width: var(--lm-tap-target);
+  min-height: 44px;
+  min-width: 44px;
 }
 
 :focus-visible {
-  outline: 2px solid var(--lm-link);
+  outline: 2px solid var(--lm-color-link);
   outline-offset: 2px;
 }

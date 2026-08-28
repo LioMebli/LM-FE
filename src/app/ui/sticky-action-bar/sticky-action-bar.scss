@@ -2,31 +2,15 @@
   display: contents;
 }
 
-/* Fixed, never sticky — and that was a defect photographed on a real phone, not a preference.
-
-   `position: sticky` resolves its offset against the layout viewport. When a mobile browser
-   hides its bottom toolbar the visual viewport grows and the layout viewport does not follow
-   immediately, so the bar came to rest a toolbar's height above the screen edge with the next
-   row of cards visible underneath it: specs/LM-51/evidence/2026-08-20-callbar-detached-on-phone.jpeg.
-   Browsers pin a fixed element to the visual viewport through that transition, which is why
-   every mobile bottom bar in the wild is fixed.
-
-   What sticky bought was that the bar came to rest at the page end instead of covering the
-   last row. The page owes it that clearance instead — see the stage in the showcase, and the
-   category page when LM-19 builds it.
-
-   480px is the reference screen's frame width. It is repeated here rather than inherited
-   because a fixed element is out of flow and cannot take its width from an ancestor; it is a
-   literal because it belongs to the page frame rather than to the look the tokens came from. */
 .bar {
+  /* Not sticky: sticky resolves against the layout viewport, so the bar detaches from the screen
+     edge when a mobile browser hides its toolbar. Reproduces only on a real phone. */
   position: fixed;
   inset-block-end: 0;
   inset-inline: 0;
   z-index: 2;
   display: flex;
   align-items: stretch;
-  /* Rule M1's floor between adjacent tap targets. A number, not var(--lm-space-sm): the two
-     are 8px today and are not obliged to stay equal, and the floor must not follow the scale. */
   gap: 8px;
   margin-inline: auto;
   max-inline-size: 480px;
@@ -58,9 +42,6 @@
   font-weight: var(--lm-weight-bold);
 }
 
-/* Charcoal rather than the primary colour. The call is the conversion on this product, and
-   17.6 : 1 against the page is what makes it the most prominent thing on the screen — the
-   variation that moved the primary onto this button lost. */
 .bar__call {
   flex-grow: 1;
   border-radius: var(--lm-radius-pill);

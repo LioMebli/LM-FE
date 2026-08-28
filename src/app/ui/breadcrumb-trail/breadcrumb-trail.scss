@@ -5,8 +5,6 @@
 .trail {
   display: flex;
   flex-wrap: wrap;
-  /* Rule M1's floor between adjacent tap targets, written as a number rather than as the
-     scale's second step: the two are 8px today and are not obliged to stay equal. */
   gap: 8px;
   margin: 0;
   padding: 0;
@@ -16,17 +14,6 @@
   line-height: var(--lm-leading-body);
 }
 
-/* A crumb is a 44 px box, and the reference screen drew it as 14 px of inline text.
-
-   This is the one place the port deviates from the screen LM-57 closed «без правок», and the
-   deviation is not a judgement about which looks better. The 44 px floor is set by
-   GLOBAL_DESCRIPTION_LM_PROJECT.md § Frontend and marked ✅ Decided, so it is withdrawn by
-   whoever set it and by nobody else — a design round's approval is not that. The mockup's own
-   audit never contradicted it either: .crumbs__item a is absent from that script's tap-target
-   list, so the crumbs were never measured at all.
-
-   What it costs is a header about 23 px taller. What the other choice cost is a ~21 px target
-   on the control that walks back up the category tree, on every category page, under a thumb. */
 .trail__step {
   display: flex;
   align-items: center;
@@ -36,7 +23,6 @@
 .trail__step + .trail__step::before {
   content: "›";
   margin-inline-end: var(--lm-space-sm);
-  /* One stop of the neutral ramp, used once on the reference screen, so it has no name. */
   color: oklch(0.72 0.012 75);
 }
 

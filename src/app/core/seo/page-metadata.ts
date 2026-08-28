@@ -6,7 +6,6 @@ import { environment } from '../../../environments/environment';
 const SITE_NAME = 'LioMebli';
 
 export interface PageMetadataInput {
-  /** The page's own title. The site name is appended here, never by the caller. */
   title: string;
   path: string;
   description?: string;

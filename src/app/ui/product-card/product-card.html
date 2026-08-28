@@ -17,7 +17,5 @@
   </span>
 </a>
 
-<!-- A sibling of the link, never a child of it: a button inside an anchor is invalid markup,
-     and the two are different destinations — the link opens the product, this one adds it to
-     the selection the sticky bar counts. -->
+<!-- Sibling, not child: a button inside an anchor is invalid markup and nothing here fails on it. -->
 <button type="button" class="card__add" (click)="addedToSelection.emit()">У підбірку</button>
