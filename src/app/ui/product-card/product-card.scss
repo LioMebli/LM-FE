@@ -66,6 +66,10 @@
   font-weight: var(--lm-weight-bold);
 }
 
+.card__body app-availability-label {
+  min-block-size: calc(var(--lm-text-sm) * var(--lm-leading-body) * 2);
+}
+
 .card__add {
   margin: 0 var(--lm-space-md) var(--lm-space-md);
 }
