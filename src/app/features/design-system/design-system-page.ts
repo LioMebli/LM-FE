@@ -45,7 +45,11 @@ export const TOKEN_GROUPS: readonly TokenGroup[] = [
       '--lm-color-success',
     ],
   },
-  { title: 'Рамка', sample: 'border', names: ['--lm-border-hairline'] },
+  {
+    title: 'Рамка',
+    sample: 'border',
+    names: ['--lm-border-hairline', '--lm-border-control'],
+  },
   { title: 'Гарнітура заголовків', sample: 'family', names: ['--lm-font-display'] },
   {
     title: 'Кегль',
