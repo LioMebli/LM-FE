@@ -1,7 +1,7 @@
 <button
   class="button"
   [class.button--primary]="variant() === 'primary'"
-  [type]="type()"
+  type="button"
   (click)="pressed.emit()"
 >
   <ng-content />

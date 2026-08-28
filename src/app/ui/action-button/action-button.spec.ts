@@ -1,6 +1,13 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActionButton } from './action-button';
+
+@Component({
+  imports: [ActionButton],
+  template: '<app-action-button><span class="label">Переглянути каталог</span></app-action-button>',
+})
+class CallerWithALabel {}
 
 describe('ActionButton', () => {
   let fixture: ComponentFixture<ActionButton>;
@@ -11,17 +18,10 @@ describe('ActionButton', () => {
     fixture = TestBed.createComponent(ActionButton);
   });
 
-  it('stays out of a form until a caller asks it in', async () => {
+  it('stays out of a form, so a caller cannot submit one by accident', async () => {
     await fixture.whenStable();
 
     expect(button()?.type).toBe('button');
-  });
-
-  it('submits when the caller asks it to', async () => {
-    fixture.componentRef.setInput('type', 'submit');
-    await fixture.whenStable();
-
-    expect(button()?.type).toBe('submit');
   });
 
   it('is the quieter of the two variants unless told otherwise', async () => {
@@ -47,6 +47,15 @@ describe('ActionButton', () => {
     button()?.click();
 
     expect(presses).toBe(1);
+  });
+
+  it('takes its label from the caller, inside the control rather than beside it', async () => {
+    const caller = TestBed.createComponent(CallerWithALabel);
+    await caller.whenStable();
+
+    const label = (caller.nativeElement as HTMLElement).querySelector('.label');
+
+    expect(label?.closest('button')).not.toBeNull();
   });
 
   function button(): HTMLButtonElement | null {

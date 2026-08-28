@@ -10,7 +10,5 @@ export type ActionButtonVariant = 'primary' | 'secondary';
 export class ActionButton {
   readonly variant = input<ActionButtonVariant>('secondary');
 
-  readonly type = input<'button' | 'submit'>('button');
-
   readonly pressed = output<void>();
 }
