@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 
+import { SiteFooter } from './ui/site-footer/site-footer';
 import { NavDestination, SiteHeader } from './ui/site-header/site-header';
 
 const SEARCH_PARAM = 'q';
@@ -9,7 +10,7 @@ const DESTINATIONS: readonly NavDestination[] = [{ label: 'Каталог', link
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SiteHeader],
+  imports: [RouterOutlet, SiteFooter, SiteHeader],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
