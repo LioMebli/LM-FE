@@ -50,3 +50,7 @@ button {
   outline: 2px solid var(--lm-color-link);
   outline-offset: 2px;
 }
+
+body:has(dialog[open]) {
+  overflow: hidden;
+}

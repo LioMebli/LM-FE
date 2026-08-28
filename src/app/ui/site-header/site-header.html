@@ -1,0 +1,49 @@
+<header class="header">
+  <a class="header__brand" routerLink="/" aria-label="Lio Mebli — на головну">
+    <img class="header__mark" src="lm-logo.svg" width="29" height="36" alt="" />
+    <span class="header__name">Lio Mebli</span>
+  </a>
+
+  <form class="header__search" role="search" (submit)="submitSearch($event, field.value)">
+    <input
+      #field
+      class="header__field"
+      type="search"
+      name="q"
+      autocomplete="off"
+      aria-label="Пошук товарів"
+      placeholder="Пошук"
+    />
+  </form>
+
+  <nav class="header__nav" aria-label="Розділи сайту">
+    <ul class="header__row">
+      @for (destination of destinations(); track destination.link) {
+        <li><a class="header__link" [routerLink]="destination.link">{{ destination.label }}</a></li>
+      }
+    </ul>
+  </nav>
+
+  <button class="header__opener" type="button" aria-haspopup="dialog" (click)="open()">Меню</button>
+
+  <dialog #menu class="menu" aria-label="Розділи сайту">
+    <div class="menu__frame">
+      <header class="menu__head">
+        <h2 class="menu__title">Розділи</h2>
+        <app-action-button (pressed)="close()">Закрити</app-action-button>
+      </header>
+
+      <nav class="menu__body">
+        <ul class="menu__list">
+          @for (destination of destinations(); track destination.link) {
+            <li>
+              <a class="menu__link" [routerLink]="destination.link" (click)="close()">
+                {{ destination.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </nav>
+    </div>
+  </dialog>
+</header>
