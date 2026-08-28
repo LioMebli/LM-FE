@@ -76,19 +76,6 @@
   line-height: var(--lm-leading-display);
 }
 
-.sheet__close {
-  min-block-size: 44px;
-  min-inline-size: 44px;
-  padding-inline: var(--lm-space-md);
-  border: var(--lm-border-hairline);
-  border-radius: var(--lm-radius-pill);
-  background: none;
-  color: var(--lm-color-ink);
-  font: inherit;
-  font-size: var(--lm-text-md);
-  cursor: pointer;
-}
-
 .sheet__body {
   flex-grow: 1;
   overflow-y: auto;
@@ -101,15 +88,3 @@
   border-block-start: var(--lm-border-hairline);
 }
 
-.sheet__apply {
-  inline-size: 100%;
-  min-block-size: 44px;
-  border: 0;
-  border-radius: var(--lm-radius-pill);
-  background: var(--lm-color-ink);
-  color: var(--lm-color-on-dark);
-  font: inherit;
-  font-size: var(--lm-text-md);
-  font-weight: var(--lm-weight-bold);
-  cursor: pointer;
-}

@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 
 import { PageMetadata } from '../../core/seo/page-metadata';
 import { Availability } from '../../core/api/catalog.types';
+import { ActionButton } from '../../ui/action-button/action-button';
 import { AvailabilityLabel } from '../../ui/availability-label/availability-label';
 import { BreadcrumbTrail } from '../../ui/breadcrumb-trail/breadcrumb-trail';
 import { CheckboxRow } from '../../ui/checkbox-row/checkbox-row';
@@ -103,6 +104,7 @@ const SHOWCASE_AVAILABILITY: readonly Availability[] = [
 @Component({
   selector: 'app-design-system-page',
   imports: [
+    ActionButton,
     AvailabilityLabel,
     BreadcrumbTrail,
     CheckboxRow,

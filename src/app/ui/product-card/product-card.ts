@@ -2,6 +2,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { ActionButton } from '../action-button/action-button';
 import { AvailabilityLabel } from '../availability-label/availability-label';
 import { VariantBadge } from '../variant-badge/variant-badge';
 import { Availability } from '../../core/api/catalog.types';
@@ -17,7 +18,7 @@ const PRICE = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 0 });
 
 @Component({
   selector: 'app-product-card',
-  imports: [AvailabilityLabel, NgOptimizedImage, RouterLink, VariantBadge],
+  imports: [ActionButton, AvailabilityLabel, NgOptimizedImage, RouterLink, VariantBadge],
   templateUrl: './product-card.html',
   styleUrl: './product-card.scss',
 })

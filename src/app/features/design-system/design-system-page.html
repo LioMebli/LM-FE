@@ -70,6 +70,27 @@
     <p class="ds__note" aria-live="polite">Остання дія: {{ lastAction() }}</p>
 
     <section class="group">
+      <h3 class="group__title">Кнопка дії</h3>
+      <p class="group__note">
+        Основна й другорядна: однакові за розміром, радіусом і фокусом, різні за вагою. Ширину
+        задає місце, де кнопка стоїть, — у картці й у панелі фільтрів вона розтягується, тут
+        стоїть за вмістом.
+      </p>
+      <ul class="row-list">
+        <li>
+          <app-action-button variant="primary" (pressed)="record('натиснуто основну кнопку')">
+            Переглянути каталог
+          </app-action-button>
+        </li>
+        <li>
+          <app-action-button (pressed)="record('натиснуто другорядну кнопку')">
+            Детальніше
+          </app-action-button>
+        </li>
+      </ul>
+    </section>
+
+    <section class="group">
       <h3 class="group__title">Хлібні крихти</h3>
       <app-breadcrumb-trail
         [steps]="[

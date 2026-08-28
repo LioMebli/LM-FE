@@ -9,7 +9,7 @@
   <div class="sheet__frame">
     <header class="sheet__head">
       <h2 class="sheet__title">{{ heading() }}</h2>
-      <button type="button" class="sheet__close" (click)="close()">Закрити</button>
+      <app-action-button (pressed)="close()">Закрити</app-action-button>
     </header>
 
     <div class="sheet__body">
@@ -17,7 +17,7 @@
     </div>
 
     <footer class="sheet__foot">
-      <button type="button" class="sheet__apply" (click)="close()">{{ applyLabel() }}</button>
+      <app-action-button variant="primary" (pressed)="close()">{{ applyLabel() }}</app-action-button>
     </footer>
   </div>
 </dialog>

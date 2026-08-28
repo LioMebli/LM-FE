@@ -67,13 +67,5 @@
 }
 
 .card__add {
-  min-block-size: 44px;
   margin: 0 var(--lm-space-md) var(--lm-space-md);
-  border: var(--lm-border-hairline);
-  border-radius: var(--lm-radius-pill);
-  background: none;
-  color: var(--lm-color-ink);
-  font: inherit;
-  font-size: var(--lm-text-md);
-  cursor: pointer;
 }

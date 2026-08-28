@@ -43,13 +43,13 @@ describe('FilterSheet', () => {
   });
 
   it.each([
-    ['.sheet__close', 'Закрити'],
-    ['.sheet__apply', 'Показати 128 товарів'],
-  ])('closes by %s, which carries the label "%s"', async (selector, label) => {
+    ['.sheet__head', 'Закрити'],
+    ['.sheet__foot', 'Показати 128 товарів'],
+  ])('closes by the control in %s, which carries the label "%s"', async (slot, label) => {
     await fixture.whenStable();
     fixture.componentInstance.open();
 
-    const control = host().querySelector<HTMLButtonElement>(selector)!;
+    const control = host().querySelector<HTMLButtonElement>(`${slot} app-action-button button`)!;
 
     expect(control.textContent?.trim()).toBe(label);
 

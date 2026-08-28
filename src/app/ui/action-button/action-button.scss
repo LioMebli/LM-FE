@@ -1,0 +1,27 @@
+:host {
+  display: block;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  padding-inline: var(--lm-space-md);
+  border: var(--lm-border-hairline);
+  border-radius: var(--lm-radius-pill);
+  background: none;
+  color: var(--lm-color-ink);
+  font: inherit;
+  font-size: var(--lm-text-md);
+  cursor: pointer;
+}
+
+.button--primary {
+  border: 0;
+  background: var(--lm-color-ink);
+  color: var(--lm-color-on-dark);
+  font-weight: var(--lm-weight-bold);
+}
