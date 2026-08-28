@@ -1,8 +1,5 @@
 <header class="header">
-  <a class="header__brand" routerLink="/" aria-label="Lio Mebli — на головну">
-    <img class="header__mark" src="lm-logo.svg" width="29" height="36" alt="" />
-    <span class="header__name">Lio Mebli</span>
-  </a>
+  <app-brand-mark />
 
   <form class="header__search" role="search" (submit)="submitSearch($event, field.value)">
     <input

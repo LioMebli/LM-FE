@@ -2,6 +2,7 @@ import { Component, ElementRef, input, output, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { ActionButton } from '../action-button/action-button';
+import { BrandMark } from '../brand-mark/brand-mark';
 
 export interface NavDestination {
   label: string;
@@ -10,7 +11,7 @@ export interface NavDestination {
 
 @Component({
   selector: 'app-site-header',
-  imports: [ActionButton, RouterLink],
+  imports: [ActionButton, BrandMark, RouterLink],
   templateUrl: './site-header.html',
   styleUrl: './site-header.scss',
 })

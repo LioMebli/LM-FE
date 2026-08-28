@@ -14,22 +14,8 @@
   background: var(--lm-color-page);
 }
 
-.header__brand {
+app-brand-mark {
   flex-shrink: 0;
-  gap: var(--lm-space-sm);
-  color: var(--lm-color-ink);
-  text-decoration: none;
-}
-
-.header__mark {
-  display: block;
-}
-
-.header__name {
-  font-family: var(--lm-font-display);
-  font-size: var(--lm-text-lg);
-  line-height: var(--lm-leading-display);
-  white-space: nowrap;
 }
 
 .header__search {

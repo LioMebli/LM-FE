@@ -1,6 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { BrandMark } from '../brand-mark/brand-mark';
 import { NavDestination } from '../site-header/site-header';
 
 export interface SocialProfile {
@@ -10,7 +11,7 @@ export interface SocialProfile {
 
 @Component({
   selector: 'app-site-footer',
-  imports: [RouterLink],
+  imports: [BrandMark, RouterLink],
   templateUrl: './site-footer.html',
   styleUrl: './site-footer.scss',
 })

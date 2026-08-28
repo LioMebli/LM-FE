@@ -1,0 +1,22 @@
+:host {
+  display: block;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--lm-space-sm);
+  color: var(--lm-color-ink);
+  text-decoration: none;
+}
+
+.brand__mark {
+  display: block;
+}
+
+.brand__name {
+  font-family: var(--lm-font-display);
+  font-size: var(--lm-text-lg);
+  line-height: var(--lm-leading-display);
+  white-space: nowrap;
+}

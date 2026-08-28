@@ -24,13 +24,10 @@ describe('SiteHeader', () => {
     fixture.componentRef.setInput('destinations', DESTINATIONS);
   });
 
-  it('sends the wordmark home, and names it for a reader who cannot see it', async () => {
+  it('carries the shared wordmark rather than a second copy of it', async () => {
     await fixture.whenStable();
 
-    const brand = host().querySelector<HTMLAnchorElement>('.header__brand');
-
-    expect(brand?.getAttribute('href')).toBe('/');
-    expect(brand?.getAttribute('aria-label')).toBe('Lio Mebli — на головну');
+    expect(host().querySelector('app-brand-mark .brand')).not.toBeNull();
   });
 
   it('offers every destination it is given, in the menu and in the row alike', async () => {
