@@ -7,7 +7,7 @@
   align-items: center;
   gap: var(--lm-space-sm);
   inline-size: 100%;
-  max-inline-size: 60rem;
+  max-inline-size: var(--lm-content-max);
   margin-inline: auto;
   padding: var(--lm-space-sm) var(--lm-space-md);
   border-block-end: var(--lm-border-hairline);
@@ -94,7 +94,7 @@
   display: flex;
   flex-direction: column;
   block-size: 100%;
-  max-inline-size: 60rem;
+  max-inline-size: var(--lm-content-max);
   margin-inline: auto;
 }
 

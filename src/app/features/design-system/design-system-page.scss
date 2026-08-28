@@ -157,7 +157,7 @@
 }
 
 .space-sample {
-  inline-size: var(--sample);
+  inline-size: min(var(--sample), 100%);
   block-size: 32px;
   background: var(--lm-color-primary);
 }

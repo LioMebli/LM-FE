@@ -31,6 +31,8 @@
   --lm-space-sm: 8px;
   --lm-space-md: 16px;
 
+  --lm-content-max: 60rem;
+
   --lm-tap-target-min: 44px;
   --lm-tap-target-chip: 22px;
 

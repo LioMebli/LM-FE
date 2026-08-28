@@ -3,7 +3,7 @@ import { Router, RouterOutlet } from '@angular/router';
 
 import { NavDestination, SiteHeader } from './ui/site-header/site-header';
 
-export const SEARCH_PARAM = 'q';
+const SEARCH_PARAM = 'q';
 
 const DESTINATIONS: readonly NavDestination[] = [{ label: 'Каталог', link: '/' }];
 

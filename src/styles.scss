@@ -16,7 +16,7 @@ body {
 }
 
 main {
-  max-width: 60rem;
+  max-inline-size: var(--lm-content-max);
   margin: 0 auto;
   padding: var(--lm-space-md);
 }
@@ -51,6 +51,6 @@ button {
   outline-offset: 2px;
 }
 
-body:has(dialog[open]) {
+body:has(dialog:modal) {
   overflow: hidden;
 }

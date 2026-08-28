@@ -9,7 +9,6 @@
       #field
       class="header__field"
       type="search"
-      name="q"
       autocomplete="off"
       aria-label="Пошук товарів"
       placeholder="Пошук"
@@ -28,10 +27,10 @@
 
   <dialog #menu class="menu" aria-label="Розділи сайту">
     <div class="menu__frame">
-      <header class="menu__head">
+      <div class="menu__head">
         <h2 class="menu__title">Розділи</h2>
         <app-action-button (pressed)="close()">Закрити</app-action-button>
-      </header>
+      </div>
 
       <nav class="menu__body">
         <ul class="menu__list">

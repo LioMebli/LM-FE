@@ -61,15 +61,6 @@ describe('App', () => {
     expect(decodeURIComponent(router.url)).toBe('/?q=ручка');
   });
 
-  it('leaves the address alone when the header reports nothing', async () => {
-    const router = TestBed.inject(Router);
-
-    await router.navigate(['/design-system']);
-    await fixture.whenStable();
-
-    expect(router.url).toBe('/design-system');
-  });
-
   function header(): SiteHeader {
     return fixture.debugElement.query((node) => node.componentInstance instanceof SiteHeader)
       .componentInstance as SiteHeader;

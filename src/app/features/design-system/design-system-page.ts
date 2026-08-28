@@ -64,6 +64,7 @@ export const TOKEN_GROUPS: readonly TokenGroup[] = [
     sample: 'space',
     names: ['--lm-tap-target-min', '--lm-tap-target-chip'],
   },
+  { title: 'Ширина змісту', sample: 'space', names: ['--lm-content-max'] },
   {
     title: 'Радіус',
     sample: 'radius',
