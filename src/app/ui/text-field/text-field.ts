@@ -1,5 +1,7 @@
 import { Component, input, output } from '@angular/core';
 
+export type InputMode = 'text' | 'numeric' | 'tel' | 'decimal' | 'email' | 'url' | 'search';
+
 let nextMessageId = 0;
 
 @Component({
@@ -12,7 +14,9 @@ export class TextField {
 
   readonly error = input<string>();
 
-  readonly inputmode = input('text');
+  readonly inputmode = input<InputMode>('text');
+
+  readonly autocomplete = input('off');
 
   readonly value = input('');
 

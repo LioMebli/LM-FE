@@ -50,15 +50,26 @@ describe('TextField', () => {
     expect(input().getAttribute('aria-invalid')).toBeNull();
   });
 
-  it('keeps the message box in both states, so an error does not move the layout', async () => {
+  it('renders the message element in both states, never adding or removing one', async () => {
     await fixture.whenStable();
 
-    expect(host().querySelector('.field__message')).not.toBeNull();
+    expect(host().querySelectorAll('.field__message').length).toBe(1);
 
     fixture.componentRef.setInput('error', 'Вкажіть число');
     await fixture.whenStable();
 
     expect(host().querySelectorAll('.field__message').length).toBe(1);
+  });
+
+  it('suppresses autofill by default and offers the field its real purpose on request', async () => {
+    await fixture.whenStable();
+
+    expect(input().getAttribute('autocomplete')).toBe('off');
+
+    fixture.componentRef.setInput('autocomplete', 'tel');
+    await fixture.whenStable();
+
+    expect(input().getAttribute('autocomplete')).toBe('tel');
   });
 
   it('reports what was typed rather than deciding anything about it', async () => {
