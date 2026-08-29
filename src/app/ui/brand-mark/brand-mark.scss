@@ -14,7 +14,8 @@
   display: block;
   inline-size: 38px;
   block-size: auto;
-  margin: -7px;
+  margin-block: -7px;
+  margin-inline-end: -7px;
 }
 
 .brand__name {
