@@ -6,7 +6,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--lm-space-sm);
   inline-size: 100%;
   max-inline-size: var(--lm-content-max);
   margin-inline: auto;
@@ -18,16 +17,19 @@
 .footer__list {
   display: flex;
   flex-direction: column;
-  gap: var(--lm-space-sm);
+}
+
+.footer__link,
+.footer__phone,
+.footer__social {
+  min-block-size: var(--lm-tap-target-footer);
 }
 
 .footer__link {
-  margin-block: -10px;
   color: var(--lm-color-ink);
 }
 
 .footer__phone {
-  margin-block: -10px;
   color: var(--lm-color-ink);
   font-size: var(--lm-text-lg);
   font-weight: var(--lm-weight-bold);
@@ -36,6 +38,5 @@
 .footer__socials {
   display: flex;
   flex-wrap: wrap;
-  margin-block: -10px;
-  gap: var(--lm-space-sm) var(--lm-space-md);
+  column-gap: var(--lm-space-md);
 }
