@@ -26,7 +26,7 @@ function everyAuthoredStylesheet(): { path: string; source: string }[] {
 
 describe('the components’ design vocabulary', () => {
   it('finds the stylesheets it is meant to be reading', () => {
-    expect(componentStylesheets().length).toBeGreaterThanOrEqual(9);
+    expect(componentStylesheets().length).toBeGreaterThanOrEqual(14);
   });
 
   it('names only values that tokens.css declares', () => {
