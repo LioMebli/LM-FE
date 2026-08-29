@@ -1,3 +1,7 @@
+<app-site-header [destinations]="destinations" (searched)="search($event)" />
+
 <main>
   <router-outlet />
 </main>
+
+<app-site-footer [destinations]="destinations" />

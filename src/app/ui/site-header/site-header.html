@@ -1,0 +1,45 @@
+<header class="header">
+  <app-brand-mark />
+
+  <form class="header__search" role="search" (submit)="submitSearch($event, field.value)">
+    <input
+      #field
+      class="header__field"
+      type="search"
+      autocomplete="off"
+      aria-label="Пошук товарів"
+      placeholder="Пошук"
+    />
+  </form>
+
+  <nav class="header__nav" aria-label="Розділи сайту">
+    <ul class="header__row">
+      @for (destination of destinations(); track destination.link) {
+        <li><a class="header__link" [routerLink]="destination.link">{{ destination.label }}</a></li>
+      }
+    </ul>
+  </nav>
+
+  <app-action-button class="header__opener" opens="dialog" (pressed)="open()">Меню</app-action-button>
+
+  <dialog #menu class="menu" aria-label="Розділи сайту">
+    <div class="menu__frame">
+      <div class="menu__head">
+        <h2 class="menu__title">Розділи</h2>
+        <app-action-button (pressed)="close()">Закрити</app-action-button>
+      </div>
+
+      <nav class="menu__body">
+        <ul class="menu__list">
+          @for (destination of destinations(); track destination.link) {
+            <li>
+              <a class="menu__link" [routerLink]="destination.link" (click)="close()">
+                {{ destination.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </nav>
+    </div>
+  </dialog>
+</header>

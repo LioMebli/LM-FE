@@ -5,9 +5,9 @@
 .chip {
   display: flex;
   align-items: center;
-  min-block-size: 22px;
+  min-block-size: var(--lm-tap-target-chip);
   padding-inline-start: var(--lm-space-sm);
-  border: var(--lm-border-hairline);
+  border: var(--lm-border-control);
   border-radius: var(--lm-radius-pill);
   background: var(--lm-color-surface);
   font-size: var(--lm-text-sm);
@@ -18,8 +18,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-inline-size: 22px;
-  min-block-size: 22px;
+  min-inline-size: var(--lm-tap-target-chip);
+  min-block-size: var(--lm-tap-target-chip);
   padding: 0;
   border: 0;
   border-radius: var(--lm-radius-pill);

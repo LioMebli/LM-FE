@@ -12,6 +12,7 @@
   --lm-color-success: oklch(0.52 0.11 152);
 
   --lm-border-hairline: 1px solid oklch(0.85 0.010 75);
+  --lm-border-control: 1px solid oklch(0.59 0.012 75);
 
   --lm-font-display: Georgia, "Times New Roman", serif;
 
@@ -29,6 +30,12 @@
   --lm-space-xs: 4px;
   --lm-space-sm: 8px;
   --lm-space-md: 16px;
+
+  --lm-content-max: 60rem;
+
+  --lm-tap-target-min: 44px;
+  --lm-tap-target-chip: 22px;
+  --lm-tap-target-footer: 32px;
 
   --lm-radius-md: 8px;
   --lm-radius-lg: 16px;

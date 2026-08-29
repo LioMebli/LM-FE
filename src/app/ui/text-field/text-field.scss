@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+.field__label {
+  display: flex;
+  flex-direction: column;
+}
+
+.field__caption {
+  color: var(--lm-color-ink-muted);
+  font-size: var(--lm-text-sm);
+  line-height: var(--lm-leading-body);
+}
+
+.field__input {
+  inline-size: 100%;
+  min-block-size: var(--lm-tap-target-min);
+  margin-block-start: var(--lm-space-xs);
+  padding-inline: var(--lm-space-md);
+  border: var(--lm-border-control);
+  border-radius: var(--lm-radius-md);
+  background: var(--lm-color-surface);
+  color: var(--lm-color-ink);
+  font: inherit;
+  font-size: var(--lm-text-md);
+}
+
+.field__input[aria-invalid='true'] {
+  border-color: var(--lm-color-error);
+  border-width: 2px;
+}
+
+.field__message {
+  display: block;
+  min-block-size: calc(var(--lm-text-sm) * var(--lm-leading-body));
+  margin-block-start: var(--lm-space-xs);
+  color: var(--lm-color-error);
+  font-size: var(--lm-text-sm);
+  line-height: var(--lm-leading-body);
+}

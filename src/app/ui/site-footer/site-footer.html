@@ -1,0 +1,29 @@
+<footer class="footer">
+  <app-brand-mark />
+
+  @if (destinations().length) {
+    <nav class="footer__nav" aria-label="Розділи сайту внизу сторінки">
+      <ul class="footer__list">
+        @for (destination of destinations(); track destination.link) {
+          <li>
+            <a class="footer__link" [routerLink]="destination.link">{{ destination.label }}</a>
+          </li>
+        }
+      </ul>
+    </nav>
+  }
+
+  @if (phone()) {
+    <a class="footer__phone" [href]="callHref()">{{ phone() }}</a>
+  }
+
+  @if (socials().length) {
+    <ul class="footer__socials">
+      @for (social of socials(); track social.href) {
+        <li>
+          <a class="footer__social" [href]="social.href">{{ social.network }}</a>
+        </li>
+      }
+    </ul>
+  }
+</footer>

@@ -16,7 +16,7 @@ body {
 }
 
 main {
-  max-width: 60rem;
+  max-inline-size: var(--lm-content-max);
   margin: 0 auto;
   padding: var(--lm-space-md);
 }
@@ -36,17 +36,25 @@ ul {
 a {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  min-width: 44px;
+  min-height: var(--lm-tap-target-min);
+  min-width: var(--lm-tap-target-min);
   color: var(--lm-color-link);
 }
 
 button {
-  min-height: 44px;
-  min-width: 44px;
+  min-height: var(--lm-tap-target-min);
+  min-width: var(--lm-tap-target-min);
 }
 
 :focus-visible {
   outline: 2px solid var(--lm-color-link);
   outline-offset: 2px;
+}
+
+body:has(dialog:modal) {
+  overflow: hidden;
+}
+
+::placeholder {
+  color: var(--lm-color-ink-muted);
 }

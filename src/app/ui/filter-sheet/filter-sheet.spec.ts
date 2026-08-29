@@ -1,19 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { giveJsdomTheDialogMethods } from '../../../testing/dialog';
 import { FilterSheet } from './filter-sheet';
-
-function giveJsdomTheDialogMethods(): void {
-  const dialog = HTMLDialogElement.prototype as HTMLDialogElement;
-
-  dialog.showModal ??= function (this: HTMLDialogElement) {
-    this.setAttribute('open', '');
-  };
-
-  dialog.close ??= function (this: HTMLDialogElement) {
-    this.removeAttribute('open');
-    this.dispatchEvent(new Event('close'));
-  };
-}
 
 describe('FilterSheet', () => {
   let fixture: ComponentFixture<FilterSheet>;
@@ -43,13 +31,13 @@ describe('FilterSheet', () => {
   });
 
   it.each([
-    ['.sheet__close', 'Закрити'],
-    ['.sheet__apply', 'Показати 128 товарів'],
-  ])('closes by %s, which carries the label "%s"', async (selector, label) => {
+    ['.sheet__head', 'Закрити'],
+    ['.sheet__foot', 'Показати 128 товарів'],
+  ])('closes by the control in %s, which carries the label "%s"', async (slot, label) => {
     await fixture.whenStable();
     fixture.componentInstance.open();
 
-    const control = host().querySelector<HTMLButtonElement>(selector)!;
+    const control = host().querySelector<HTMLButtonElement>(`${slot} app-action-button button`)!;
 
     expect(control.textContent?.trim()).toBe(label);
 

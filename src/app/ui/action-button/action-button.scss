@@ -2,26 +2,26 @@
   display: block;
 }
 
-.page {
+.button {
   display: flex;
   align-items: center;
   justify-content: center;
+  inline-size: 100%;
   min-inline-size: var(--lm-tap-target-min);
   min-block-size: var(--lm-tap-target-min);
+  padding-inline: var(--lm-space-md);
   border: var(--lm-border-control);
-  border-radius: var(--lm-radius-md);
-  background: var(--lm-color-surface);
+  border-radius: var(--lm-radius-pill);
+  background: none;
   color: var(--lm-color-ink);
+  font: inherit;
   font-size: var(--lm-text-md);
-  text-decoration: none;
+  cursor: pointer;
 }
 
-.page--current {
-  border-color: var(--lm-color-ink);
+.button--primary {
+  border: 0;
   background: var(--lm-color-ink);
   color: var(--lm-color-on-dark);
-}
-
-.page--next {
-  padding-inline: 12px;
+  font-weight: var(--lm-weight-bold);
 }

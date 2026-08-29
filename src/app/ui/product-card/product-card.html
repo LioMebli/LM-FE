@@ -18,4 +18,4 @@
 </a>
 
 <!-- Sibling, not child: a button inside an anchor is invalid markup and nothing here fails on it. -->
-<button type="button" class="card__add" (click)="addedToSelection.emit()">У підбірку</button>
+<app-action-button class="card__add" (pressed)="addedToSelection.emit()">У підбірку</app-action-button>

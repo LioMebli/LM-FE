@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 
 import { PageMetadata } from '../../core/seo/page-metadata';
 import { Availability } from '../../core/api/catalog.types';
+import { ActionButton } from '../../ui/action-button/action-button';
 import { AvailabilityLabel } from '../../ui/availability-label/availability-label';
 import { BreadcrumbTrail } from '../../ui/breadcrumb-trail/breadcrumb-trail';
 import { CheckboxRow } from '../../ui/checkbox-row/checkbox-row';
@@ -9,7 +10,10 @@ import { FilterChip } from '../../ui/filter-chip/filter-chip';
 import { FilterSheet } from '../../ui/filter-sheet/filter-sheet';
 import { PaginationLink } from '../../ui/pagination-link/pagination-link';
 import { ProductCard } from '../../ui/product-card/product-card';
+import { SocialProfile } from '../../ui/shell.types';
+import { SiteFooter } from '../../ui/site-footer/site-footer';
 import { StickyActionBar } from '../../ui/sticky-action-bar/sticky-action-bar';
+import { TextField } from '../../ui/text-field/text-field';
 import { VariantBadge } from '../../ui/variant-badge/variant-badge';
 
 export type TokenSample =
@@ -44,7 +48,11 @@ export const TOKEN_GROUPS: readonly TokenGroup[] = [
       '--lm-color-success',
     ],
   },
-  { title: 'Рамка', sample: 'border', names: ['--lm-border-hairline'] },
+  {
+    title: 'Рамка',
+    sample: 'border',
+    names: ['--lm-border-hairline', '--lm-border-control'],
+  },
   { title: 'Гарнітура заголовків', sample: 'family', names: ['--lm-font-display'] },
   {
     title: 'Кегль',
@@ -54,6 +62,12 @@ export const TOKEN_GROUPS: readonly TokenGroup[] = [
   { title: 'Інтерліньяж', sample: 'leading', names: ['--lm-leading-body', '--lm-leading-display'] },
   { title: 'Накреслення', sample: 'weight', names: ['--lm-weight-regular', '--lm-weight-bold'] },
   { title: 'Відступ', sample: 'space', names: ['--lm-space-xs', '--lm-space-sm', '--lm-space-md'] },
+  {
+    title: 'Зона дотику',
+    sample: 'space',
+    names: ['--lm-tap-target-min', '--lm-tap-target-chip', '--lm-tap-target-footer'],
+  },
+  { title: 'Ширина змісту', sample: 'space', names: ['--lm-content-max'] },
   {
     title: 'Радіус',
     sample: 'radius',
@@ -94,6 +108,13 @@ const SHOWCASE_CARDS: readonly ShowcaseCard[] = [
   },
 ];
 
+const SHOWCASE_SOCIALS: readonly SocialProfile[] = [
+  { network: 'Instagram', href: 'https://www.instagram.com/' },
+  { network: 'Facebook', href: 'https://www.facebook.com/' },
+  { network: 'Telegram', href: 'https://telegram.org/' },
+  { network: 'Viber', href: 'https://www.viber.com/' },
+];
+
 const SHOWCASE_AVAILABILITY: readonly Availability[] = [
   'IN_STOCK',
   'MADE_TO_ORDER',
@@ -103,6 +124,7 @@ const SHOWCASE_AVAILABILITY: readonly Availability[] = [
 @Component({
   selector: 'app-design-system-page',
   imports: [
+    ActionButton,
     AvailabilityLabel,
     BreadcrumbTrail,
     CheckboxRow,
@@ -110,7 +132,9 @@ const SHOWCASE_AVAILABILITY: readonly Availability[] = [
     FilterSheet,
     PaginationLink,
     ProductCard,
+    SiteFooter,
     StickyActionBar,
+    TextField,
     VariantBadge,
   ],
   templateUrl: './design-system-page.html',
@@ -120,6 +144,7 @@ export class DesignSystemPage {
   protected readonly tokenGroups = TOKEN_GROUPS;
   protected readonly cards = SHOWCASE_CARDS;
   protected readonly availabilityStates = SHOWCASE_AVAILABILITY;
+  protected readonly socials = SHOWCASE_SOCIALS;
 
   protected readonly lastAction = signal('нічого ще не натиснуто');
 

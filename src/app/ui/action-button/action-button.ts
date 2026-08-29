@@ -1,0 +1,16 @@
+import { Component, input, output } from '@angular/core';
+
+export type ActionButtonVariant = 'primary' | 'secondary';
+
+@Component({
+  selector: 'app-action-button',
+  templateUrl: './action-button.html',
+  styleUrl: './action-button.scss',
+})
+export class ActionButton {
+  readonly variant = input<ActionButtonVariant>('secondary');
+
+  readonly opens = input<'dialog'>();
+
+  readonly pressed = output<void>();
+}

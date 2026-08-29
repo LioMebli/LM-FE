@@ -24,7 +24,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-block-size: 44px;
+  min-block-size: var(--lm-tap-target-min);
   font-size: var(--lm-text-md);
   text-decoration: none;
 }
@@ -32,7 +32,7 @@
 .bar__selection {
   gap: var(--lm-space-sm);
   padding-inline: var(--lm-space-md);
-  border: var(--lm-border-hairline);
+  border: var(--lm-border-control);
   border-radius: var(--lm-radius-pill);
   background: var(--lm-color-surface);
   color: var(--lm-color-ink);

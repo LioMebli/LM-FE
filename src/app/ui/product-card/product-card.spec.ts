@@ -74,7 +74,7 @@ describe('ProductCard', () => {
     fixture.componentInstance.addedToSelection.subscribe(() => added.push(1));
     await fixture.whenStable();
 
-    host().querySelector<HTMLButtonElement>('.card__add')?.click();
+    host().querySelector<HTMLButtonElement>('.card__add button')?.click();
 
     expect(added).toHaveLength(1);
   });

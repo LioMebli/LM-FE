@@ -1,7 +1,10 @@
 import { Component, ElementRef, input, output, viewChild } from '@angular/core';
 
+import { ActionButton } from '../action-button/action-button';
+
 @Component({
   selector: 'app-filter-sheet',
+  imports: [ActionButton],
   templateUrl: './filter-sheet.html',
   styleUrl: './filter-sheet.scss',
 })

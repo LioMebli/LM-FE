@@ -70,6 +70,36 @@
     <p class="ds__note" aria-live="polite">Остання дія: {{ lastAction() }}</p>
 
     <section class="group">
+      <h3 class="group__title">Шапка сайту й знак</h3>
+      <p class="group__note">
+        Шапка вже на цій сторінці — вгорі, над заголовком. Щоб побачити меню, звузьте вікно й
+        натисніть «Меню». Знак із назвою — окремий елемент, і він стоїть і в шапці, і в підвалі
+        нижче: третій примірник тут показав би те саме втретє.
+      </p>
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Кнопка дії</h3>
+      <p class="group__note">
+        Основна й другорядна: однакові за розміром, радіусом і фокусом, різні за вагою. Ширину
+        задає місце, де кнопка стоїть, — у картці й у панелі фільтрів вона розтягується, тут
+        стоїть за вмістом.
+      </p>
+      <ul class="row-list">
+        <li>
+          <app-action-button variant="primary" (pressed)="record('натиснуто основну кнопку')">
+            Переглянути каталог
+          </app-action-button>
+        </li>
+        <li>
+          <app-action-button (pressed)="record('натиснуто другорядну кнопку')">
+            Детальніше
+          </app-action-button>
+        </li>
+      </ul>
+    </section>
+
+    <section class="group">
       <h3 class="group__title">Хлібні крихти</h3>
       <app-breadcrumb-trail
         [steps]="[
@@ -159,6 +189,26 @@
     </section>
 
     <section class="group">
+      <h3 class="group__title">Поле введення</h3>
+      <p class="group__note">
+        Два стани й більше жодного. У помилковому причина стає описом поля для читача з екрана,
+        а не лише червоним написом поруч, і рамка темнішає — тож стан видно й на знімку без
+        кольору. Місце під повідомлення зайняте завжди, тому поява помилки нічого не зсуває.
+      </p>
+      <ul class="stack">
+        <li><app-text-field label="Імʼя" value="Олена" /></li>
+        <li>
+          <app-text-field
+            label="Телефон"
+            inputmode="tel"
+            value="+38067"
+            error="Вкажіть номер повністю — 12 цифр"
+          />
+        </li>
+      </ul>
+    </section>
+
+    <section class="group">
       <h3 class="group__title">Панель фільтрів</h3>
       <p class="group__note">
         Закрита — це кнопка; відкрита — модальна шухляда, яка перекриває сторінку цілком, бо
@@ -170,14 +220,8 @@
         (closed)="record('панель фільтрів закрито')"
       >
         <div class="range">
-          <label class="range__field">
-            <span class="range__label">Ціна від, ₴</span>
-            <input class="range__input" type="text" inputmode="numeric" autocomplete="off" />
-          </label>
-          <label class="range__field">
-            <span class="range__label">до, ₴</span>
-            <input class="range__input" type="text" inputmode="numeric" autocomplete="off" />
-          </label>
+          <app-text-field label="Ціна від, ₴" inputmode="numeric" />
+          <app-text-field label="до, ₴" inputmode="numeric" />
         </div>
 
         <app-checkbox-row label="В наявності" [checked]="true" />
@@ -196,6 +240,19 @@
         <p>Низ сторінки розділу. Панель нічого тут не перекриває — сторінка лишає їй місце.</p>
         <app-sticky-action-bar [selectionCount]="3" selectionLink="/" phone="+380671234567" />
       </div>
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Підвал сайту</h3>
+      <p class="group__note">
+        Справжній підвал стоїть у самому низу цієї сторінки й показує лише знак і розділи:
+        номера телефону та акаунтів магазину ще ніхто не називав, а частина без вмісту не
+        малюється зовсім. Примірник нижче отримує зразкові телефон і соцмережі, щоб їх було
+        видно й було що зміряти, а розділи — ні: їх показує справжній підвал нижче, і два
+        однаково названі орієнтири «розділи внизу сторінки» на одній сторінці — помилка
+        доступності, а не повтор.
+      </p>
+      <app-site-footer [destinations]="[]" phone="+380671234567" [socials]="socials" />
     </section>
   </section>
 </article>
