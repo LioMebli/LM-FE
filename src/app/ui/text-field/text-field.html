@@ -1,0 +1,16 @@
+<div class="field">
+  <label class="field__label">
+    <span class="field__caption">{{ label() }}</span>
+    <input
+      class="field__input"
+      type="text"
+      autocomplete="off"
+      [value]="value()"
+      [attr.inputmode]="inputmode()"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-describedby]="error() ? messageId : null"
+      (input)="report($event.target)"
+    />
+  </label>
+  <span class="field__message" [id]="messageId">{{ error() }}</span>
+</div>

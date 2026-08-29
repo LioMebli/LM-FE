@@ -13,6 +13,7 @@ import { ProductCard } from '../../ui/product-card/product-card';
 import { SiteFooter, SocialProfile } from '../../ui/site-footer/site-footer';
 import { NavDestination } from '../../ui/site-header/site-header';
 import { StickyActionBar } from '../../ui/sticky-action-bar/sticky-action-bar';
+import { TextField } from '../../ui/text-field/text-field';
 import { VariantBadge } from '../../ui/variant-badge/variant-badge';
 
 export type TokenSample =
@@ -139,6 +140,7 @@ const SHOWCASE_AVAILABILITY: readonly Availability[] = [
     ProductCard,
     SiteFooter,
     StickyActionBar,
+    TextField,
     VariantBadge,
   ],
   templateUrl: './design-system-page.html',

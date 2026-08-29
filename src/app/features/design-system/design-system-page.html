@@ -189,6 +189,26 @@
     </section>
 
     <section class="group">
+      <h3 class="group__title">Поле введення</h3>
+      <p class="group__note">
+        Два стани й більше жодного. У помилковому причина стає описом поля для читача з екрана,
+        а не лише червоним написом поруч, і рамка темнішає — тож стан видно й на знімку без
+        кольору. Місце під повідомлення зайняте завжди, тому поява помилки нічого не зсуває.
+      </p>
+      <ul class="stack">
+        <li><app-text-field label="Імʼя" value="Олена" /></li>
+        <li>
+          <app-text-field
+            label="Телефон"
+            inputmode="tel"
+            value="+38067"
+            error="Вкажіть номер повністю — 12 цифр"
+          />
+        </li>
+      </ul>
+    </section>
+
+    <section class="group">
       <h3 class="group__title">Панель фільтрів</h3>
       <p class="group__note">
         Закрита — це кнопка; відкрита — модальна шухляда, яка перекриває сторінку цілком, бо
@@ -200,14 +220,8 @@
         (closed)="record('панель фільтрів закрито')"
       >
         <div class="range">
-          <label class="range__field">
-            <span class="range__label">Ціна від, ₴</span>
-            <input class="range__input" type="text" inputmode="numeric" autocomplete="off" />
-          </label>
-          <label class="range__field">
-            <span class="range__label">до, ₴</span>
-            <input class="range__input" type="text" inputmode="numeric" autocomplete="off" />
-          </label>
+          <app-text-field label="Ціна від, ₴" inputmode="numeric" />
+          <app-text-field label="до, ₴" inputmode="numeric" />
         </div>
 
         <app-checkbox-row label="В наявності" [checked]="true" />
