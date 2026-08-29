@@ -38,8 +38,8 @@ describe('BrandMark', () => {
 
     const mark = host().querySelector<HTMLImageElement>('.brand__mark');
 
-    expect(mark?.getAttribute('width')).toBe('33');
-    expect(mark?.getAttribute('height')).toBe('48');
+    expect(mark?.getAttribute('width')).toBe('38');
+    expect(mark?.getAttribute('height')).toBe('55');
   });
 
   function host(): HTMLElement {

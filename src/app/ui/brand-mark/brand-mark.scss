@@ -12,9 +12,13 @@
 
 .brand__mark {
   display: block;
+  inline-size: 38px;
+  block-size: auto;
+  margin: -7px;
 }
 
 .brand__name {
+  padding-inline-start: 7px;
   font-family: var(--lm-font-display);
   font-size: var(--lm-text-lg);
   line-height: var(--lm-leading-display);

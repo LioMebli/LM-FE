@@ -22,10 +22,12 @@
 }
 
 .footer__link {
+  margin-block: -10px;
   color: var(--lm-color-ink);
 }
 
 .footer__phone {
+  margin-block: -10px;
   color: var(--lm-color-ink);
   font-size: var(--lm-text-lg);
   font-weight: var(--lm-weight-bold);
@@ -34,5 +36,6 @@
 .footer__socials {
   display: flex;
   flex-wrap: wrap;
+  margin-block: -10px;
   gap: var(--lm-space-sm) var(--lm-space-md);
 }
