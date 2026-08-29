@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 
+import { NavDestination } from './ui/shell.types';
 import { SiteFooter } from './ui/site-footer/site-footer';
-import { NavDestination, SiteHeader } from './ui/site-header/site-header';
+import { SiteHeader } from './ui/site-header/site-header';
 
 const SEARCH_PARAM = 'q';
 

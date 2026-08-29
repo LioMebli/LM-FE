@@ -2,7 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import { giveJsdomTheDialogMethods } from '../../../testing/dialog';
-import { NavDestination, SiteHeader } from './site-header';
+import { NavDestination } from '../shell.types';
+import { SiteHeader } from './site-header';
 
 const DESTINATIONS: NavDestination[] = [
   { label: 'Каталог', link: '/' },
@@ -50,7 +51,7 @@ describe('SiteHeader', () => {
 
     expect(menu().open).toBe(false);
 
-    host().querySelector<HTMLButtonElement>('.header__opener')!.click();
+    host().querySelector<HTMLButtonElement>('.header__opener button')!.click();
 
     expect(menu().open).toBe(true);
 
@@ -66,7 +67,7 @@ describe('SiteHeader', () => {
   it('closes the menu when a destination in it is taken', async () => {
     await fixture.whenStable();
 
-    host().querySelector<HTMLButtonElement>('.header__opener')!.click();
+    host().querySelector<HTMLButtonElement>('.header__opener button')!.click();
     host().querySelector<HTMLAnchorElement>('.menu__link')!.click();
 
     expect(menu().open).toBe(false);

@@ -1,13 +1,9 @@
 import { Component, ElementRef, input, output, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { NavDestination } from '../shell.types';
 import { ActionButton } from '../action-button/action-button';
 import { BrandMark } from '../brand-mark/brand-mark';
-
-export interface NavDestination {
-  label: string;
-  link: string;
-}
 
 @Component({
   selector: 'app-site-header',

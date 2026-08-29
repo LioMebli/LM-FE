@@ -10,8 +10,8 @@ import { FilterChip } from '../../ui/filter-chip/filter-chip';
 import { FilterSheet } from '../../ui/filter-sheet/filter-sheet';
 import { PaginationLink } from '../../ui/pagination-link/pagination-link';
 import { ProductCard } from '../../ui/product-card/product-card';
-import { SiteFooter, SocialProfile } from '../../ui/site-footer/site-footer';
-import { NavDestination } from '../../ui/site-header/site-header';
+import { SocialProfile } from '../../ui/shell.types';
+import { SiteFooter } from '../../ui/site-footer/site-footer';
 import { StickyActionBar } from '../../ui/sticky-action-bar/sticky-action-bar';
 import { TextField } from '../../ui/text-field/text-field';
 import { VariantBadge } from '../../ui/variant-badge/variant-badge';
@@ -108,12 +108,6 @@ const SHOWCASE_CARDS: readonly ShowcaseCard[] = [
   },
 ];
 
-const SHOWCASE_DESTINATIONS: readonly NavDestination[] = [
-  { label: 'Каталог', link: '/' },
-  { label: 'Доставка й оплата', link: '/dostavka' },
-  { label: 'Контакти', link: '/kontakty' },
-];
-
 const SHOWCASE_SOCIALS: readonly SocialProfile[] = [
   { network: 'Instagram', href: 'https://www.instagram.com/' },
   { network: 'Facebook', href: 'https://www.facebook.com/' },
@@ -150,7 +144,6 @@ export class DesignSystemPage {
   protected readonly tokenGroups = TOKEN_GROUPS;
   protected readonly cards = SHOWCASE_CARDS;
   protected readonly availabilityStates = SHOWCASE_AVAILABILITY;
-  protected readonly destinations = SHOWCASE_DESTINATIONS;
   protected readonly socials = SHOWCASE_SOCIALS;
 
   protected readonly lastAction = signal('нічого ще не натиснуто');

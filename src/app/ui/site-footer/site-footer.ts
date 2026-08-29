@@ -1,13 +1,8 @@
 import { Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { NavDestination, SocialProfile } from '../shell.types';
 import { BrandMark } from '../brand-mark/brand-mark';
-import { NavDestination } from '../site-header/site-header';
-
-export interface SocialProfile {
-  network: string;
-  href: string;
-}
 
 @Component({
   selector: 'app-site-footer',

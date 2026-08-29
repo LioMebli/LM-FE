@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, model } from '@angular/core';
 
 export type InputMode = 'text' | 'numeric' | 'tel' | 'decimal' | 'email' | 'url' | 'search';
 
@@ -18,13 +18,11 @@ export class TextField {
 
   readonly autocomplete = input('off');
 
-  readonly value = input('');
-
-  readonly valueChanged = output<string>();
+  readonly value = model('');
 
   protected readonly messageId = `text-field-message-${nextMessageId++}`;
 
   protected report(target: EventTarget | null): void {
-    this.valueChanged.emit((target as HTMLInputElement).value);
+    this.value.set((target as HTMLInputElement).value);
   }
 }

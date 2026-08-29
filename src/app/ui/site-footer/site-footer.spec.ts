@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
-import { NavDestination } from '../site-header/site-header';
-import { SiteFooter, SocialProfile } from './site-footer';
+import { NavDestination, SocialProfile } from '../shell.types';
+import { SiteFooter } from './site-footer';
 
 const DESTINATIONS: NavDestination[] = [
   { label: 'Каталог', link: '/' },

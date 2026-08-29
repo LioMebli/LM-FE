@@ -75,13 +75,26 @@ describe('TextField', () => {
   it('reports what was typed rather than deciding anything about it', async () => {
     const typed: string[] = [];
 
-    fixture.componentInstance.valueChanged.subscribe((v) => typed.push(v));
+    fixture.componentInstance.value.subscribe((v) => typed.push(v));
     await fixture.whenStable();
 
     input().value = '800';
     input().dispatchEvent(new Event('input'));
 
     expect(typed).toEqual(['800']);
+    expect(fixture.componentInstance.value()).toBe('800');
+  });
+
+  it('lets the caller write the value back, which is what two-way binding needs', async () => {
+    await fixture.whenStable();
+
+    input().value = '80';
+    input().dispatchEvent(new Event('input'));
+
+    fixture.componentInstance.value.set('+380');
+    await fixture.whenStable();
+
+    expect(input().value).toBe('+380');
   });
 
   it('asks for a text keyboard by default and a numeric one when told', async () => {

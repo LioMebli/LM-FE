@@ -20,7 +20,7 @@
     </ul>
   </nav>
 
-  <button class="header__opener" type="button" aria-haspopup="dialog" (click)="open()">Меню</button>
+  <app-action-button class="header__opener" opens="dialog" (pressed)="open()">Меню</app-action-button>
 
   <dialog #menu class="menu" aria-label="Розділи сайту">
     <div class="menu__frame">

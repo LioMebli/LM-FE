@@ -10,5 +10,7 @@ export type ActionButtonVariant = 'primary' | 'secondary';
 export class ActionButton {
   readonly variant = input<ActionButtonVariant>('secondary');
 
+  readonly opens = input<'dialog'>();
+
   readonly pressed = output<void>();
 }

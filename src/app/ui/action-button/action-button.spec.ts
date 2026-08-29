@@ -49,6 +49,17 @@ describe('ActionButton', () => {
     expect(presses).toBe(1);
   });
 
+  it('announces a dialog only when it opens one', async () => {
+    await fixture.whenStable();
+
+    expect(button()?.hasAttribute('aria-haspopup')).toBe(false);
+
+    fixture.componentRef.setInput('opens', 'dialog');
+    await fixture.whenStable();
+
+    expect(button()?.getAttribute('aria-haspopup')).toBe('dialog');
+  });
+
   it('takes its label from the caller, inside the control rather than beside it', async () => {
     const caller = TestBed.createComponent(CallerWithALabel);
     await caller.whenStable();

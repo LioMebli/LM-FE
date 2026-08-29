@@ -1,6 +1,7 @@
 <button
   class="button"
   [class.button--primary]="variant() === 'primary'"
+  [attr.aria-haspopup]="opens()"
   type="button"
   (click)="pressed.emit()"
 >
