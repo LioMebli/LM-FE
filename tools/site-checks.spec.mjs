@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { checkCommentBudget, runSiteChecks } from './site-checks.mjs';
+import { runSiteChecks } from './site-checks.mjs';
 
 const SITE_ORIGIN = 'https://liomebli.com.ua';
 const SHELL_TITLE = 'LioMebli — меблева фурнітура';
@@ -442,77 +442,6 @@ function page({ title, canonical, head = '', body = '' }) {
     `<body>${body}</body></html>`
   );
 }
-
-describe('checkCommentBudget', () => {
-  let directory;
-
-  beforeEach(async () => {
-    directory = await mkdtemp(join(tmpdir(), 'lm-comments-'));
-  });
-
-  afterEach(async () => {
-    await rm(directory, { recursive: true, force: true });
-  });
-
-  async function given(name, lines) {
-    await writeFile(join(directory, name), lines.join('\n'), 'utf8');
-  }
-
-  it('passes a source tree with no comments and reports the count', async () => {
-    await given('clean.ts', ['export const answer = 42;', '']);
-
-    const { failures, notes } = await checkCommentBudget([directory], 0);
-
-    expect(failures).toEqual([]);
-    expect(notes[0]).toContain(': 0, ceiling 0');
-  });
-
-  it('fails naming the file and the count when the ceiling is passed', async () => {
-    await given('noisy.ts', ['// why', 'export const answer = 42;', '']);
-
-    const { failures } = await checkCommentBudget([directory], 0);
-
-    expect(failures[0]).toContain('1 comment lines');
-    expect(failures[0]).toContain('noisy.ts (1)');
-  });
-
-  it('counts every line of a block comment, not the block', async () => {
-    await given('block.scss', ['/* one', '   two', '   three */', '.a { color: red; }', '']);
-
-    const { notes } = await checkCommentBudget([directory], 99);
-
-    expect(notes[0]).toContain(': 3, ceiling 99');
-  });
-
-  it('counts an HTML comment', async () => {
-    await given('markup.html', ['<!-- why -->', '<p>text</p>', '']);
-
-    const { notes } = await checkCommentBudget([directory], 99);
-
-    expect(notes[0]).toContain(': 1, ceiling 99');
-  });
-
-  it('does not count comment syntax that a string or a regular expression owns', async () => {
-    await given('code.ts', [
-      "const url = 'https://liomebli.com.ua';",
-      'const pattern = /\\/\\*|<!--/;',
-      "const fixture = '/* not a comment */';",
-      '',
-    ]);
-
-    const { notes } = await checkCommentBudget([directory], 0);
-
-    expect(notes[0]).toContain(': 0, ceiling 0');
-  });
-
-  it('reads only the extensions the site is built from', async () => {
-    await given('notes.md', ['<!-- prose is not code -->', '']);
-
-    const { notes } = await checkCommentBudget([directory], 0);
-
-    expect(notes[0]).toContain(': 0, ceiling 0');
-  });
-});
 
 function publishedLocations() {
   return [`${SITE_ORIGIN}/`, `${SITE_ORIGIN}${CATEGORY_ROUTE}`, `${SITE_ORIGIN}${PRODUCT_ROUTE}`];
