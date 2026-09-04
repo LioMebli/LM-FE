@@ -365,13 +365,12 @@ if (import.meta.main) {
   const siteOrigin = process.env.LM_SITE_ORIGIN ?? DEFAULT_SITE_ORIGIN;
 
   try {
-    const release = await runSiteChecks({
+    const { failures, notes } = await runSiteChecks({
       manifestPath: MANIFEST_PATH,
       outputDir: OUTPUT_DIR,
       shellIndexPath: SHELL_INDEX_PATH,
       siteOrigin,
     });
-    const { failures, notes } = release;
 
     for (const note of notes) {
       console.log(note);
