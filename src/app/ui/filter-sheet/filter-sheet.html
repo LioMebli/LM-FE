@@ -5,7 +5,14 @@
   }
 </button>
 
-<dialog #sheet class="sheet" [attr.aria-label]="heading()" (close)="closed.emit()">
+<dialog
+  #sheet
+  class="sheet"
+  [attr.aria-label]="heading()"
+  [attr.role]="inFlow() ? 'group' : null"
+  [attr.open]="inFlow() ? '' : null"
+  (close)="closed.emit()"
+>
   <div class="sheet__frame">
     <header class="sheet__head">
       <h2 class="sheet__title">{{ heading() }}</h2>

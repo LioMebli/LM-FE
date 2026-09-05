@@ -64,6 +64,43 @@ describe('FilterSheet', () => {
     expect(sheet().getAttribute('aria-labelledby')).toBeNull();
   });
 
+  it('is a dialog while it is a drawer: no role of its own, and no open attribute', async () => {
+    await fixture.whenStable();
+
+    expect(sheet().getAttribute('role')).toBeNull();
+    expect(sheet().hasAttribute('open')).toBe(false);
+  });
+
+  it('stops being a dialog once the stylesheet says it stands in the page', async () => {
+    await fixture.whenStable();
+
+    widen();
+    await fixture.whenStable();
+
+    expect(sheet().getAttribute('role')).toBe('group');
+    expect(sheet().hasAttribute('open')).toBe(true);
+  });
+
+  it('reads the state from the stylesheet, so no width is written in the component', async () => {
+    await fixture.whenStable();
+
+    widen();
+    await fixture.whenStable();
+    expect(sheet().getAttribute('role')).toBe('group');
+
+    host().style.setProperty('--lm-sheet-inflow', '0');
+    window.dispatchEvent(new Event('resize'));
+    await fixture.whenStable();
+
+    expect(sheet().getAttribute('role')).toBeNull();
+    expect(sheet().hasAttribute('open')).toBe(false);
+  });
+
+  function widen(): void {
+    host().style.setProperty('--lm-sheet-inflow', '1');
+    window.dispatchEvent(new Event('resize'));
+  }
+
   function host(): HTMLElement {
     return fixture.nativeElement as HTMLElement;
   }

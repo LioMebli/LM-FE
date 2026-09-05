@@ -1,4 +1,14 @@
-import { Component, ElementRef, input, output, viewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  ElementRef,
+  afterNextRender,
+  inject,
+  input,
+  output,
+  signal,
+  viewChild,
+} from '@angular/core';
 
 import { ActionButton } from '../action-button/action-button';
 
@@ -17,7 +27,23 @@ export class FilterSheet {
 
   readonly closed = output<void>();
 
+  protected readonly inFlow = signal(false);
+
+  private readonly host = inject(ElementRef<HTMLElement>);
+
   private readonly sheet = viewChild.required<ElementRef<HTMLDialogElement>>('sheet');
+
+  constructor() {
+    const destroyRef = inject(DestroyRef);
+
+    afterNextRender(() => {
+      const read = () => this.inFlow.set(this.readInFlowFlag());
+
+      read();
+      window.addEventListener('resize', read);
+      destroyRef.onDestroy(() => window.removeEventListener('resize', read));
+    });
+  }
 
   open(): void {
     this.sheet().nativeElement.showModal();
@@ -25,5 +51,10 @@ export class FilterSheet {
 
   close(): void {
     this.sheet().nativeElement.close();
+  }
+
+  private readInFlowFlag(): boolean {
+    const flag = getComputedStyle(this.host.nativeElement).getPropertyValue('--lm-sheet-inflow');
+    return flag.trim() === '1';
   }
 }

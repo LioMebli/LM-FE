@@ -1,5 +1,6 @@
 :host {
   display: block;
+  --lm-sheet-inflow: 0;
 }
 
 .opener {
@@ -89,6 +90,10 @@
 }
 
 @media (min-width: 48rem) {
+  :host {
+    --lm-sheet-inflow: 1;
+  }
+
   .opener {
     display: none;
   }
