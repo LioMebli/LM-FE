@@ -22,3 +22,9 @@
 .row__text {
   font-size: var(--lm-text-md);
 }
+
+@media (hover: hover) {
+  .row:hover {
+    background: color-mix(in oklch, currentColor 8%, transparent);
+  }
+}
