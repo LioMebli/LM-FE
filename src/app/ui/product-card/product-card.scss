@@ -78,4 +78,8 @@
   :host:has(.card__link:hover) {
     border-color: var(--lm-color-primary);
   }
+
+  .card__link:hover {
+    box-shadow: none;
+  }
 }
