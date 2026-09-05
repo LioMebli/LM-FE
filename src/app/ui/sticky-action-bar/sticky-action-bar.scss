@@ -49,3 +49,12 @@
   color: var(--lm-color-on-dark);
   font-weight: var(--lm-weight-bold);
 }
+
+@media (min-width: 48rem) {
+  /* The bar belongs to the page rather than to a column of products, so its ceiling is the
+     page's. A token where the threshold could not be one: max-inline-size reads a custom
+     property, a media query does not. */
+  .bar {
+    max-inline-size: var(--lm-content-max);
+  }
+}

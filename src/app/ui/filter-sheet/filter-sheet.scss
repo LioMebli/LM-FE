@@ -88,3 +88,33 @@
   border-block-start: var(--lm-border-hairline);
 }
 
+@media (min-width: 48rem) {
+  .opener {
+    display: none;
+  }
+
+  /* `:not(:modal)` rather than a bare selector: a sheet opened at 360 px and then widened is
+     still modal, and stripping its close button would leave a backdrop nobody can dismiss. */
+  .sheet:not(:modal) {
+    display: block;
+    position: static;
+    max-inline-size: none;
+    max-block-size: none;
+    margin: 0;
+    border: var(--lm-border-hairline);
+    border-radius: var(--lm-radius-lg);
+  }
+
+  .sheet:not(:modal) .sheet__frame {
+    max-block-size: none;
+  }
+
+  .sheet:not(:modal) .sheet__body {
+    overflow-y: visible;
+  }
+
+  .sheet:not(:modal) .sheet__close {
+    display: none;
+  }
+}
+
