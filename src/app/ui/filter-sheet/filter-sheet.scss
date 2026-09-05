@@ -93,8 +93,6 @@
     display: none;
   }
 
-  /* `:not(:modal)` rather than a bare selector: a sheet opened at 360 px and then widened is
-     still modal, and stripping its close button would leave a backdrop nobody can dismiss. */
   .sheet:not(:modal) {
     display: block;
     position: static;

@@ -42,21 +42,17 @@
 }
 
 @media (min-width: 48rem) {
-  /* Rows become a row. Not a grid with a column list: the template renders between one and four
-     children depending on its inputs, so any fixed column count is wrong for some of them. */
   .footer {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    column-gap: var(--lm-space-md);
+    gap: var(--lm-space-md);
   }
 
-  /* The rows tile at 32 px with no gap only while they are stacked; laid across, M1's 8 px
-     between adjacent targets applies again and the scale's 16 px is the nearest value above it. */
   .footer__list {
     flex-direction: row;
     flex-wrap: wrap;
-    column-gap: var(--lm-space-md);
+    gap: var(--lm-space-md);
   }
 }
