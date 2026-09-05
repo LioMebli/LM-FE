@@ -46,11 +46,23 @@ export class FilterSheet {
   }
 
   open(): void {
+    if (this.inFlow()) {
+      return;
+    }
+
     this.sheet().nativeElement.showModal();
   }
 
   close(): void {
+    if (this.inFlow()) {
+      return;
+    }
+
     this.sheet().nativeElement.close();
+  }
+
+  protected apply(): void {
+    this.close();
   }
 
   private readInFlowFlag(): boolean {

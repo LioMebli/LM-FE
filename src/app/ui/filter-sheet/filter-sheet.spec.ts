@@ -96,6 +96,32 @@ describe('FilterSheet', () => {
     expect(sheet().hasAttribute('open')).toBe(false);
   });
 
+  it('keeps its open attribute when the in-flow panel’s own apply button is pressed', async () => {
+    await fixture.whenStable();
+
+    widen();
+    await fixture.whenStable();
+
+    const dismissed = vi.fn();
+    fixture.componentInstance.closed.subscribe(dismissed);
+
+    host().querySelector<HTMLButtonElement>('.sheet__foot app-action-button button')!.click();
+    await fixture.whenStable();
+
+    expect(sheet().hasAttribute('open')).toBe(true);
+    expect(dismissed).not.toHaveBeenCalled();
+  });
+
+  it('does not try to show a panel that is already standing in the page', async () => {
+    await fixture.whenStable();
+
+    widen();
+    await fixture.whenStable();
+
+    expect(() => fixture.componentInstance.open()).not.toThrow();
+    expect(sheet().hasAttribute('open')).toBe(true);
+  });
+
   function widen(): void {
     host().style.setProperty('--lm-sheet-inflow', '1');
     window.dispatchEvent(new Event('resize'));
