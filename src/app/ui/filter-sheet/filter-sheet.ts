@@ -3,6 +3,7 @@ import {
   DestroyRef,
   ElementRef,
   afterNextRender,
+  computed,
   inject,
   input,
   output,
@@ -25,9 +26,15 @@ export class FilterSheet {
 
   readonly applyLabel = input.required<string>();
 
+  readonly applied = output<void>();
+
   readonly closed = output<void>();
 
-  protected readonly inFlow = signal(false);
+  protected readonly standing = computed(() => this.inFlow() && !this.modal());
+
+  private readonly inFlow = signal(false);
+
+  private readonly modal = signal(false);
 
   private readonly host = inject(ElementRef<HTMLElement>);
 
@@ -46,27 +53,37 @@ export class FilterSheet {
   }
 
   open(): void {
-    if (this.inFlow()) {
+    const dialog = this.sheet().nativeElement;
+
+    if (dialog.open) {
       return;
     }
 
-    this.sheet().nativeElement.showModal();
+    dialog.showModal();
+    this.modal.set(true);
   }
 
   close(): void {
-    if (this.inFlow()) {
+    if (this.standing()) {
       return;
     }
 
     this.sheet().nativeElement.close();
+    this.modal.set(false);
   }
 
   protected apply(): void {
+    this.applied.emit();
     this.close();
   }
 
+  protected onClosed(): void {
+    this.modal.set(false);
+    this.closed.emit();
+  }
+
   private readInFlowFlag(): boolean {
-    const flag = getComputedStyle(this.host.nativeElement).getPropertyValue('--lm-sheet-inflow');
+    const flag = getComputedStyle(this.host.nativeElement).getPropertyValue('--sheet-inflow');
     return flag.trim() === '1';
   }
 }

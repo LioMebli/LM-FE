@@ -88,7 +88,7 @@ describe('FilterSheet', () => {
     await fixture.whenStable();
     expect(sheet().getAttribute('role')).toBe('group');
 
-    host().style.setProperty('--lm-sheet-inflow', '0');
+    host().style.setProperty('--sheet-inflow', '0');
     window.dispatchEvent(new Event('resize'));
     await fixture.whenStable();
 
@@ -112,6 +112,37 @@ describe('FilterSheet', () => {
     expect(dismissed).not.toHaveBeenCalled();
   });
 
+  it('stays dismissable when the viewport crosses the threshold while the drawer is open', async () => {
+    await fixture.whenStable();
+
+    host().querySelector<HTMLButtonElement>('.opener')!.click();
+    expect(sheet().open).toBe(true);
+
+    widen();
+    await fixture.whenStable();
+
+    expect(sheet().getAttribute('role')).toBeNull();
+
+    host().querySelector<HTMLButtonElement>('.sheet__head app-action-button button')!.click();
+
+    expect(sheet().open).toBe(false);
+  });
+
+  it('tells the page the filters were applied at every width, not only as a dismissal', async () => {
+    await fixture.whenStable();
+
+    const applied = vi.fn();
+    fixture.componentInstance.applied.subscribe(applied);
+
+    widen();
+    await fixture.whenStable();
+
+    host().querySelector<HTMLButtonElement>('.sheet__foot app-action-button button')!.click();
+
+    expect(applied).toHaveBeenCalledTimes(1);
+    expect(sheet().hasAttribute('open')).toBe(true);
+  });
+
   it('does not try to show a panel that is already standing in the page', async () => {
     await fixture.whenStable();
 
@@ -123,7 +154,7 @@ describe('FilterSheet', () => {
   });
 
   function widen(): void {
-    host().style.setProperty('--lm-sheet-inflow', '1');
+    host().style.setProperty('--sheet-inflow', '1');
     window.dispatchEvent(new Event('resize'));
   }
 

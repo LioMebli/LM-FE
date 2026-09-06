@@ -38,7 +38,7 @@
 .footer__socials {
   display: flex;
   flex-wrap: wrap;
-  column-gap: var(--lm-space-md);
+  gap: var(--lm-space-md);
 }
 
 @media (min-width: 48rem) {

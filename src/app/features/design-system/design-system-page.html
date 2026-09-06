@@ -218,6 +218,7 @@
       <app-filter-sheet
         [activeCount]="4"
         applyLabel="Показати 128 товарів"
+        (applied)="record('фільтри застосовано')"
         (closed)="record('панель фільтрів закрито')"
       >
         <div class="range">

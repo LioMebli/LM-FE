@@ -9,9 +9,9 @@
   #sheet
   class="sheet"
   [attr.aria-label]="heading()"
-  [attr.role]="inFlow() ? 'group' : null"
-  [attr.open]="inFlow() ? '' : null"
-  (close)="closed.emit()"
+  [attr.role]="standing() ? 'group' : null"
+  [attr.open]="standing() ? '' : null"
+  (close)="onClosed()"
 >
   <div class="sheet__frame">
     <header class="sheet__head">
