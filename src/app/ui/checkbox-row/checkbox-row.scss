@@ -22,3 +22,9 @@
 .row__text {
   font-size: var(--lm-text-md);
 }
+
+@media (hover: hover) {
+  .row:hover {
+    box-shadow: inset 0 0 0 100vmax var(--lm-hover-veil);
+  }
+}

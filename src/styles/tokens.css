@@ -8,6 +8,8 @@
 
   --lm-color-link: oklch(0.48 0.12 250);
 
+  --lm-hover-veil: color-mix(in oklch, currentColor 10%, transparent);
+
   --lm-color-error: oklch(0.40 0.15 25);
   --lm-color-success: oklch(0.52 0.11 152);
 

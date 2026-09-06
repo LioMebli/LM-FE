@@ -64,6 +64,100 @@ describe('FilterSheet', () => {
     expect(sheet().getAttribute('aria-labelledby')).toBeNull();
   });
 
+  it('is a dialog while it is a drawer: no role of its own, and no open attribute', async () => {
+    await fixture.whenStable();
+
+    expect(sheet().getAttribute('role')).toBeNull();
+    expect(sheet().hasAttribute('open')).toBe(false);
+  });
+
+  it('stops being a dialog once the stylesheet says it stands in the page', async () => {
+    await fixture.whenStable();
+
+    widen();
+    await fixture.whenStable();
+
+    expect(sheet().getAttribute('role')).toBe('group');
+    expect(sheet().hasAttribute('open')).toBe(true);
+  });
+
+  it('reads the state from the stylesheet, so no width is written in the component', async () => {
+    await fixture.whenStable();
+
+    widen();
+    await fixture.whenStable();
+    expect(sheet().getAttribute('role')).toBe('group');
+
+    host().style.setProperty('--sheet-inflow', '0');
+    window.dispatchEvent(new Event('resize'));
+    await fixture.whenStable();
+
+    expect(sheet().getAttribute('role')).toBeNull();
+    expect(sheet().hasAttribute('open')).toBe(false);
+  });
+
+  it('keeps its open attribute when the in-flow panel’s own apply button is pressed', async () => {
+    await fixture.whenStable();
+
+    widen();
+    await fixture.whenStable();
+
+    const dismissed = vi.fn();
+    fixture.componentInstance.closed.subscribe(dismissed);
+
+    host().querySelector<HTMLButtonElement>('.sheet__foot app-action-button button')!.click();
+    await fixture.whenStable();
+
+    expect(sheet().hasAttribute('open')).toBe(true);
+    expect(dismissed).not.toHaveBeenCalled();
+  });
+
+  it('stays dismissable when the viewport crosses the threshold while the drawer is open', async () => {
+    await fixture.whenStable();
+
+    host().querySelector<HTMLButtonElement>('.opener')!.click();
+    expect(sheet().open).toBe(true);
+
+    widen();
+    await fixture.whenStable();
+
+    expect(sheet().getAttribute('role')).toBeNull();
+
+    host().querySelector<HTMLButtonElement>('.sheet__head app-action-button button')!.click();
+
+    expect(sheet().open).toBe(false);
+  });
+
+  it('tells the page the filters were applied at every width, not only as a dismissal', async () => {
+    await fixture.whenStable();
+
+    const applied = vi.fn();
+    fixture.componentInstance.applied.subscribe(applied);
+
+    widen();
+    await fixture.whenStable();
+
+    host().querySelector<HTMLButtonElement>('.sheet__foot app-action-button button')!.click();
+
+    expect(applied).toHaveBeenCalledTimes(1);
+    expect(sheet().hasAttribute('open')).toBe(true);
+  });
+
+  it('does not try to show a panel that is already standing in the page', async () => {
+    await fixture.whenStable();
+
+    widen();
+    await fixture.whenStable();
+
+    expect(() => fixture.componentInstance.open()).not.toThrow();
+    expect(sheet().hasAttribute('open')).toBe(true);
+  });
+
+  function widen(): void {
+    host().style.setProperty('--sheet-inflow', '1');
+    window.dispatchEvent(new Event('resize'));
+  }
+
   function host(): HTMLElement {
     return fixture.nativeElement as HTMLElement;
   }

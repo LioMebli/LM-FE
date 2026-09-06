@@ -32,3 +32,9 @@
   transform: translateY(-1.5px);
   cursor: pointer;
 }
+
+@media (hover: hover) {
+  .chip__remove:hover {
+    color: var(--lm-color-ink);
+  }
+}

@@ -1,5 +1,6 @@
 :host {
   display: block;
+  --sheet-inflow: 0;
 }
 
 .opener {
@@ -86,5 +87,37 @@
   flex-shrink: 0;
   padding: var(--lm-space-md);
   border-block-start: var(--lm-border-hairline);
+}
+
+@media (min-width: 48rem) {
+  :host {
+    --sheet-inflow: 1;
+  }
+
+  .opener {
+    display: none;
+  }
+
+  .sheet:not(:modal) {
+    display: block;
+    position: static;
+    max-inline-size: none;
+    max-block-size: none;
+    margin: 0;
+    border: var(--lm-border-hairline);
+    border-radius: var(--lm-radius-lg);
+  }
+
+  .sheet:not(:modal) .sheet__frame {
+    max-block-size: none;
+  }
+
+  .sheet:not(:modal) .sheet__body {
+    overflow-y: visible;
+  }
+
+  .sheet:not(:modal) .sheet__close {
+    display: none;
+  }
 }
 

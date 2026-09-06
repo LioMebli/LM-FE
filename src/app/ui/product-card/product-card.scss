@@ -71,5 +71,15 @@
 }
 
 .card__add {
-  margin: 0 var(--lm-space-md) var(--lm-space-md);
+  margin: var(--lm-space-sm) var(--lm-space-md) var(--lm-space-md);
+}
+
+@media (hover: hover) {
+  :host:has(.card__link:hover) {
+    border-color: var(--lm-color-primary);
+  }
+
+  .card__link:hover {
+    box-shadow: none;
+  }
 }

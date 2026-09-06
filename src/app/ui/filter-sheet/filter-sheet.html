@@ -5,11 +5,18 @@
   }
 </button>
 
-<dialog #sheet class="sheet" [attr.aria-label]="heading()" (close)="closed.emit()">
+<dialog
+  #sheet
+  class="sheet"
+  [attr.aria-label]="heading()"
+  [attr.role]="standing() ? 'group' : null"
+  [attr.open]="standing() ? '' : null"
+  (close)="onClosed()"
+>
   <div class="sheet__frame">
     <header class="sheet__head">
       <h2 class="sheet__title">{{ heading() }}</h2>
-      <app-action-button (pressed)="close()">Закрити</app-action-button>
+      <app-action-button class="sheet__close" (pressed)="close()">Закрити</app-action-button>
     </header>
 
     <div class="sheet__body">
@@ -17,7 +24,7 @@
     </div>
 
     <footer class="sheet__foot">
-      <app-action-button variant="primary" (pressed)="close()">{{ applyLabel() }}</app-action-button>
+      <app-action-button variant="primary" (pressed)="apply()">{{ applyLabel() }}</app-action-button>
     </footer>
   </div>
 </dialog>

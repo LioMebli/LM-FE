@@ -1,5 +1,5 @@
 import { readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, sep } from 'node:path';
 
 import { declaredTokenNames, referencedTokenNamesIn } from '../../testing/tokens-css';
 
@@ -24,9 +24,20 @@ function everyAuthoredStylesheet(): { path: string; source: string }[] {
   ];
 }
 
+const WIDE_LAYOUT_COMPONENTS = ['filter-sheet', 'site-footer', 'site-header', 'sticky-action-bar'];
+
 describe('the components’ design vocabulary', () => {
   it('finds the stylesheets it is meant to be reading', () => {
     expect(componentStylesheets().length).toBeGreaterThanOrEqual(14);
+  });
+
+  it('gives a second layout only to the components that were decided to have one', () => {
+    const wide = componentStylesheets()
+      .filter(({ source }) => /@media[^{]*min-width/.test(source))
+      .map(({ path }) => path.split(sep).at(-2))
+      .sort();
+
+    expect(wide).toEqual(WIDE_LAYOUT_COMPONENTS);
   });
 
   it('names only values that tokens.css declares', () => {

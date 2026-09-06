@@ -38,5 +38,20 @@
 .footer__socials {
   display: flex;
   flex-wrap: wrap;
-  column-gap: var(--lm-space-md);
+  gap: var(--lm-space-md);
+}
+
+@media (min-width: 48rem) {
+  .footer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--lm-space-md);
+  }
+
+  .footer__list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--lm-space-md);
+  }
 }

@@ -49,3 +49,9 @@
   color: var(--lm-color-on-dark);
   font-weight: var(--lm-weight-bold);
 }
+
+@media (min-width: 48rem) {
+  .bar {
+    max-inline-size: var(--lm-content-max);
+  }
+}

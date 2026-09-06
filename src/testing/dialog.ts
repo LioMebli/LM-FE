@@ -3,7 +3,7 @@ export function giveJsdomTheDialogMethods(): void {
 
   dialog.showModal ??= function (this: HTMLDialogElement) {
     if (this.hasAttribute('open')) {
-      return;
+      throw new DOMException('The element already has an "open" attribute', 'InvalidStateError');
     }
 
     this.setAttribute('open', '');
