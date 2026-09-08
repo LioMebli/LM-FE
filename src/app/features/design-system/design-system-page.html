@@ -133,6 +133,31 @@
     </section>
 
     <section class="group">
+      <h3 class="group__title">Картка категорії</h3>
+      <p class="group__note">
+        Коротка назва й довга в одному ряду: довга переноситься, а не обрізається, і картки
+        лишаються однакової висоти. Фотографій категорій API не віддає, тож картка їх і не малює.
+      </p>
+      <ul class="grid">
+        @for (category of categories; track category) {
+          <li><app-category-card [name]="category" link="/" /></li>
+        }
+      </ul>
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Смуга героя</h3>
+      <p class="group__note">
+        Без знімка — смуга з токенів, яка не вдає фотографію. Фотографію дає LM-7, вона приходить
+        входом, і нижче за неї не зрушить нічого.
+      </p>
+      <app-hero-banner
+        heading="Меблева фурнітура"
+        lede="Ручки, петлі, напрямні та комплектуючі — для майстерень і для власних проєктів."
+      />
+    </section>
+
+    <section class="group">
       <h3 class="group__title">Стан наявності</h3>
       <ul class="row-list">
         @for (state of availabilityStates; track state) {

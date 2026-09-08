@@ -1,0 +1,18 @@
+<section class="hero">
+  <span class="hero__media">
+    @if (image(); as photo) {
+      <img
+        [src]="photo.src"
+        [alt]="photo.alt"
+        [width]="photo.width"
+        [height]="photo.height"
+        fetchpriority="high"
+      />
+    }
+  </span>
+
+  <div class="hero__body">
+    <h1 class="hero__heading">{{ heading() }}</h1>
+    <p class="hero__lede">{{ lede() }}</p>
+  </div>
+</section>

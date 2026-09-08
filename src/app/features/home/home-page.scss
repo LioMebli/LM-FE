@@ -1,0 +1,17 @@
+.home__categories {
+  margin-block-start: calc(var(--lm-space-md) * 2);
+}
+
+.home__heading {
+  margin: 0 0 var(--lm-space-md);
+  font-family: var(--lm-font-display);
+  font-size: var(--lm-text-lg);
+  font-weight: var(--lm-weight-regular);
+  line-height: var(--lm-leading-display);
+}
+
+.home__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(var(--lm-space-md) * 10), 1fr));
+  gap: var(--lm-space-md);
+}

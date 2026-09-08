@@ -1,0 +1,28 @@
+:host {
+  display: block;
+  block-size: 100%;
+}
+
+.card {
+  display: flex;
+  align-items: end;
+  block-size: 100%;
+  padding: var(--lm-space-md);
+  border: var(--lm-border-hairline);
+  border-radius: var(--lm-radius-md);
+  background: var(--lm-color-surface);
+  color: var(--lm-color-ink);
+  text-decoration: none;
+}
+
+.card__name {
+  font-size: var(--lm-text-md);
+  line-height: var(--lm-leading-body);
+}
+
+@media (hover: hover) {
+  .card:hover {
+    border-color: var(--lm-color-primary);
+    box-shadow: none;
+  }
+}

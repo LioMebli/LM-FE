@@ -5,9 +5,11 @@ import { Availability } from '../../core/api/catalog.types';
 import { ActionButton } from '../../ui/action-button/action-button';
 import { AvailabilityLabel } from '../../ui/availability-label/availability-label';
 import { BreadcrumbTrail } from '../../ui/breadcrumb-trail/breadcrumb-trail';
+import { CategoryCard } from '../../ui/category-card/category-card';
 import { CheckboxRow } from '../../ui/checkbox-row/checkbox-row';
 import { FilterChip } from '../../ui/filter-chip/filter-chip';
 import { FilterSheet } from '../../ui/filter-sheet/filter-sheet';
+import { HeroBanner } from '../../ui/hero-banner/hero-banner';
 import { PaginationLink } from '../../ui/pagination-link/pagination-link';
 import { ProductCard } from '../../ui/product-card/product-card';
 import { SocialProfile } from '../../ui/shell.types';
@@ -109,6 +111,13 @@ const SHOWCASE_CARDS: readonly ShowcaseCard[] = [
   },
 ];
 
+const SHOWCASE_CATEGORIES: readonly string[] = [
+  'Петлі',
+  'Ручки меблеві',
+  'Напрямні прихованого монтажу з доводчиком',
+  'Кріплення',
+];
+
 const SHOWCASE_SOCIALS: readonly SocialProfile[] = [
   { network: 'Instagram', href: 'https://www.instagram.com/' },
   { network: 'Facebook', href: 'https://www.facebook.com/' },
@@ -128,9 +137,11 @@ const SHOWCASE_AVAILABILITY: readonly Availability[] = [
     ActionButton,
     AvailabilityLabel,
     BreadcrumbTrail,
+    CategoryCard,
     CheckboxRow,
     FilterChip,
     FilterSheet,
+    HeroBanner,
     PaginationLink,
     ProductCard,
     SiteFooter,
@@ -144,6 +155,7 @@ const SHOWCASE_AVAILABILITY: readonly Availability[] = [
 export class DesignSystemPage {
   protected readonly tokenGroups = TOKEN_GROUPS;
   protected readonly cards = SHOWCASE_CARDS;
+  protected readonly categories = SHOWCASE_CATEGORIES;
   protected readonly availabilityStates = SHOWCASE_AVAILABILITY;
   protected readonly socials = SHOWCASE_SOCIALS;
 
