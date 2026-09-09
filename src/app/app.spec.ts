@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 
 import { App } from './app';
+import { SITE_PHONE } from './core/site-contact';
 import { SiteFooter } from './ui/site-footer/site-footer';
 import { SiteHeader } from './ui/site-header/site-header';
 
@@ -45,6 +46,17 @@ describe('App', () => {
 
     expect(header().destinations()).toEqual([{ label: 'Каталог', link: '/' }]);
     expect(footer().destinations()).toBe(header().destinations());
+  });
+
+  it('gives the footer the number to dial, so it shows on every route and not only the homepage', async () => {
+    await fixture.whenStable();
+
+    expect(footer().phone()).toBe(SITE_PHONE);
+    expect(
+      (fixture.nativeElement as HTMLElement)
+        .querySelector('app-site-footer a[href^="tel:"]')
+        ?.getAttribute('href'),
+    ).toBe(`tel:${SITE_PHONE}`);
   });
 
   it('turns a search into a catalog address carrying the query', async () => {
