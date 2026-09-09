@@ -1,15 +1,14 @@
 import { Component, input } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 
 export interface BannerImage {
   src: string;
   alt: string;
-  width: number;
-  height: number;
 }
 
 @Component({
   selector: 'app-hero-banner',
-  imports: [],
+  imports: [NgOptimizedImage],
   templateUrl: './hero-banner.html',
   styleUrl: './hero-banner.scss',
 })

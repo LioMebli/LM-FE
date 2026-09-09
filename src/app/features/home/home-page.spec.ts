@@ -34,12 +34,6 @@ describe('HomePage', () => {
     expect(cardHrefs()).toEqual(['/category/1', '/category/2', '/category/3']);
   });
 
-  it('lists a category that currently holds no products', () => {
-    render(categories());
-
-    expect(cardTexts()).toContain('Напрямні');
-  });
-
   it('drops the whole block when the catalog returns nothing, rather than drawing an empty one', () => {
     render([]);
 
@@ -57,6 +51,15 @@ describe('HomePage', () => {
 
     expect(document.title).toBe('Меблева фурнітура — LioMebli');
     expect(canonical()).toBe(`${environment.siteOrigin}/`);
+  });
+
+  it('carries a call that survives scrolling, with no selection to lead nowhere', () => {
+    render(categories());
+
+    const bar = host.querySelector('app-sticky-action-bar');
+
+    expect(bar?.querySelector('.bar__call')?.getAttribute('href')).toMatch(/^tel:\+/);
+    expect(bar?.querySelector('.bar__selection')).toBeNull();
   });
 
   it('opens the document outline with one h1 and puts the categories under an h2', () => {

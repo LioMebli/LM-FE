@@ -111,6 +111,11 @@ const SHOWCASE_CARDS: readonly ShowcaseCard[] = [
   },
 ];
 
+const SHOWCASE_HERO = {
+  heading: 'Заголовок сторінки',
+  lede: 'Одне речення під ним, достатньо довге, щоб перенестися на другий рядок при 360 px.',
+};
+
 const SHOWCASE_CATEGORIES: readonly string[] = [
   'Петлі',
   'Ручки меблеві',
@@ -156,6 +161,7 @@ export class DesignSystemPage {
   protected readonly tokenGroups = TOKEN_GROUPS;
   protected readonly cards = SHOWCASE_CARDS;
   protected readonly categories = SHOWCASE_CATEGORIES;
+  protected readonly heroSample = SHOWCASE_HERO;
   protected readonly availabilityStates = SHOWCASE_AVAILABILITY;
   protected readonly socials = SHOWCASE_SOCIALS;
 

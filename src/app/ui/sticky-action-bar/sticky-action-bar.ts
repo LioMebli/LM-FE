@@ -8,11 +8,18 @@ import { RouterLink } from '@angular/router';
   styleUrl: './sticky-action-bar.scss',
 })
 export class StickyActionBar {
-  readonly selectionCount = input.required<number>();
+  readonly selectionCount = input<number>();
 
-  readonly selectionLink = input.required<string>();
+  readonly selectionLink = input<string>();
 
   readonly phone = input.required<string>();
 
   protected readonly callHref = computed(() => `tel:${this.phone()}`);
+
+  protected readonly selection = computed(() => {
+    const count = this.selectionCount();
+    const link = this.selectionLink();
+
+    return count !== undefined && link !== undefined ? { count, link } : null;
+  });
 }

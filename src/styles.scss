@@ -62,6 +62,10 @@ body:has(dialog:modal) {
   overflow: hidden;
 }
 
+body:has(app-sticky-action-bar) {
+  padding-block-end: calc(var(--lm-tap-target-min) + var(--lm-space-sm) + var(--lm-space-md) * 2);
+}
+
 ::placeholder {
   color: var(--lm-color-ink-muted);
 }

@@ -1,6 +1,8 @@
 <div class="bar">
-  <a class="bar__selection" [routerLink]="selectionLink()">
-    Підбірка <span class="bar__count">{{ selectionCount() }}</span>
-  </a>
+  @if (selection(); as chosen) {
+    <a class="bar__selection" [routerLink]="chosen.link">
+      Підбірка <span class="bar__count">{{ chosen.count }}</span>
+    </a>
+  }
   <a class="bar__call" [href]="callHref()">Зателефонувати</a>
 </div>

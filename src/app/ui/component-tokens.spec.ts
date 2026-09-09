@@ -26,6 +26,8 @@ function everyAuthoredStylesheet(): { path: string; source: string }[] {
 
 const WIDE_LAYOUT_COMPONENTS = ['filter-sheet', 'site-footer', 'site-header', 'sticky-action-bar'];
 
+const VIEWPORT_WIDTH_UNIT = /[\d.]+vw\b/;
+
 describe('the components’ design vocabulary', () => {
   it('finds the stylesheets it is meant to be reading', () => {
     expect(componentStylesheets().length).toBeGreaterThanOrEqual(14);
@@ -38,6 +40,21 @@ describe('the components’ design vocabulary', () => {
       .sort();
 
     expect(wide).toEqual(WIDE_LAYOUT_COMPONENTS);
+  });
+
+  it('sizes nothing against the viewport width, which counts the scrollbar gutter', () => {
+    const offenders = componentStylesheets()
+      .filter(({ source }) => VIEWPORT_WIDTH_UNIT.test(source))
+      .map(({ path }) => path);
+
+    expect(offenders).toEqual([]);
+  });
+
+  it('catches the full-bleed idiom, and leaves the hover veil alone', () => {
+    expect(VIEWPORT_WIDTH_UNIT.test('.hero { margin-inline: calc(50% - 50vw); }')).toBe(true);
+    expect(VIEWPORT_WIDTH_UNIT.test('box-shadow: inset 0 0 0 100vmax var(--lm-hover-veil);')).toBe(
+      false,
+    );
   });
 
   it('names only values that tokens.css declares', () => {

@@ -32,32 +32,20 @@ describe('HeroBanner', () => {
   });
 
   it('draws the photograph once it is given one, with the alternative text as passed', () => {
-    fixture.componentRef.setInput('image', {
-      src: '/media/hero.webp',
-      alt: 'Ручки на верстаті',
-      width: 1200,
-      height: 600,
-    });
+    fixture.componentRef.setInput('image', { src: '/media/hero.webp', alt: 'Ручки на верстаті' });
     fixture.detectChanges();
 
     const image = host.querySelector('img');
 
-    expect(image?.getAttribute('src')).toBe('/media/hero.webp');
     expect(image?.getAttribute('alt')).toBe('Ручки на верстаті');
+    expect(image?.getAttribute('src')).toContain('/media/hero.webp');
   });
 
-  it('keeps the same body whether or not a photograph arrived, so nothing below it moves', () => {
-    fixture.detectChanges();
-    const withoutImage = host.querySelector('.hero__body')?.innerHTML;
-
-    fixture.componentRef.setInput('image', {
-      src: '/media/hero.webp',
-      alt: 'Ручки на верстаті',
-      width: 1200,
-      height: 600,
-    });
+  it('puts the photograph in the media layer and never in the body, so nothing below it moves', () => {
+    fixture.componentRef.setInput('image', { src: '/media/hero.webp', alt: 'Ручки на верстаті' });
     fixture.detectChanges();
 
-    expect(host.querySelector('.hero__body')?.innerHTML).toBe(withoutImage);
+    expect(host.querySelector('.hero__media img')).not.toBeNull();
+    expect(host.querySelector('.hero__body img')).toBeNull();
   });
 });

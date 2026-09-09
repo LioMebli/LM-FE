@@ -11,7 +11,9 @@
 }
 
 .home__grid {
+  --home-category-min: 10rem;
+
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(calc(var(--lm-space-md) * 10), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--home-category-min), 1fr));
   gap: var(--lm-space-md);
 }
