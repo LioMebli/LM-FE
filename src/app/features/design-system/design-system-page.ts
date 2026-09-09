@@ -11,6 +11,7 @@ import { FilterChip } from '../../ui/filter-chip/filter-chip';
 import { FilterSheet } from '../../ui/filter-sheet/filter-sheet';
 import { HeroBanner } from '../../ui/hero-banner/hero-banner';
 import { PaginationLink } from '../../ui/pagination-link/pagination-link';
+import { ProcessStep, ProcessSteps } from '../../ui/process-steps/process-steps';
 import { ProductCard } from '../../ui/product-card/product-card';
 import { SocialProfile } from '../../ui/shell.types';
 import { SiteFooter } from '../../ui/site-footer/site-footer';
@@ -113,6 +114,12 @@ const SHOWCASE_CARDS: readonly ShowcaseCard[] = [
 
 const SHOWCASE_PHONE = '+380671234567';
 
+const SHOWCASE_STEPS: readonly ProcessStep[] = [
+  { label: 'Перший крок', detail: 'Короткий рядок пояснення.' },
+  { label: 'Другий крок', detail: 'Довший рядок, який на вузькому екрані перенесеться.' },
+  { label: 'Третій крок', detail: 'І ще один.' },
+];
+
 const SHOWCASE_HERO = {
   heading: 'Заголовок сторінки',
   lede: 'Одне речення під ним, достатньо довге, щоб перенестися на другий рядок при 360 px.',
@@ -150,6 +157,7 @@ const SHOWCASE_AVAILABILITY: readonly Availability[] = [
     FilterSheet,
     HeroBanner,
     PaginationLink,
+    ProcessSteps,
     ProductCard,
     SiteFooter,
     StickyActionBar,
@@ -165,6 +173,7 @@ export class DesignSystemPage {
   protected readonly categories = SHOWCASE_CATEGORIES;
   protected readonly heroSample = SHOWCASE_HERO;
   protected readonly samplePhone = SHOWCASE_PHONE;
+  protected readonly stepSamples = SHOWCASE_STEPS;
   protected readonly availabilityStates = SHOWCASE_AVAILABILITY;
   protected readonly socials = SHOWCASE_SOCIALS;
 

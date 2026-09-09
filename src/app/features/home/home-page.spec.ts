@@ -53,6 +53,25 @@ describe('HomePage', () => {
     expect(canonical()).toBe(`${environment.siteOrigin}/`);
   });
 
+  it('says how buying works, because a shop with no cart cannot leave that to guesswork', () => {
+    render(categories());
+
+    const steps = host.querySelector('app-process-steps');
+
+    expect(steps?.querySelectorAll('ol > li')).toHaveLength(3);
+    expect(host.querySelector('.home__process h2')?.textContent?.trim()).toBe(
+      'Як зробити замовлення',
+    );
+  });
+
+  it('keeps the steps as the last content, so the block that must clear the bar is the one measured', () => {
+    render(categories());
+
+    const blocks = [...host.querySelectorAll('section')];
+
+    expect(blocks.at(-1)?.classList.contains('home__process')).toBe(true);
+  });
+
   it('carries a call that survives scrolling, with no selection to lead nowhere', () => {
     render(categories());
 

@@ -155,6 +155,15 @@
     </section>
 
     <section class="group">
+      <h3 class="group__title">Кроки процесу</h3>
+      <p class="group__note">
+        Номер бере позицію пункту, а не поле: переставте пункти — і номери підуть за ними.
+        Розкладка сама вирішує, скільки колонок вміщається, тож медіазапиту тут немає.
+      </p>
+      <app-process-steps [steps]="stepSamples" />
+    </section>
+
+    <section class="group">
       <h3 class="group__title">Стан наявності</h3>
       <ul class="row-list">
         @for (state of availabilityStates; track state) {
