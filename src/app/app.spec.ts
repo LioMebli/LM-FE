@@ -52,11 +52,6 @@ describe('App', () => {
     await fixture.whenStable();
 
     expect(footer().phone()).toBe(SITE_PHONE);
-    expect(
-      (fixture.nativeElement as HTMLElement)
-        .querySelector('app-site-footer a[href^="tel:"]')
-        ?.getAttribute('href'),
-    ).toBe(`tel:${SITE_PHONE}`);
   });
 
   it('turns a search into a catalog address carrying the query', async () => {

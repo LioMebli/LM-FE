@@ -111,6 +111,8 @@ const SHOWCASE_CARDS: readonly ShowcaseCard[] = [
   },
 ];
 
+const SHOWCASE_PHONE = '+380671234567';
+
 const SHOWCASE_HERO = {
   heading: 'Заголовок сторінки',
   lede: 'Одне речення під ним, достатньо довге, щоб перенестися на другий рядок при 360 px.',
@@ -162,6 +164,7 @@ export class DesignSystemPage {
   protected readonly cards = SHOWCASE_CARDS;
   protected readonly categories = SHOWCASE_CATEGORIES;
   protected readonly heroSample = SHOWCASE_HERO;
+  protected readonly samplePhone = SHOWCASE_PHONE;
   protected readonly availabilityStates = SHOWCASE_AVAILABILITY;
   protected readonly socials = SHOWCASE_SOCIALS;
 
