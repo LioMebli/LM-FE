@@ -8,7 +8,7 @@ import { SiteHeader } from './ui/site-header/site-header';
 
 const SEARCH_PARAM = 'q';
 
-const DESTINATIONS: readonly NavDestination[] = [{ label: 'Каталог', link: '/' }];
+const DESTINATIONS: readonly NavDestination[] = [{ label: 'Головна', link: '/' }];
 
 @Component({
   selector: 'app-root',

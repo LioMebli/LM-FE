@@ -44,7 +44,7 @@ describe('App', () => {
   it('holds one destination list and hands the same one to both header and footer', async () => {
     await fixture.whenStable();
 
-    expect(header().destinations()).toEqual([{ label: 'Каталог', link: '/' }]);
+    expect(header().destinations()).toEqual([{ label: 'Головна', link: '/' }]);
     expect(footer().destinations()).toBe(header().destinations());
   });
 
@@ -54,7 +54,7 @@ describe('App', () => {
     expect(footer().phone()).toBe(SITE_PHONE);
   });
 
-  it('turns a search into a catalog address carrying the query', async () => {
+  it('sends a search to the homepage carrying the query, which no route reads yet', async () => {
     const router = TestBed.inject(Router);
 
     await router.navigate(['/design-system']);

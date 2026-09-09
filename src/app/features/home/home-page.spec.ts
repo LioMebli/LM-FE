@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 
 import { HomePage } from './home-page';
 import { CategoryResponse } from '../../core/api/catalog.types';
+import { StickyActionBar } from '../../ui/sticky-action-bar/sticky-action-bar';
 import { environment } from '../../../environments/environment';
 
 describe('HomePage', () => {
@@ -65,10 +66,12 @@ describe('HomePage', () => {
   it('carries a call that survives scrolling, with no selection to lead nowhere', () => {
     render(categories());
 
-    const bar = host.querySelector('app-sticky-action-bar');
+    const bar = fixture.debugElement.query((node) => node.componentInstance instanceof StickyActionBar)
+      .componentInstance as StickyActionBar;
 
-    expect(bar?.querySelector('.bar__call')?.getAttribute('href')).toMatch(/^tel:\+/);
-    expect(bar?.querySelector('.bar__selection')).toBeNull();
+    expect(bar.phone()).toMatch(/^\+\d/);
+    expect(bar.selectionCount()).toBeUndefined();
+    expect(bar.selectionLink()).toBeUndefined();
   });
 
   it('opens the document outline with one h1 and puts the categories under an h2', () => {

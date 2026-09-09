@@ -2,8 +2,8 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join, sep } from 'node:path';
 
 import { declaredTokenNames, referencedTokenNamesIn } from '../../testing/tokens-css';
+import { UI_DIR, componentDirectories } from '../../testing/ui-components';
 
-const UI_DIR = 'src/app/ui';
 const SHELL_STYLESHEET = 'src/styles.scss';
 const TAP_TARGET_LITERAL = /\b44px\b/g;
 
@@ -28,13 +28,9 @@ const WIDE_LAYOUT_COMPONENTS = ['filter-sheet', 'site-footer', 'site-header', 's
 
 const VIEWPORT_WIDTH_UNIT = /[\d.]+vw\b/;
 
-const SHOWCASE_TEMPLATE = 'src/app/features/design-system/design-system-page.html';
-
-const SHOWN_BY_THE_SHELL = ['brand-mark', 'site-header'];
-
 describe('the components’ design vocabulary', () => {
-  it('finds the stylesheets it is meant to be reading', () => {
-    expect(componentStylesheets().length).toBeGreaterThanOrEqual(14);
+  it('reads a stylesheet for every component, so the checks below cannot pass on a short list', () => {
+    expect(componentStylesheets()).toHaveLength(componentDirectories().length);
   });
 
   it('gives a second layout only to the components that were decided to have one', () => {
@@ -59,24 +55,6 @@ describe('the components’ design vocabulary', () => {
     expect(VIEWPORT_WIDTH_UNIT.test('box-shadow: inset 0 0 0 100vmax var(--lm-hover-veil);')).toBe(
       false,
     );
-  });
-
-  it('shows every component on the vitrine, except the two the shell already renders', () => {
-    const template = readFileSync(SHOWCASE_TEMPLATE, 'utf8');
-    const shown = new Set([...template.matchAll(/<app-([a-z-]+)/g)].map((match) => match[1]));
-    const missing = readdirSync(UI_DIR, { withFileTypes: true })
-      .filter((entry) => entry.isDirectory())
-      .map((entry) => entry.name)
-      .filter((name) => !shown.has(name) && !SHOWN_BY_THE_SHELL.includes(name));
-
-    expect(missing).toEqual([]);
-  });
-
-  it('would notice a component that stopped being shown', () => {
-    const template = readFileSync(SHOWCASE_TEMPLATE, 'utf8').replace('<app-process-steps', '<div');
-    const shown = new Set([...template.matchAll(/<app-([a-z-]+)/g)].map((match) => match[1]));
-
-    expect(shown.has('process-steps')).toBe(false);
   });
 
   it('names only values that tokens.css declares', () => {

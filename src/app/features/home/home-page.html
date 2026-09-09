@@ -4,7 +4,7 @@
   <section class="home__categories">
     <h2 class="home__heading">Категорії</h2>
 
-    <ul class="home__grid">
+    <ul class="home__grid" role="list">
       @for (category of categories(); track category.id) {
         <li>
           <app-category-card [name]="category.name" [link]="'/category/' + category.id" />

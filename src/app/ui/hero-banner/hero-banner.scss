@@ -1,11 +1,14 @@
 :host {
   display: block;
-  margin-inline: calc(-1 * var(--lm-space-md));
 }
 
 .hero {
   position: relative;
   overflow: hidden;
+  background: var(--lm-color-surface);
+}
+
+.hero:has(img) {
   background: var(--lm-color-ink);
 }
 
@@ -20,7 +23,7 @@
   object-fit: cover;
 }
 
-.hero__media::after {
+.hero__media:has(img)::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -33,6 +36,10 @@
   flex-direction: column;
   gap: var(--lm-space-sm);
   padding: calc(var(--lm-space-md) * 3) var(--lm-space-md);
+  color: var(--lm-color-ink);
+}
+
+.hero:has(img) .hero__body {
   color: var(--lm-color-on-dark);
 }
 

@@ -1,3 +1,8 @@
+app-hero-banner {
+  display: block;
+  margin-inline: calc(-1 * var(--lm-space-md));
+}
+
 .home__categories,
 .home__process {
   margin-block-start: calc(var(--lm-space-md) * 2);
