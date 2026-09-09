@@ -41,10 +41,10 @@ describe('ProcessSteps', () => {
     expect(ordinals()).toEqual(['1', '2']);
   });
 
-  it('announces itself as an ordered list, so the order is not only visual', () => {
+  it('keeps the list role that list-style:none takes away, so the order is not only visual', () => {
     fixture.detectChanges();
 
-    expect(host.querySelector('ol')).not.toBeNull();
+    expect(host.querySelector('ol')?.getAttribute('role')).toBe('list');
     expect(host.querySelectorAll('ol > li')).toHaveLength(3);
   });
 

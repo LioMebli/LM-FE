@@ -28,6 +28,10 @@ const WIDE_LAYOUT_COMPONENTS = ['filter-sheet', 'site-footer', 'site-header', 's
 
 const VIEWPORT_WIDTH_UNIT = /[\d.]+vw\b/;
 
+const SHOWCASE_TEMPLATE = 'src/app/features/design-system/design-system-page.html';
+
+const SHOWN_BY_THE_SHELL = ['brand-mark', 'site-header'];
+
 describe('the components’ design vocabulary', () => {
   it('finds the stylesheets it is meant to be reading', () => {
     expect(componentStylesheets().length).toBeGreaterThanOrEqual(14);
@@ -55,6 +59,24 @@ describe('the components’ design vocabulary', () => {
     expect(VIEWPORT_WIDTH_UNIT.test('box-shadow: inset 0 0 0 100vmax var(--lm-hover-veil);')).toBe(
       false,
     );
+  });
+
+  it('shows every component on the vitrine, except the two the shell already renders', () => {
+    const template = readFileSync(SHOWCASE_TEMPLATE, 'utf8');
+    const shown = new Set([...template.matchAll(/<app-([a-z-]+)/g)].map((match) => match[1]));
+    const missing = readdirSync(UI_DIR, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+      .filter((name) => !shown.has(name) && !SHOWN_BY_THE_SHELL.includes(name));
+
+    expect(missing).toEqual([]);
+  });
+
+  it('would notice a component that stopped being shown', () => {
+    const template = readFileSync(SHOWCASE_TEMPLATE, 'utf8').replace('<app-process-steps', '<div');
+    const shown = new Set([...template.matchAll(/<app-([a-z-]+)/g)].map((match) => match[1]));
+
+    expect(shown.has('process-steps')).toBe(false);
   });
 
   it('names only values that tokens.css declares', () => {

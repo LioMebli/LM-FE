@@ -1,5 +1,5 @@
 <nav [attr.aria-label]="label()">
-  <ol class="trail">
+  <ol class="trail" role="list">
     @for (step of steps(); track step.label) {
       <li class="trail__step">
         @if (step.link) {
