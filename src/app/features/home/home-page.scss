@@ -1,0 +1,25 @@
+app-hero-banner {
+  display: block;
+  margin-inline: calc(-1 * var(--lm-space-md));
+}
+
+.home__categories,
+.home__process {
+  margin-block-start: calc(var(--lm-space-md) * 2);
+}
+
+.home__heading {
+  margin: 0 0 var(--lm-space-md);
+  font-family: var(--lm-font-display);
+  font-size: var(--lm-text-lg);
+  font-weight: var(--lm-weight-regular);
+  line-height: var(--lm-leading-display);
+}
+
+.home__grid {
+  --home-category-min: 10rem;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--home-category-min), 1fr));
+  gap: var(--lm-space-md);
+}

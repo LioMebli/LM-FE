@@ -1,0 +1,12 @@
+<section class="hero">
+  <span class="hero__media">
+    @if (image(); as photo) {
+      <img [ngSrc]="photo.src" [alt]="photo.alt" fill priority />
+    }
+  </span>
+
+  <div class="hero__body">
+    <h1 class="hero__heading">{{ heading() }}</h1>
+    <p class="hero__lede">{{ lede() }}</p>
+  </div>
+</section>

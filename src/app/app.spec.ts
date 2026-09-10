@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 
 import { App } from './app';
+import { SITE_PHONE } from './core/site-contact';
 import { SiteFooter } from './ui/site-footer/site-footer';
 import { SiteHeader } from './ui/site-header/site-header';
 
@@ -43,11 +44,17 @@ describe('App', () => {
   it('holds one destination list and hands the same one to both header and footer', async () => {
     await fixture.whenStable();
 
-    expect(header().destinations()).toEqual([{ label: 'Каталог', link: '/' }]);
+    expect(header().destinations()).toEqual([{ label: 'Головна', link: '/' }]);
     expect(footer().destinations()).toBe(header().destinations());
   });
 
-  it('turns a search into a catalog address carrying the query', async () => {
+  it('gives the footer the number to dial, so it shows on every route and not only the homepage', async () => {
+    await fixture.whenStable();
+
+    expect(footer().phone()).toBe(SITE_PHONE);
+  });
+
+  it('sends a search to the homepage carrying the query, which no route reads yet', async () => {
     const router = TestBed.inject(Router);
 
     await router.navigate(['/design-system']);

@@ -133,6 +133,37 @@
     </section>
 
     <section class="group">
+      <h3 class="group__title">Картка категорії</h3>
+      <p class="group__note">
+        Коротка назва й довга в одному ряду: довга переноситься, а не обрізається, і картки
+        лишаються однакової висоти. Фотографій категорій API не віддає, тож картка їх і не малює.
+      </p>
+      <ul class="grid">
+        @for (category of categories; track category) {
+          <li><app-category-card [name]="category" link="/" /></li>
+        }
+      </ul>
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Смуга героя</h3>
+      <p class="group__note">
+        Без знімка — смуга з токенів, яка не вдає фотографію. Фотографію дає LM-7, вона приходить
+        входом, і нижче за неї не зрушить нічого.
+      </p>
+      <app-hero-banner [heading]="heroSample.heading" [lede]="heroSample.lede" />
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Кроки процесу</h3>
+      <p class="group__note">
+        Номер бере позицію пункту, а не поле: переставте пункти — і номери підуть за ними.
+        Розкладка сама вирішує, скільки колонок вміщається, тож медіазапиту тут немає.
+      </p>
+      <app-process-steps [steps]="stepSamples" />
+    </section>
+
+    <section class="group">
       <h3 class="group__title">Стан наявності</h3>
       <ul class="row-list">
         @for (state of availabilityStates; track state) {
@@ -236,25 +267,31 @@
       <h3 class="group__title">Липка панель дії</h3>
       <p class="group__note">
         Вона фіксована, тож у рамці нижче вона стоїть на її нижньому краї, а не на краї екрана:
-        рамка має <code>contain: paint</code> і сама стає для неї системою координат.
+        рамка має <code>contain: paint</code> і сама стає для неї системою координат. Два стани:
+        з підбіркою і без неї. Без підбірки дзвінок займає всю ширину — так панель виглядає на
+        сторінці, де підбірки ще не існує.
       </p>
       <div class="stage">
         <p>Низ сторінки розділу. Панель нічого тут не перекриває — сторінка лишає їй місце.</p>
-        <app-sticky-action-bar [selectionCount]="3" selectionLink="/" phone="+380671234567" />
+        <app-sticky-action-bar [selectionCount]="3" selectionLink="/" [phone]="samplePhone" />
+      </div>
+      <div class="stage">
+        <p>Сторінка без підбірки: лишається сам дзвінок.</p>
+        <app-sticky-action-bar [phone]="samplePhone" />
       </div>
     </section>
 
     <section class="group">
       <h3 class="group__title">Підвал сайту</h3>
       <p class="group__note">
-        Справжній підвал стоїть у самому низу цієї сторінки й показує лише знак і розділи:
-        номера телефону та акаунтів магазину ще ніхто не називав, а частина без вмісту не
-        малюється зовсім. Примірник нижче отримує зразкові телефон і соцмережі, щоб їх було
-        видно й було що зміряти, а розділи — ні: їх показує справжній підвал нижче, і два
+        Справжній підвал стоїть у самому низу цієї сторінки й показує знак, розділи та телефон:
+        акаунтів магазину ще ніхто не називав, а частина без вмісту не малюється зовсім.
+        Примірник нижче отримує зразкові телефон і соцмережі, щоб було видно й той стан, до
+        якого сайт ще не дійшов, а розділи — ні: їх показує справжній підвал нижче, і два
         однаково названі орієнтири «розділи внизу сторінки» на одній сторінці — помилка
         доступності, а не повтор.
       </p>
-      <app-site-footer [destinations]="[]" phone="+380671234567" [socials]="socials" />
+      <app-site-footer [destinations]="[]" [phone]="samplePhone" [socials]="socials" />
     </section>
   </section>
 </article>

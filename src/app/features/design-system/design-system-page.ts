@@ -5,10 +5,13 @@ import { Availability } from '../../core/api/catalog.types';
 import { ActionButton } from '../../ui/action-button/action-button';
 import { AvailabilityLabel } from '../../ui/availability-label/availability-label';
 import { BreadcrumbTrail } from '../../ui/breadcrumb-trail/breadcrumb-trail';
+import { CategoryCard } from '../../ui/category-card/category-card';
 import { CheckboxRow } from '../../ui/checkbox-row/checkbox-row';
 import { FilterChip } from '../../ui/filter-chip/filter-chip';
 import { FilterSheet } from '../../ui/filter-sheet/filter-sheet';
+import { HeroBanner } from '../../ui/hero-banner/hero-banner';
 import { PaginationLink } from '../../ui/pagination-link/pagination-link';
+import { ProcessStep, ProcessSteps } from '../../ui/process-steps/process-steps';
 import { ProductCard } from '../../ui/product-card/product-card';
 import { SocialProfile } from '../../ui/shell.types';
 import { SiteFooter } from '../../ui/site-footer/site-footer';
@@ -109,6 +112,26 @@ const SHOWCASE_CARDS: readonly ShowcaseCard[] = [
   },
 ];
 
+const SHOWCASE_PHONE = '+380671234567';
+
+const SHOWCASE_STEPS: readonly ProcessStep[] = [
+  { label: 'Перший крок', detail: 'Короткий рядок пояснення.' },
+  { label: 'Другий крок', detail: 'Довший рядок, який на вузькому екрані перенесеться.' },
+  { label: 'Третій крок', detail: 'І ще один.' },
+];
+
+const SHOWCASE_HERO = {
+  heading: 'Заголовок сторінки',
+  lede: 'Одне речення під ним, достатньо довге, щоб перенестися на другий рядок при 360 px.',
+};
+
+const SHOWCASE_CATEGORIES: readonly string[] = [
+  'Петлі',
+  'Ручки меблеві',
+  'Напрямні прихованого монтажу з доводчиком',
+  'Кріплення',
+];
+
 const SHOWCASE_SOCIALS: readonly SocialProfile[] = [
   { network: 'Instagram', href: 'https://www.instagram.com/' },
   { network: 'Facebook', href: 'https://www.facebook.com/' },
@@ -128,10 +151,13 @@ const SHOWCASE_AVAILABILITY: readonly Availability[] = [
     ActionButton,
     AvailabilityLabel,
     BreadcrumbTrail,
+    CategoryCard,
     CheckboxRow,
     FilterChip,
     FilterSheet,
+    HeroBanner,
     PaginationLink,
+    ProcessSteps,
     ProductCard,
     SiteFooter,
     StickyActionBar,
@@ -144,6 +170,10 @@ const SHOWCASE_AVAILABILITY: readonly Availability[] = [
 export class DesignSystemPage {
   protected readonly tokenGroups = TOKEN_GROUPS;
   protected readonly cards = SHOWCASE_CARDS;
+  protected readonly categories = SHOWCASE_CATEGORIES;
+  protected readonly heroSample = SHOWCASE_HERO;
+  protected readonly samplePhone = SHOWCASE_PHONE;
+  protected readonly stepSamples = SHOWCASE_STEPS;
   protected readonly availabilityStates = SHOWCASE_AVAILABILITY;
   protected readonly socials = SHOWCASE_SOCIALS;
 
