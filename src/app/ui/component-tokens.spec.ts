@@ -28,6 +28,8 @@ const WIDE_LAYOUT_COMPONENTS = ['filter-sheet', 'site-footer', 'site-header', 's
 
 const VIEWPORT_WIDTH_UNIT = /[\d.]+vw\b/;
 
+const PIXELS_IN_A_MEDIA_CONDITION = /@media[^{]*[\d.]+px\b/;
+
 describe('the components’ design vocabulary', () => {
   it('reads a stylesheet for every component, so the checks below cannot pass on a short list', () => {
     expect(componentStylesheets()).toHaveLength(componentDirectories().length);
@@ -55,6 +57,23 @@ describe('the components’ design vocabulary', () => {
     expect(VIEWPORT_WIDTH_UNIT.test('box-shadow: inset 0 0 0 100vmax var(--lm-hover-veil);')).toBe(
       false,
     );
+  });
+
+  it('reads the layout switch width from _breakpoints.scss rather than writing it', () => {
+    const offenders = componentStylesheets()
+      .filter(({ source }) => PIXELS_IN_A_MEDIA_CONDITION.test(source))
+      .map(({ path }) => path);
+
+    expect(offenders).toEqual([]);
+  });
+
+  it('catches a media condition that writes a width instead of reading it', () => {
+    expect(PIXELS_IN_A_MEDIA_CONDITION.test('@media (min-width: 860px) { .a { color: red } }')).toBe(
+      true,
+    );
+    expect(
+      PIXELS_IN_A_MEDIA_CONDITION.test('@media (min-width: bp.$lm-layout-wide) { .a { color: red } }'),
+    ).toBe(false);
   });
 
   it('names only values that tokens.css declares', () => {

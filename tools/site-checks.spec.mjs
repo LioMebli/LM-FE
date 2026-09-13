@@ -347,6 +347,78 @@ describe('runSiteChecks', () => {
     expect(failures).toContainEqual(expect.stringContaining('robots.txt'));
   });
 
+  it('fails when a page pulls a stylesheet from Google Fonts', async () => {
+    await writePage(
+      CATALOG_ROUTE,
+      catalogPage({
+        head: `${MODULEPRELOAD}<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest">`,
+      }),
+    );
+
+    const { failures } = await runSiteChecks(inputs);
+
+    expect(failures).toContainEqual(
+      expect.stringContaining('fonts.googleapis.com, a third-party host'),
+    );
+  });
+
+  it('fails when a stylesheet the page loads fetches a font from a third party', async () => {
+    await writeToOutput(
+      'styles.css',
+      "@font-face { font-family: Onest; src: url(https://fonts.gstatic.com/s/onest/v11/x.woff2) format('woff2'); }",
+    );
+    await writePage(
+      CATALOG_ROUTE,
+      catalogPage({ head: `${MODULEPRELOAD}<link rel="stylesheet" href="styles.css">` }),
+    );
+
+    const { failures } = await runSiteChecks(inputs);
+
+    expect(failures).toContainEqual(
+      expect.stringContaining('styles.css loads https://fonts.gstatic.com'),
+    );
+  });
+
+  it('leaves outbound links alone, because the footer legitimately points at social networks', async () => {
+    await writePage(
+      CATALOG_ROUTE,
+      catalogPage({ body: `<h1>Каталог</h1><a href="https://www.instagram.com/">Instagram</a>${SCRIPT}` }),
+    );
+
+    const { failures } = await runSiteChecks(inputs);
+
+    expect(failures).toEqual([]);
+  });
+
+  it('treats a subdomain of the site as ours, since media and api both live on one', async () => {
+    await writePage(
+      CATALOG_ROUTE,
+      catalogPage({
+        body: `<h1>Каталог</h1><img src="https://media.liomebli.com.ua/1.webp" alt="">${SCRIPT}`,
+      }),
+    );
+
+    const { failures } = await runSiteChecks(inputs);
+
+    expect(failures).toEqual([]);
+  });
+
+  it('reads every candidate in a srcset, not only the first', async () => {
+    await writePage(
+      CATALOG_ROUTE,
+      catalogPage({
+        body:
+          '<h1>Каталог</h1><img src="/a.webp" ' +
+          'srcset="/a.webp 500w, https://cdn.example.com/a@2x.webp 1000w" alt="">' +
+          SCRIPT,
+      }),
+    );
+
+    const { failures } = await runSiteChecks(inputs);
+
+    expect(failures).toContainEqual(expect.stringContaining('cdn.example.com, a third-party host'));
+  });
+
   async function givenAGoodRelease() {
     await writeManifest({ categories: CATEGORIES, products: PRODUCTS });
     await writeFile(inputs.shellIndexPath, page({ title: SHELL_TITLE }), 'utf8');
@@ -392,13 +464,8 @@ describe('runSiteChecks', () => {
   }
 });
 
-function catalogPage() {
-  return page({
-    title: 'Каталог — LioMebli',
-    canonical: `${SITE_ORIGIN}/`,
-    head: MODULEPRELOAD,
-    body: `<h1>Каталог</h1>${SCRIPT}`,
-  });
+function catalogPage({ head = MODULEPRELOAD, body = `<h1>Каталог</h1>${SCRIPT}` } = {}) {
+  return page({ title: 'Каталог — LioMebli', canonical: `${SITE_ORIGIN}/`, head, body });
 }
 
 function categoryPage({

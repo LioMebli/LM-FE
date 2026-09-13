@@ -1,0 +1,4 @@
+// The one width at which the site switches from the narrow layout to the wide one.
+// It is a Sass variable rather than a token because a custom property cannot be read
+// inside a @media condition -- `@media (min-width: var(--x))` works in no browser.
+$lm-layout-wide: 860px;

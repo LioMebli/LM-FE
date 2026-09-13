@@ -35,6 +35,12 @@ const LINK_TAG = /<link[^>]*>/g;
 const HREF = /href="([^"]*)"/;
 const SRC = /src="([^"]*)"/;
 
+const SUBRESOURCE_ELEMENT = /<(?:link|script|img|source|iframe|video|audio)\b[^>]*>/gi;
+const STYLESHEET_LINK = /<link[^>]*rel="stylesheet"[^>]*>/gi;
+const SRCSET = /srcset="([^"]*)"/;
+const CSS_URL = /url\(\s*['"]?([^'")]+)['"]?\s*\)/g;
+const NON_FETCHING_SCHEME = /^(?:data|about|mailto|tel|blob|javascript):/i;
+
 export async function runSiteChecks({ manifestPath, outputDir, shellIndexPath, siteOrigin }) {
   const manifest = await readManifest(manifestPath);
   const emptyCatalog = checkCatalogIsNotEmpty(manifest, manifestPath);
@@ -57,6 +63,7 @@ export async function runSiteChecks({ manifestPath, outputDir, shellIndexPath, s
       ...(await checkRobots(outputDir, siteOrigin)),
       ...checkTitles(pages, shellTitle),
       ...checkCanonicals(pages, siteOrigin),
+      ...(await checkNoThirdPartyHosts(outputDir, pages, siteOrigin)),
       ...initialScripts.failures,
     ],
     notes: [...duplicateTitleNotes(pages), ...initialScripts.notes],
@@ -248,6 +255,86 @@ function checkCanonicals(pages, siteOrigin) {
       ? []
       : [`${route} names "${href}" as its canonical address, not "${expected}"`];
   });
+}
+
+async function checkNoThirdPartyHosts(outputDir, pages, siteOrigin) {
+  const failures = [];
+  const stylesheets = new Set();
+
+  for (const [route, html] of pages) {
+    failures.push(
+      ...offendingReferences(subresourceReferencesIn(html), siteOrigin).map(
+        ({ reference, host }) => `${route} loads ${reference} from ${host}, a third-party host`,
+      ),
+    );
+
+    for (const href of stylesheetHrefsIn(html)) {
+      if (thirdPartyHostOf(href, siteOrigin) === undefined) {
+        stylesheets.add(href.replace(/^\//, ''));
+      }
+    }
+  }
+
+  for (const stylesheet of stylesheets) {
+    const source = await readIfPresent(join(outputDir, stylesheet));
+
+    if (source === undefined) {
+      continue;
+    }
+
+    failures.push(
+      ...offendingReferences(
+        [...source.matchAll(CSS_URL)].map(([, reference]) => reference),
+        siteOrigin,
+      ).map(({ reference, host }) => `${stylesheet} loads ${reference} from ${host}, a third-party host`),
+    );
+  }
+
+  return failures;
+}
+
+function offendingReferences(references, siteOrigin) {
+  return references
+    .map((reference) => ({ reference, host: thirdPartyHostOf(reference, siteOrigin) }))
+    .filter(({ host }) => host !== undefined);
+}
+
+function subresourceReferencesIn(html) {
+  return [...html.matchAll(SUBRESOURCE_ELEMENT)]
+    .flatMap(([tag]) => [HREF.exec(tag)?.[1], SRC.exec(tag)?.[1], ...srcsetReferencesIn(tag)])
+    .filter((reference) => reference !== undefined && reference !== '');
+}
+
+function srcsetReferencesIn(tag) {
+  return (SRCSET.exec(tag)?.[1] ?? '')
+    .split(',')
+    .map((candidate) => candidate.trim().split(/\s+/)[0])
+    .filter((reference) => reference !== '');
+}
+
+function stylesheetHrefsIn(html) {
+  return [...html.matchAll(STYLESHEET_LINK)]
+    .map(([tag]) => HREF.exec(tag)?.[1])
+    .filter((href) => href !== undefined && href !== '');
+}
+
+function thirdPartyHostOf(reference, siteOrigin) {
+  if (reference.startsWith('#') || NON_FETCHING_SCHEME.test(reference)) {
+    return undefined;
+  }
+
+  let resolved;
+
+  try {
+    resolved = new URL(reference, siteOrigin);
+  } catch {
+    return undefined;
+  }
+
+  const site = new URL(siteOrigin).hostname;
+  const ours = resolved.hostname === site || resolved.hostname.endsWith(`.${site}`);
+
+  return ours ? undefined : resolved.hostname;
 }
 
 async function checkInitialScripts(outputDir, catalogRoot) {
