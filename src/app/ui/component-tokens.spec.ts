@@ -30,6 +30,8 @@ const VIEWPORT_WIDTH_UNIT = /[\d.]+vw\b/;
 
 const PIXELS_IN_A_MEDIA_CONDITION = /@media[^{]*[\d.]+px\b/;
 
+const CUSTOM_PROPERTY_IN_A_MEDIA_CONDITION = /@media[^{]*var\(/;
+
 describe('the components’ design vocabulary', () => {
   it('reads a stylesheet for every component, so the checks below cannot pass on a short list', () => {
     expect(componentStylesheets()).toHaveLength(componentDirectories().length);
@@ -71,8 +73,32 @@ describe('the components’ design vocabulary', () => {
     expect(PIXELS_IN_A_MEDIA_CONDITION.test('@media (min-width: 860px) { .a { color: red } }')).toBe(
       true,
     );
+  });
+
+  it('leaves a length inside the block alone, and flags only the condition', () => {
     expect(
-      PIXELS_IN_A_MEDIA_CONDITION.test('@media (min-width: bp.$lm-layout-wide) { .a { color: red } }'),
+      PIXELS_IN_A_MEDIA_CONDITION.test(
+        '@media (min-width: bp.$lm-layout-wide) { .a { border-width: 1px } }',
+      ),
+    ).toBe(false);
+  });
+
+  it('reaches the breakpoint through Sass, never through a custom property', () => {
+    const offenders = componentStylesheets()
+      .filter(({ source }) => CUSTOM_PROPERTY_IN_A_MEDIA_CONDITION.test(source))
+      .map(({ path }) => path);
+
+    expect(offenders).toEqual([]);
+  });
+
+  it('catches the edit that moves the breakpoint into tokens.css, which no browser would honour', () => {
+    expect(
+      CUSTOM_PROPERTY_IN_A_MEDIA_CONDITION.test('@media (min-width: var(--lm-layout-wide)) { .a { color: red } }'),
+    ).toBe(true);
+    expect(
+      CUSTOM_PROPERTY_IN_A_MEDIA_CONDITION.test(
+        '@media (min-width: bp.$lm-layout-wide) { .a { color: var(--lm-color-ink) } }',
+      ),
     ).toBe(false);
   });
 

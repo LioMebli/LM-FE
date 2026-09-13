@@ -1,7 +1,5 @@
 @use './styles/tokens.css';
 
-// Onest is variable, so one file per subset covers the whole 400-700 range.
-// Provenance, licence and how to refresh these files: public/fonts/README.md
 @font-face {
   font-family: Onest;
   font-style: normal;
@@ -100,14 +98,6 @@ body:has(app-sticky-action-bar) {
   color: var(--lm-color-ink-muted);
 }
 
-// `animation: none` rather than a near-zero duration, because a scroll-driven animation has no
-// duration in time — `animation-timeline: view()` is paced by the scroll position, and shortening
-// a duration it never reads would leave the hero drifting for the one visitor who asked it not to.
-//
-// Consequence for every component: an element MUST be in its final state without its animation.
-// Animate from a transform or an opacity declared inside the keyframes, never from a base rule
-// that hides the element and relies on `animation-fill-mode` to reveal it — under this rule that
-// element would never appear at all.
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

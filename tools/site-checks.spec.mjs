@@ -379,6 +379,67 @@ describe('runSiteChecks', () => {
     );
   });
 
+  it('fails when a component stylesheet inlined into the page fetches from a third party', async () => {
+    await writePage(
+      CATALOG_ROUTE,
+      catalogPage({
+        head:
+          `${MODULEPRELOAD}<style ng-app-id="ng">` +
+          '.hero[_ngcontent-ng-c1]{background:url(https://cdn.example.com/hero.jpg)}</style>',
+      }),
+    );
+
+    const { failures } = await runSiteChecks(inputs);
+
+    expect(failures).toContainEqual(
+      expect.stringContaining('/ has inline CSS loading https://cdn.example.com/hero.jpg'),
+    );
+  });
+
+  it('fails when a linked stylesheet cannot be read, rather than passing on having read none', async () => {
+    await writePage(
+      CATALOG_ROUTE,
+      catalogPage({ head: `${MODULEPRELOAD}<link rel="stylesheet" href="missing.css">` }),
+    );
+
+    const { failures } = await runSiteChecks(inputs);
+
+    expect(failures).toContainEqual(
+      expect.stringContaining('missing.css is linked as a stylesheet but could not be read'),
+    );
+  });
+
+  it('says what the third-party check covered, so a pass is not silent', async () => {
+    await writeToOutput('styles.css', '.a { color: red }');
+    await writePage(
+      CATALOG_ROUTE,
+      catalogPage({
+        head: `${MODULEPRELOAD}<link rel="stylesheet" href="styles.css"><style>.b{color:blue}</style>`,
+      }),
+    );
+
+    const { notes } = await runSiteChecks(inputs);
+
+    expect(notes).toContainEqual(
+      expect.stringContaining('Third-party hosts: read 5 page(s), 1 stylesheet(s) and 1 inline'),
+    );
+  });
+
+  it('leaves a data URI alone, because an inline icon is not a host', async () => {
+    await writeToOutput(
+      'styles.css',
+      ".icon { background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E\") }",
+    );
+    await writePage(
+      CATALOG_ROUTE,
+      catalogPage({ head: `${MODULEPRELOAD}<link rel="stylesheet" href="styles.css">` }),
+    );
+
+    const { failures } = await runSiteChecks(inputs);
+
+    expect(failures).toEqual([]);
+  });
+
   it('leaves outbound links alone, because the footer legitimately points at social networks', async () => {
     await writePage(
       CATALOG_ROUTE,

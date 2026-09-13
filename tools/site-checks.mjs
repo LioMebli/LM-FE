@@ -37,6 +37,7 @@ const SRC = /src="([^"]*)"/;
 
 const SUBRESOURCE_ELEMENT = /<(?:link|script|img|source|iframe|video|audio)\b[^>]*>/gi;
 const STYLESHEET_LINK = /<link[^>]*rel="stylesheet"[^>]*>/gi;
+const STYLE_BLOCK = /<style[^>]*>([\s\S]*?)<\/style>/gi;
 const SRCSET = /srcset="([^"]*)"/;
 const CSS_URL = /url\(\s*['"]?([^'")]+)['"]?\s*\)/g;
 const NON_FETCHING_SCHEME = /^(?:data|about|mailto|tel|blob|javascript):/i;
@@ -52,6 +53,7 @@ export async function runSiteChecks({ manifestPath, outputDir, shellIndexPath, s
   const pages = await readProducedPages(outputDir);
   const shellTitle = await readShellTitle(shellIndexPath);
   const initialScripts = await checkInitialScripts(outputDir, pages.get(CATALOG_ROOT_ROUTE));
+  const thirdPartyHosts = await checkNoThirdPartyHosts(outputDir, pages, siteOrigin);
 
   return {
     failures: [
@@ -63,10 +65,10 @@ export async function runSiteChecks({ manifestPath, outputDir, shellIndexPath, s
       ...(await checkRobots(outputDir, siteOrigin)),
       ...checkTitles(pages, shellTitle),
       ...checkCanonicals(pages, siteOrigin),
-      ...(await checkNoThirdPartyHosts(outputDir, pages, siteOrigin)),
+      ...thirdPartyHosts.failures,
       ...initialScripts.failures,
     ],
-    notes: [...duplicateTitleNotes(pages), ...initialScripts.notes],
+    notes: [...duplicateTitleNotes(pages), ...thirdPartyHosts.notes, ...initialScripts.notes],
   };
 }
 
@@ -260,6 +262,7 @@ function checkCanonicals(pages, siteOrigin) {
 async function checkNoThirdPartyHosts(outputDir, pages, siteOrigin) {
   const failures = [];
   const stylesheets = new Set();
+  let inlineBlocks = 0;
 
   for (const [route, html] of pages) {
     failures.push(
@@ -267,6 +270,16 @@ async function checkNoThirdPartyHosts(outputDir, pages, siteOrigin) {
         ({ reference, host }) => `${route} loads ${reference} from ${host}, a third-party host`,
       ),
     );
+
+    for (const style of inlineStylesIn(html)) {
+      inlineBlocks += 1;
+      failures.push(
+        ...offendingReferences(cssReferencesIn(style), siteOrigin).map(
+          ({ reference, host }) =>
+            `${route} has inline CSS loading ${reference} from ${host}, a third-party host`,
+        ),
+      );
+    }
 
     for (const href of stylesheetHrefsIn(html)) {
       if (thirdPartyHostOf(href, siteOrigin) === undefined) {
@@ -279,18 +292,35 @@ async function checkNoThirdPartyHosts(outputDir, pages, siteOrigin) {
     const source = await readIfPresent(join(outputDir, stylesheet));
 
     if (source === undefined) {
+      failures.push(
+        `${stylesheet} is linked as a stylesheet but could not be read, so nothing checked it`,
+      );
       continue;
     }
 
     failures.push(
-      ...offendingReferences(
-        [...source.matchAll(CSS_URL)].map(([, reference]) => reference),
-        siteOrigin,
-      ).map(({ reference, host }) => `${stylesheet} loads ${reference} from ${host}, a third-party host`),
+      ...offendingReferences(cssReferencesIn(source), siteOrigin).map(
+        ({ reference, host }) =>
+          `${stylesheet} loads ${reference} from ${host}, a third-party host`,
+      ),
     );
   }
 
-  return failures;
+  return {
+    failures,
+    notes: [
+      `Third-party hosts: read ${pages.size} page(s), ${stylesheets.size} stylesheet(s) and ` +
+        `${inlineBlocks} inline style block(s)`,
+    ],
+  };
+}
+
+function cssReferencesIn(source) {
+  return [...source.matchAll(CSS_URL)].map(([, reference]) => reference);
+}
+
+function inlineStylesIn(html) {
+  return [...html.matchAll(STYLE_BLOCK)].map(([, contents]) => contents);
 }
 
 function offendingReferences(references, siteOrigin) {
