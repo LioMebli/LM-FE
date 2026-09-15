@@ -42,10 +42,6 @@ app-brand-mark {
   display: none;
 }
 
-.header__count {
-  font-weight: var(--lm-weight-bold);
-}
-
 .header__call {
   display: inline-flex;
   flex-shrink: 0;
@@ -146,14 +142,7 @@ app-brand-mark {
   }
 
   .header__selection {
-    display: inline-flex;
-    flex-shrink: 0;
-    gap: var(--lm-space-sm);
-    padding-inline: var(--lm-space-md);
-    border: var(--lm-border-control);
-    border-radius: var(--lm-radius-pill);
-    color: var(--lm-color-ink);
-    font-size: var(--lm-text-sm);
+    display: contents;
   }
 
   .header__call,

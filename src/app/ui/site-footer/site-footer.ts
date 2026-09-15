@@ -1,6 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { telHref } from '../../core/site-contact';
 import { NavDestination, SocialProfile } from '../shell.types';
 import { BrandMark } from '../brand-mark/brand-mark';
 
@@ -21,11 +22,11 @@ export class SiteFooter {
 
   readonly socials = input<readonly SocialProfile[]>([]);
 
-  protected readonly callHref = computed(() => `tel:${this.phone()}`);
+  protected readonly callHref = computed(() => telHref(this.phone()));
 
   protected readonly mailHref = computed(() => `mailto:${this.email()}`);
 
   protected readonly hasContacts = computed(() =>
-    Boolean(this.phone() ?? this.address() ?? this.email()),
+    Boolean(this.phone() || this.address() || this.email()),
   );
 }

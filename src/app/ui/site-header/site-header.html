@@ -20,11 +20,11 @@
     </ul>
   </nav>
 
-  @if (selection(); as chosen) {
-    <a class="header__selection" [routerLink]="chosen.link">
-      Підбірка <span class="header__count">{{ chosen.count }}</span>
-    </a>
-  }
+  <app-selection-link
+    class="header__selection"
+    [count]="selectionCount()"
+    [link]="selectionLink()"
+  />
 
   @if (phone()) {
     <a class="header__call" [href]="callHref()" aria-label="Зателефонувати">

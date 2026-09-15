@@ -1,0 +1,23 @@
+:host {
+  display: contents;
+}
+
+.selection {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lm-space-sm);
+  min-block-size: var(--lm-tap-target-min);
+  padding-inline: var(--lm-space-md);
+  border: var(--lm-border-control);
+  border-radius: var(--lm-radius-pill);
+  background: var(--lm-color-surface);
+  color: var(--lm-color-ink);
+  font-size: var(--lm-text-md);
+  text-decoration: none;
+}
+
+.selection__count {
+  font-weight: var(--lm-weight-bold);
+}

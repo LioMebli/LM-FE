@@ -1,0 +1,5 @@
+@if (selection(); as chosen) {
+  <a class="selection" [routerLink]="chosen.link">
+    Підбірка <span class="selection__count">{{ chosen.count }}</span>
+  </a>
+}

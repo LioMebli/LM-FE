@@ -78,23 +78,23 @@ describe('SiteHeader', () => {
     fixture.componentRef.setInput('selectionLink', '/pidbirka');
     await fixture.whenStable();
 
-    const control = host().querySelector<HTMLAnchorElement>('.header__selection')!;
+    const control = host().querySelector<HTMLAnchorElement>('.header__selection .selection')!;
 
     expect(control.getAttribute('href')).toBe('/pidbirka');
     expect(control.textContent?.replace(/\s+/g, ' ').trim()).toBe('Підбірка 3');
   });
 
-  it('renders no selection control when only one half of it was given', async () => {
+  it('passes both halves through or neither, rather than deciding for the control', async () => {
     fixture.componentRef.setInput('selectionCount', 3);
     await fixture.whenStable();
 
-    expect(host().querySelector('.header__selection')).toBeNull();
+    expect(host().querySelector('.header__selection .selection')).toBeNull();
 
     fixture.componentRef.setInput('selectionCount', undefined);
     fixture.componentRef.setInput('selectionLink', '/pidbirka');
     await fixture.whenStable();
 
-    expect(host().querySelector('.header__selection')).toBeNull();
+    expect(host().querySelector('.header__selection .selection')).toBeNull();
   });
 
   it('still shows the wordmark and the call when it is given no destination at all', async () => {

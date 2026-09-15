@@ -14,6 +14,7 @@ import { PaginationLink } from '../../ui/pagination-link/pagination-link';
 import { ProcessStep, ProcessSteps } from '../../ui/process-steps/process-steps';
 import { ProductCard } from '../../ui/product-card/product-card';
 import { SocialProfile } from '../../ui/shell.types';
+import { SelectionLink } from '../../ui/selection-link/selection-link';
 import { SiteFooter } from '../../ui/site-footer/site-footer';
 import { StickyActionBar } from '../../ui/sticky-action-bar/sticky-action-bar';
 import { TextField } from '../../ui/text-field/text-field';
@@ -134,7 +135,7 @@ const SHOWCASE_PHONE = '+380671234567';
 
 const SHOWCASE_ADDRESS = 'вул. Сумська 10, Харків';
 
-const SHOWCASE_EMAIL = 'info@liomebli.ua';
+const SHOWCASE_EMAIL = 'info@liomebli.com.ua';
 
 const SHOWCASE_STEPS: readonly ProcessStep[] = [
   { label: 'Перший крок', detail: 'Короткий рядок пояснення.' },
@@ -181,6 +182,7 @@ const SHOWCASE_AVAILABILITY: readonly Availability[] = [
     PaginationLink,
     ProcessSteps,
     ProductCard,
+    SelectionLink,
     SiteFooter,
     StickyActionBar,
     TextField,

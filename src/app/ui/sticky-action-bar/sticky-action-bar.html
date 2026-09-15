@@ -1,8 +1,4 @@
 <div class="bar">
-  @if (selection(); as chosen) {
-    <a class="bar__selection" [routerLink]="chosen.link">
-      Підбірка <span class="bar__count">{{ chosen.count }}</span>
-    </a>
-  }
+  <app-selection-link [count]="selectionCount()" [link]="selectionLink()" />
   <a class="bar__call" [href]="callHref()">Зателефонувати</a>
 </div>

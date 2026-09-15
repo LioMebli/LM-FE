@@ -1,13 +1,15 @@
 import { Component, ElementRef, computed, input, output, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { telHref } from '../../core/site-contact';
 import { NavDestination } from '../shell.types';
 import { ActionButton } from '../action-button/action-button';
 import { BrandMark } from '../brand-mark/brand-mark';
+import { SelectionLink } from '../selection-link/selection-link';
 
 @Component({
   selector: 'app-site-header',
-  imports: [ActionButton, BrandMark, RouterLink],
+  imports: [ActionButton, BrandMark, RouterLink, SelectionLink],
   templateUrl: './site-header.html',
   styleUrl: './site-header.scss',
 })
@@ -22,14 +24,7 @@ export class SiteHeader {
 
   readonly searched = output<string>();
 
-  protected readonly callHref = computed(() => `tel:${this.phone()}`);
-
-  protected readonly selection = computed(() => {
-    const count = this.selectionCount();
-    const link = this.selectionLink();
-
-    return count !== undefined && link !== undefined ? { count, link } : null;
-  });
+  protected readonly callHref = computed(() => telHref(this.phone()));
 
   private readonly menu = viewChild.required<ElementRef<HTMLDialogElement>>('menu');
 

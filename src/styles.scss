@@ -115,7 +115,7 @@ body:has(app-hero-panel) app-site-header {
     animation-duration: auto;
     animation-fill-mode: both;
     animation-timeline: scroll();
-    animation-range: 0 56px;
+    animation-range: 0 calc(var(--lm-tap-target-min) + var(--lm-space-sm) * 2 + 1px);
   }
 }
 
