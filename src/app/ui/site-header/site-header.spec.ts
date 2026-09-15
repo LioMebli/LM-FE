@@ -144,6 +144,27 @@ describe('SiteHeader', () => {
     expect(asked).toEqual(['ручка']);
   });
 
+  it('offers the search in the bar and in the menu, and both report the same way', async () => {
+    const asked: string[] = [];
+
+    fixture.componentInstance.searched.subscribe((query) => asked.push(query));
+    await fixture.whenStable();
+
+    expect(host().querySelector('.header__search .header__field')).not.toBeNull();
+    expect(host().querySelector('.menu__search .header__field')).not.toBeNull();
+
+    for (const form of ['.header__search', '.menu__search']) {
+      const field = host().querySelector<HTMLInputElement>(`${form} .header__field`)!;
+
+      field.value = 'ручка';
+      host()
+        .querySelector<HTMLFormElement>(form)!
+        .dispatchEvent(new Event('submit', { cancelable: true }));
+    }
+
+    expect(asked).toEqual(['ручка', 'ручка']);
+  });
+
   it('says nothing when the search is submitted empty', async () => {
     const asked: string[] = [];
 

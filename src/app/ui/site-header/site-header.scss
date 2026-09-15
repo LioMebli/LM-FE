@@ -21,8 +21,12 @@ app-brand-mark {
 }
 
 .header__search {
-  flex-grow: 1;
-  min-inline-size: 0;
+  display: none;
+}
+
+.menu__search {
+  flex-shrink: 0;
+  padding: var(--lm-space-md) var(--lm-space-md) 0;
 }
 
 .header__field {
@@ -132,13 +136,23 @@ app-brand-mark {
   margin-block-start: auto;
   padding: var(--lm-space-md);
   color: var(--lm-color-ink);
-  font-family: var(--lm-font-display);
   font-size: var(--lm-text-lg);
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 @media (min-width: layout.$lm-layout-wide) {
   .header__nav {
     display: block;
+  }
+
+  .header__search {
+    display: block;
+    flex-grow: 1;
+    min-inline-size: 0;
+  }
+
+  .menu__search {
+    display: none;
   }
 
   .header__selection {

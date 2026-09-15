@@ -35,7 +35,7 @@
 }
 
 .ds__intro p {
-  max-inline-size: 60ch;
+  max-inline-size: var(--lm-text-max);
 }
 
 .ds__section {
@@ -45,6 +45,7 @@
 }
 
 .ds__note {
+  max-inline-size: var(--lm-text-max);
   color: var(--lm-color-ink-muted);
   font-size: var(--lm-text-sm);
 }
@@ -61,7 +62,7 @@
 }
 
 .group__note {
-  max-inline-size: 60ch;
+  max-inline-size: var(--lm-text-max);
   margin-block-start: 0;
   color: var(--lm-color-ink-muted);
   font-size: var(--lm-text-sm);

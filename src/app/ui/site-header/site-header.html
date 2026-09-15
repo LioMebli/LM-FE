@@ -1,16 +1,7 @@
 <header class="header">
   <app-brand-mark />
 
-  <form class="header__search" role="search" (submit)="submitSearch($event, field.value)">
-    <input
-      #field
-      class="header__field"
-      type="search"
-      autocomplete="off"
-      aria-label="Пошук товарів"
-      placeholder="Пошук"
-    />
-  </form>
+  <ng-container [ngTemplateOutlet]="search" [ngTemplateOutletContext]="{ place: 'header' }" />
 
   <nav class="header__nav" aria-label="Розділи сайту">
     <ul class="header__row">
@@ -52,6 +43,8 @@
         <app-action-button (pressed)="close()">Закрити</app-action-button>
       </div>
 
+      <ng-container [ngTemplateOutlet]="search" [ngTemplateOutletContext]="{ place: 'menu' }" />
+
       <nav class="menu__body">
         <ul class="menu__list">
           @for (destination of destinations(); track destination.link) {
@@ -70,3 +63,20 @@
     </div>
   </dialog>
 </header>
+
+<ng-template #search let-place="place">
+  <form
+    [class]="place === 'menu' ? 'menu__search' : 'header__search'"
+    role="search"
+    (submit)="submitSearch($event, field.value)"
+  >
+    <input
+      #field
+      class="header__field"
+      type="search"
+      autocomplete="off"
+      aria-label="Пошук товарів"
+      placeholder="Пошук"
+    />
+  </form>
+</ng-template>

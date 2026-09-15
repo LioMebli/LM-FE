@@ -53,6 +53,6 @@
 
 .hero__lede {
   margin: 0;
-  max-inline-size: 65ch;
+  max-inline-size: var(--lm-text-max);
   font-size: var(--lm-text-md);
 }

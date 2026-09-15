@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, ElementRef, computed, input, output, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
@@ -9,7 +10,7 @@ import { SelectionLink } from '../selection-link/selection-link';
 
 @Component({
   selector: 'app-site-header',
-  imports: [ActionButton, BrandMark, RouterLink, SelectionLink],
+  imports: [ActionButton, BrandMark, NgTemplateOutlet, RouterLink, SelectionLink],
   templateUrl: './site-header.html',
   styleUrl: './site-header.scss',
 })
