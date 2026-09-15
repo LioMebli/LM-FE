@@ -65,6 +65,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: var(--lm-space-md);
 }
 
 .footer__rights {
