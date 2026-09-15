@@ -15,7 +15,17 @@ export class SiteFooter {
 
   readonly phone = input<string>();
 
+  readonly address = input<string>();
+
+  readonly email = input<string>();
+
   readonly socials = input<readonly SocialProfile[]>([]);
 
   protected readonly callHref = computed(() => `tel:${this.phone()}`);
+
+  protected readonly mailHref = computed(() => `mailto:${this.email()}`);
+
+  protected readonly hasContacts = computed(() =>
+    Boolean(this.phone() ?? this.address() ?? this.email()),
+  );
 }

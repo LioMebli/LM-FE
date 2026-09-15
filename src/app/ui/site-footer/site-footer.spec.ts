@@ -62,6 +62,34 @@ describe('SiteFooter', () => {
     expect(host().querySelector('.footer__phone')).toBeNull();
   });
 
+  it('turns the address and the email into a contact block a reader can act on', async () => {
+    fixture.componentRef.setInput('address', 'вул. Сумська 10, Харків');
+    fixture.componentRef.setInput('email', 'info@liomebli.ua');
+    await fixture.whenStable();
+
+    expect(host().querySelector('.footer__address')?.textContent?.trim()).toBe(
+      'вул. Сумська 10, Харків',
+    );
+    expect(host().querySelector<HTMLAnchorElement>('.footer__email')?.getAttribute('href')).toBe(
+      'mailto:info@liomebli.ua',
+    );
+  });
+
+  it('renders no contact block at all when it was given no way to be reached', async () => {
+    await fixture.whenStable();
+
+    expect(host().querySelector('.footer__contacts')).toBeNull();
+  });
+
+  it('keeps the contact block when only one of the three is known', async () => {
+    fixture.componentRef.setInput('email', 'info@liomebli.ua');
+    await fixture.whenStable();
+
+    expect(host().querySelector('.footer__contacts')).not.toBeNull();
+    expect(host().querySelector('.footer__phone')).toBeNull();
+    expect(host().querySelector('.footer__address')).toBeNull();
+  });
+
   it('names the network on every social link, so an icon is never announced as nothing', async () => {
     fixture.componentRef.setInput('socials', SOCIALS);
     await fixture.whenStable();

@@ -46,6 +46,66 @@ describe('SiteHeader', () => {
     expect(labels('.menu__link')).toEqual([]);
   });
 
+  it('dials the phone it is given, rather than scrolling to where a number is printed', async () => {
+    fixture.componentRef.setInput('phone', '+380671234567');
+    await fixture.whenStable();
+
+    for (const selector of ['.header__call', '.menu__phone']) {
+      expect(host().querySelector<HTMLAnchorElement>(selector)!.getAttribute('href')).toBe(
+        'tel:+380671234567',
+      );
+    }
+  });
+
+  it('gives the call glyph a label, since it carries no text of its own', async () => {
+    fixture.componentRef.setInput('phone', '+380671234567');
+    await fixture.whenStable();
+
+    expect(host().querySelector('.header__call')!.getAttribute('aria-label')).toBe(
+      'Зателефонувати',
+    );
+  });
+
+  it('renders no call control when it was given no phone', async () => {
+    await fixture.whenStable();
+
+    expect(host().querySelector('.header__call')).toBeNull();
+    expect(host().querySelector('.menu__phone')).toBeNull();
+  });
+
+  it('offers the selection only when told both how many and where', async () => {
+    fixture.componentRef.setInput('selectionCount', 3);
+    fixture.componentRef.setInput('selectionLink', '/pidbirka');
+    await fixture.whenStable();
+
+    const control = host().querySelector<HTMLAnchorElement>('.header__selection')!;
+
+    expect(control.getAttribute('href')).toBe('/pidbirka');
+    expect(control.textContent?.replace(/\s+/g, ' ').trim()).toBe('Підбірка 3');
+  });
+
+  it('renders no selection control when only one half of it was given', async () => {
+    fixture.componentRef.setInput('selectionCount', 3);
+    await fixture.whenStable();
+
+    expect(host().querySelector('.header__selection')).toBeNull();
+
+    fixture.componentRef.setInput('selectionCount', undefined);
+    fixture.componentRef.setInput('selectionLink', '/pidbirka');
+    await fixture.whenStable();
+
+    expect(host().querySelector('.header__selection')).toBeNull();
+  });
+
+  it('still shows the wordmark and the call when it is given no destination at all', async () => {
+    fixture.componentRef.setInput('destinations', []);
+    fixture.componentRef.setInput('phone', '+380671234567');
+    await fixture.whenStable();
+
+    expect(host().querySelector('app-brand-mark .brand')).not.toBeNull();
+    expect(host().querySelector('.header__call')).not.toBeNull();
+  });
+
   it('opens the menu as a modal and closes it by a labelled control', async () => {
     await fixture.whenStable();
 

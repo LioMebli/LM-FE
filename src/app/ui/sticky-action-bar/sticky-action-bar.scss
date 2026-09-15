@@ -1,3 +1,5 @@
+@use 'breakpoints' as layout;
+
 :host {
   display: contents;
 }
@@ -50,7 +52,7 @@
   font-weight: var(--lm-weight-bold);
 }
 
-@media (min-width: 48rem) {
+@media (min-width: layout.$lm-layout-wide) {
   .bar {
     max-inline-size: var(--lm-content-max);
   }

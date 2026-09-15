@@ -20,6 +20,29 @@
     </ul>
   </nav>
 
+  @if (selection(); as chosen) {
+    <a class="header__selection" [routerLink]="chosen.link">
+      Підбірка <span class="header__count">{{ chosen.count }}</span>
+    </a>
+  }
+
+  @if (phone()) {
+    <a class="header__call" [href]="callHref()" aria-label="Зателефонувати">
+      <svg
+        class="header__glyph"
+        viewBox="0 0 20 20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M6.2 2.8h-3v3c0 6.1 5 11.1 11.1 11.1h3v-3l-3.6-1.2-1.8 1.8a13 13 0 0 1-6.1-6.1l1.8-1.8Z" />
+      </svg>
+    </a>
+  }
+
   <app-action-button class="header__opener" opens="dialog" (pressed)="open()">Меню</app-action-button>
 
   <dialog #menu class="menu" aria-label="Розділи сайту">
@@ -40,6 +63,10 @@
           }
         </ul>
       </nav>
+
+      @if (phone()) {
+        <a class="menu__phone" [href]="callHref()">{{ phone() }}</a>
+      }
     </div>
   </dialog>
 </header>

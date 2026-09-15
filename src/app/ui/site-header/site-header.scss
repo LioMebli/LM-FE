@@ -1,3 +1,5 @@
+@use 'breakpoints' as layout;
+
 :host {
   display: block;
 }
@@ -35,8 +37,26 @@ app-brand-mark {
   font-size: var(--lm-text-md);
 }
 
-.header__nav {
+.header__nav,
+.header__selection {
   display: none;
+}
+
+.header__count {
+  font-weight: var(--lm-weight-bold);
+}
+
+.header__call {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--lm-color-ink);
+}
+
+.header__glyph {
+  inline-size: var(--lm-space-lg);
+  block-size: var(--lm-space-lg);
 }
 
 .header__row {
@@ -111,11 +131,32 @@ app-brand-mark {
   font-size: var(--lm-text-lg);
 }
 
-@media (min-width: 48rem) {
+.menu__phone {
+  flex-shrink: 0;
+  margin-block-start: auto;
+  padding: var(--lm-space-md);
+  color: var(--lm-color-ink);
+  font-family: var(--lm-font-display);
+  font-size: var(--lm-text-lg);
+}
+
+@media (min-width: layout.$lm-layout-wide) {
   .header__nav {
     display: block;
   }
 
+  .header__selection {
+    display: inline-flex;
+    flex-shrink: 0;
+    gap: var(--lm-space-sm);
+    padding-inline: var(--lm-space-md);
+    border: var(--lm-border-control);
+    border-radius: var(--lm-radius-pill);
+    color: var(--lm-color-ink);
+    font-size: var(--lm-text-sm);
+  }
+
+  .header__call,
   .header__opener {
     display: none;
   }

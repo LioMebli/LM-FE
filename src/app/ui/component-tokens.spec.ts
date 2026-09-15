@@ -28,7 +28,7 @@ const WIDE_LAYOUT_COMPONENTS = ['filter-sheet', 'site-footer', 'site-header', 's
 
 const VIEWPORT_WIDTH_UNIT = /[\d.]+vw\b/;
 
-const PIXELS_IN_A_MEDIA_CONDITION = /@media[^{]*[\d.]+px\b/;
+const LENGTH_IN_A_MEDIA_CONDITION = /@media[^{]*[\d.]+(?:px|rem|em|ch|vw|vh)\b/;
 
 const CUSTOM_PROPERTY_IN_A_MEDIA_CONDITION = /@media[^{]*var\(/;
 
@@ -63,22 +63,24 @@ describe('the components’ design vocabulary', () => {
 
   it('reads the layout switch width from _breakpoints.scss rather than writing it', () => {
     const offenders = componentStylesheets()
-      .filter(({ source }) => PIXELS_IN_A_MEDIA_CONDITION.test(source))
+      .filter(({ source }) => LENGTH_IN_A_MEDIA_CONDITION.test(source))
       .map(({ path }) => path);
 
     expect(offenders).toEqual([]);
   });
 
-  it('catches a media condition that writes a width instead of reading it', () => {
-    expect(PIXELS_IN_A_MEDIA_CONDITION.test('@media (min-width: 860px) { .a { color: red } }')).toBe(
-      true,
-    );
+  it('catches a media condition that writes a width instead of reading it, in any unit', () => {
+    for (const written of ['860px', '53.75rem', '48em', '100vw']) {
+      expect(
+        LENGTH_IN_A_MEDIA_CONDITION.test(`@media (min-width: ${written}) { .a { color: red } }`),
+      ).toBe(true);
+    }
   });
 
   it('leaves a length inside the block alone, and flags only the condition', () => {
     expect(
-      PIXELS_IN_A_MEDIA_CONDITION.test(
-        '@media (min-width: bp.$lm-layout-wide) { .a { border-width: 1px } }',
+      LENGTH_IN_A_MEDIA_CONDITION.test(
+        '@media (min-width: layout.$lm-layout-wide) { .a { border-width: 1px } }',
       ),
     ).toBe(false);
   });

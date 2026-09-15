@@ -132,6 +132,10 @@ const SHOWCASE_CARDS: readonly ShowcaseCard[] = [
 
 const SHOWCASE_PHONE = '+380671234567';
 
+const SHOWCASE_ADDRESS = 'вул. Сумська 10, Харків';
+
+const SHOWCASE_EMAIL = 'info@liomebli.ua';
+
 const SHOWCASE_STEPS: readonly ProcessStep[] = [
   { label: 'Перший крок', detail: 'Короткий рядок пояснення.' },
   { label: 'Другий крок', detail: 'Довший рядок, який на вузькому екрані перенесеться.' },
@@ -191,6 +195,8 @@ export class DesignSystemPage {
   protected readonly categories = SHOWCASE_CATEGORIES;
   protected readonly heroSample = SHOWCASE_HERO;
   protected readonly samplePhone = SHOWCASE_PHONE;
+  protected readonly sampleAddress = SHOWCASE_ADDRESS;
+  protected readonly sampleEmail = SHOWCASE_EMAIL;
   protected readonly stepSamples = SHOWCASE_STEPS;
   protected readonly availabilityStates = SHOWCASE_AVAILABILITY;
   protected readonly socials = SHOWCASE_SOCIALS;

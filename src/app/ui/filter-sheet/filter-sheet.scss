@@ -1,3 +1,5 @@
+@use 'breakpoints' as layout;
+
 :host {
   display: block;
   --sheet-inflow: 0;
@@ -89,7 +91,7 @@
   border-block-start: var(--lm-border-hairline);
 }
 
-@media (min-width: 48rem) {
+@media (min-width: layout.$lm-layout-wide) {
   :host {
     --sheet-inflow: 1;
   }

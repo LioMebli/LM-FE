@@ -1,4 +1,4 @@
-import { Component, ElementRef, input, output, viewChild } from '@angular/core';
+import { Component, ElementRef, computed, input, output, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { NavDestination } from '../shell.types';
@@ -14,7 +14,22 @@ import { BrandMark } from '../brand-mark/brand-mark';
 export class SiteHeader {
   readonly destinations = input.required<readonly NavDestination[]>();
 
+  readonly phone = input<string>();
+
+  readonly selectionCount = input<number>();
+
+  readonly selectionLink = input<string>();
+
   readonly searched = output<string>();
+
+  protected readonly callHref = computed(() => `tel:${this.phone()}`);
+
+  protected readonly selection = computed(() => {
+    const count = this.selectionCount();
+    const link = this.selectionLink();
+
+    return count !== undefined && link !== undefined ? { count, link } : null;
+  });
 
   private readonly menu = viewChild.required<ElementRef<HTMLDialogElement>>('menu');
 
