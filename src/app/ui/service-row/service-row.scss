@@ -1,0 +1,46 @@
+@use 'breakpoints' as layout;
+
+:host {
+  display: block;
+}
+
+.services {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--lm-color-page);
+}
+
+.service {
+  display: grid;
+  justify-items: center;
+  gap: var(--lm-space-sm);
+  padding: var(--lm-space-lg) var(--lm-space-md);
+  background: var(--lm-color-surface);
+  text-align: center;
+}
+
+.service__name {
+  margin: 0;
+  font-family: var(--lm-font-display);
+  font-size: var(--lm-text-xl);
+  font-weight: var(--lm-weight-regular);
+  line-height: var(--lm-leading-display);
+}
+
+.service__detail {
+  margin: 0;
+  max-inline-size: var(--lm-text-max);
+  color: var(--lm-color-ink-muted);
+  font-size: var(--lm-text-md);
+  text-wrap: pretty;
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  .services {
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+  }
+}

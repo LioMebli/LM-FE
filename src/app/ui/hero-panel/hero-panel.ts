@@ -4,12 +4,12 @@ import { NgOptimizedImage } from '@angular/common';
 import { Photograph } from '../media.types';
 
 @Component({
-  selector: 'app-hero-banner',
+  selector: 'app-hero-panel',
   imports: [NgOptimizedImage],
-  templateUrl: './hero-banner.html',
-  styleUrl: './hero-banner.scss',
+  templateUrl: './hero-panel.html',
+  styleUrl: './hero-panel.scss',
 })
-export class HeroBanner {
+export class HeroPanel {
   readonly heading = input.required<string>();
 
   readonly lede = input.required<string>();

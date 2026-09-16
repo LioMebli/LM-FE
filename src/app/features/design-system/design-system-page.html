@@ -155,6 +155,58 @@
     </section>
 
     <section class="group">
+      <h3 class="group__title">Панель героя</h3>
+      <p class="group__note">
+        На сторінці вона заввишки в екран і тримає перший заголовок; рамка нижче її стискає, бо
+        інакше картка витіснила б решту вітрини. Фотографії немає — її заводить LM-157, — тож
+        видно затемнення, яке лежить під написом, і воно ж тримає контраст, коли знімок світлий.
+        Знімок їде повільніше за сторінку, і цей рух вимикає загальне правило
+        <code>prefers-reduced-motion</code>.
+      </p>
+      <div class="hero-stage">
+        <app-hero-panel [heading]="heroPanelSample.heading" [lede]="heroPanelSample.lede" />
+      </div>
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Ряд послуг</h3>
+      <p class="group__note">
+        Три послуги стовпчиком до порогу широкої розкладки і в один ряд після нього. Розділяє їх
+        не рамка, а проміжок у піксель, крізь який видно колір сторінки.
+      </p>
+      <app-service-row [services]="serviceSamples" />
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Смуга дзвінка</h3>
+      <p class="group__note">
+        Найгучніший елемент у своїй смузі: кнопка дзвінка вища за поріг дотику й залита основним
+        кольором. На вузькій розкладці вона на всю ширину під текстом, на широкій — поруч із ним.
+        Години роботи не обовʼязкові; без них лишається сам номер.
+      </p>
+      <app-call-band
+        [heading]="callSample.heading"
+        [lede]="callSample.lede"
+        [phone]="samplePhone"
+        [hours]="callSample.hours"
+      />
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Картка проєкту</h3>
+      <p class="group__note">
+        Знімок, назва й один рядок. Фотографій у репозиторії ще немає, тож картка малює порожнє
+        поле 4:3 замість зображення без джерела. Під вказівником знімок трохи більшає — це
+        <code>&#64;media (hover: hover)</code>, тож на дотик нічого не відбувається.
+      </p>
+      <ul class="grid">
+        @for (project of projectSamples; track project.name) {
+          <li><app-project-card [name]="project.name" [lede]="project.lede" /></li>
+        }
+      </ul>
+    </section>
+
+    <section class="group">
       <h3 class="group__title">Кроки процесу</h3>
       <p class="group__note">
         Номер бере позицію пункту, а не поле: переставте пункти — і номери підуть за ними.

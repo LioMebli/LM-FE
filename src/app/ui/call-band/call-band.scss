@@ -1,0 +1,99 @@
+@use 'breakpoints' as layout;
+
+:host {
+  display: block;
+}
+
+.band {
+  display: grid;
+  justify-items: center;
+  gap: var(--lm-space-md);
+  max-inline-size: var(--lm-content-max);
+  margin-inline: auto;
+  padding: var(--lm-space-xl) var(--lm-space-md);
+  text-align: center;
+}
+
+.band__copy {
+  display: grid;
+  justify-items: center;
+  gap: var(--lm-space-md);
+}
+
+.band__heading {
+  margin: 0;
+  max-inline-size: var(--lm-text-max);
+  font-family: var(--lm-font-display);
+  font-size: var(--lm-text-display);
+  font-weight: var(--lm-weight-regular);
+  line-height: var(--lm-leading-display);
+  text-wrap: pretty;
+}
+
+.band__lede {
+  margin: 0;
+  max-inline-size: var(--lm-text-max);
+  color: var(--lm-color-ink-muted);
+  font-size: var(--lm-text-md);
+  text-wrap: pretty;
+}
+
+.band__action {
+  display: grid;
+  justify-items: center;
+  gap: var(--lm-space-sm);
+  inline-size: 100%;
+}
+
+.band__call {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lm-space-sm);
+  inline-size: 100%;
+  min-block-size: calc(var(--lm-tap-target-min) + var(--lm-space-sm));
+  padding-inline: var(--lm-space-lg);
+  border-radius: var(--lm-radius-pill);
+  background: var(--lm-color-primary);
+  color: var(--lm-color-on-dark);
+  font-size: var(--lm-text-md);
+  font-weight: var(--lm-weight-bold);
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.band__glyph {
+  flex-shrink: 0;
+  inline-size: var(--lm-space-md);
+  block-size: var(--lm-space-md);
+}
+
+.band__hours {
+  margin: 0;
+  color: var(--lm-color-ink-muted);
+  font-size: var(--lm-text-sm);
+}
+
+.band__phone {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  .band {
+    grid-auto-flow: column;
+    grid-auto-columns: auto;
+    align-items: center;
+    justify-content: center;
+    gap: var(--lm-space-lg);
+    padding: var(--lm-space-2xl) var(--lm-space-md);
+  }
+
+  .band__action {
+    inline-size: auto;
+  }
+
+  .band__call {
+    inline-size: auto;
+  }
+}

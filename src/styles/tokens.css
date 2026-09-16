@@ -41,6 +41,7 @@
 
   --lm-content-max: 70rem;
   --lm-text-max: 53ch;
+  --lm-header-block-size: calc(var(--lm-tap-target-min) + var(--lm-space-sm) * 2 + 1px);
 
   --lm-tap-target-min: 44px;
   --lm-tap-target-chip: 22px;

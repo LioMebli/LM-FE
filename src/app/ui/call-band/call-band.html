@@ -1,0 +1,31 @@
+<div class="band">
+  <div class="band__copy">
+    <h2 class="band__heading">{{ heading() }}</h2>
+    <p class="band__lede">{{ lede() }}</p>
+  </div>
+
+  <div class="band__action">
+    <a class="band__call" [href]="callHref()">
+      <svg
+        class="band__glyph"
+        viewBox="0 0 20 20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M6.2 2.8h-3v3c0 6.1 5 11.1 11.1 11.1h3v-3l-3.6-1.2-1.8 1.8a13 13 0 0 1-6.1-6.1l1.8-1.8Z" />
+      </svg>
+      Зателефонувати
+    </a>
+
+    <p class="band__hours">
+      @if (hours()) {
+        {{ hours() }} ·
+      }
+      <span class="band__phone">{{ phone() }}</span>
+    </p>
+  </div>
+</div>

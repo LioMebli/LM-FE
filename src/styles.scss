@@ -94,7 +94,7 @@ body:has(app-sticky-action-bar) {
   padding-block-end: calc(var(--lm-tap-target-min) + var(--lm-space-sm) + var(--lm-space-md) * 2);
 }
 
-body:has(app-hero-panel) app-site-header {
+body:has(app-home-page app-hero-panel) app-site-header {
   position: fixed;
   inset-block-start: 0;
   inset-inline: 0;
@@ -110,12 +110,12 @@ body:has(app-hero-panel) app-site-header {
 }
 
 @supports (animation-timeline: scroll()) {
-  body:has(app-hero-panel) app-site-header {
+  body:has(app-home-page app-hero-panel) app-site-header {
     animation-name: lm-header-arrives;
     animation-duration: auto;
     animation-fill-mode: both;
     animation-timeline: scroll();
-    animation-range: 0 calc(var(--lm-tap-target-min) + var(--lm-space-sm) * 2 + 1px);
+    animation-range: 0 var(--lm-header-block-size);
   }
 }
 

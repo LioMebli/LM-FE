@@ -5,14 +5,18 @@ import { Availability } from '../../core/api/catalog.types';
 import { ActionButton } from '../../ui/action-button/action-button';
 import { AvailabilityLabel } from '../../ui/availability-label/availability-label';
 import { BreadcrumbTrail } from '../../ui/breadcrumb-trail/breadcrumb-trail';
+import { CallBand } from '../../ui/call-band/call-band';
 import { CategoryCard } from '../../ui/category-card/category-card';
 import { CheckboxRow } from '../../ui/checkbox-row/checkbox-row';
 import { FilterChip } from '../../ui/filter-chip/filter-chip';
 import { FilterSheet } from '../../ui/filter-sheet/filter-sheet';
 import { HeroBanner } from '../../ui/hero-banner/hero-banner';
+import { HeroPanel } from '../../ui/hero-panel/hero-panel';
 import { PaginationLink } from '../../ui/pagination-link/pagination-link';
 import { ProcessStep, ProcessSteps } from '../../ui/process-steps/process-steps';
 import { ProductCard } from '../../ui/product-card/product-card';
+import { ProjectCard } from '../../ui/project-card/project-card';
+import { Service, ServiceRow } from '../../ui/service-row/service-row';
 import { SocialProfile } from '../../ui/shell.types';
 import { SelectionLink } from '../../ui/selection-link/selection-link';
 import { SiteFooter } from '../../ui/site-footer/site-footer';
@@ -91,6 +95,7 @@ export const TOKEN_GROUPS: readonly TokenGroup[] = [
     names: ['--lm-tap-target-min', '--lm-tap-target-chip', '--lm-tap-target-footer'],
   },
   { title: 'Ширина змісту', sample: 'space', names: ['--lm-content-max', '--lm-text-max'] },
+  { title: 'Висота шапки', sample: 'space', names: ['--lm-header-block-size'] },
   {
     title: 'Радіус',
     sample: 'radius',
@@ -148,6 +153,28 @@ const SHOWCASE_HERO = {
   lede: 'Одне речення під ним, достатньо довге, щоб перенестися на другий рядок при 360 px.',
 };
 
+const SHOWCASE_HERO_PANEL = {
+  heading: 'Lio Mebli',
+  lede: 'Створюємо простір, де кожен сантиметр має значення.',
+};
+
+const SHOWCASE_SERVICES: readonly Service[] = [
+  { name: 'Проєктування', detail: 'Індивідуальні рішення під ваш простір.' },
+  { name: 'Виготовлення', detail: 'Чесні матеріали й власне виробництво.' },
+  { name: 'Монтаж', detail: 'Привозимо, збираємо, прибираємо за собою.' },
+];
+
+const SHOWCASE_CALL = {
+  heading: 'Один дзвінок — і ми порахуємо вашу кухню',
+  lede: 'Безкоштовна консультація: підберемо планування, матеріали й фурнітуру під ваш простір і бюджет, назвемо точну ціну та строк.',
+  hours: 'Пн–Сб, 9:00–19:00',
+};
+
+const SHOWCASE_PROJECTS: readonly { name: string; lede: string }[] = [
+  { name: 'Кухня «Anthracite Minimal»', lede: 'Матові фасади та інтегроване освітлення.' },
+  { name: 'Вітальня «Warm Wood»', lede: 'Поєднання дуба та мʼяких ліній.' },
+];
+
 const SHOWCASE_CATEGORIES: readonly string[] = [
   'Петлі',
   'Ручки меблеві',
@@ -174,15 +201,19 @@ const SHOWCASE_AVAILABILITY: readonly Availability[] = [
     ActionButton,
     AvailabilityLabel,
     BreadcrumbTrail,
+    CallBand,
     CategoryCard,
     CheckboxRow,
     FilterChip,
     FilterSheet,
     HeroBanner,
+    HeroPanel,
     PaginationLink,
     ProcessSteps,
     ProductCard,
+    ProjectCard,
     SelectionLink,
+    ServiceRow,
     SiteFooter,
     StickyActionBar,
     TextField,
@@ -196,6 +227,10 @@ export class DesignSystemPage {
   protected readonly cards = SHOWCASE_CARDS;
   protected readonly categories = SHOWCASE_CATEGORIES;
   protected readonly heroSample = SHOWCASE_HERO;
+  protected readonly heroPanelSample = SHOWCASE_HERO_PANEL;
+  protected readonly serviceSamples = SHOWCASE_SERVICES;
+  protected readonly callSample = SHOWCASE_CALL;
+  protected readonly projectSamples = SHOWCASE_PROJECTS;
   protected readonly samplePhone = SHOWCASE_PHONE;
   protected readonly sampleAddress = SHOWCASE_ADDRESS;
   protected readonly sampleEmail = SHOWCASE_EMAIL;

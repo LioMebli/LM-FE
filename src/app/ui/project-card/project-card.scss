@@ -1,0 +1,60 @@
+:host {
+  display: block;
+  block-size: 100%;
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  overflow: clip;
+  border: var(--lm-border-hairline);
+  border-radius: var(--lm-radius-md);
+  background: var(--lm-color-surface);
+  transition: border-color 0.22s ease;
+}
+
+.project__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: clip;
+  background: var(--lm-color-page);
+}
+
+.project__image {
+  object-fit: cover;
+  transition: scale 0.5s ease;
+}
+
+.project__body {
+  display: grid;
+  gap: var(--lm-space-sm);
+  padding: var(--lm-space-md);
+}
+
+.project__name {
+  margin: 0;
+  font-family: var(--lm-font-display);
+  font-size: var(--lm-text-xl);
+  font-weight: var(--lm-weight-regular);
+  line-height: var(--lm-leading-display);
+}
+
+.project__lede {
+  margin: 0;
+  max-inline-size: var(--lm-text-max);
+  color: var(--lm-color-ink-muted);
+  font-size: var(--lm-text-md);
+  text-wrap: pretty;
+}
+
+@media (hover: hover) {
+  .project:hover {
+    border-color: var(--lm-color-primary);
+  }
+
+  .project:hover .project__image {
+    scale: 1.05;
+  }
+}

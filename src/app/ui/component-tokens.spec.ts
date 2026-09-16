@@ -24,7 +24,35 @@ function everyAuthoredStylesheet(): { path: string; source: string }[] {
   ];
 }
 
-const WIDE_LAYOUT_COMPONENTS = ['filter-sheet', 'site-footer', 'site-header', 'sticky-action-bar'];
+const WIDE_LAYOUT_COMPONENTS = [
+  'call-band',
+  'filter-sheet',
+  'hero-panel',
+  'service-row',
+  'site-footer',
+  'site-header',
+  'sticky-action-bar',
+];
+
+const KEYFRAMES_BLOCK = /@keyframes[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}/g;
+
+const RUNS_AN_ANIMATION = /animation(?:-name)?\s*:/;
+
+const HIDDEN_BY_A_BASE_RULE = /(?:opacity:\s*0(?![\d.])|visibility:\s*hidden)/;
+
+const VIEW_PROGRESS_TIMELINE = /animation-timeline:\s*view\(/;
+
+const MAKES_A_SCROLL_CONTAINER = /overflow(?:-block|-inline|-x|-y)?:\s*(?:auto|scroll|hidden)/;
+
+function baseRulesOf(source: string): string {
+  return source.replace(KEYFRAMES_BLOCK, '');
+}
+
+function revealedOnlyByItsAnimation(source: string): boolean {
+  const base = baseRulesOf(source);
+
+  return RUNS_AN_ANIMATION.test(base) && HIDDEN_BY_A_BASE_RULE.test(base);
+}
 
 const VIEWPORT_WIDTH_UNIT = /[\d.]+vw\b/;
 
@@ -102,6 +130,46 @@ describe('the components’ design vocabulary', () => {
         '@media (min-width: bp.$lm-layout-wide) { .a { color: var(--lm-color-ink) } }',
       ),
     ).toBe(false);
+  });
+
+  it('leaves every animated element in its finished state when the animation is cancelled', () => {
+    const strays = everyAuthoredStylesheet()
+      .filter(({ source }) => revealedOnlyByItsAnimation(source))
+      .map(
+        ({ path }) =>
+          `${path} hides an element outside @keyframes and animates it back into view, which prefers-reduced-motion never undoes`,
+      );
+
+    expect(strays).toEqual([]);
+  });
+
+  it('catches the hide-then-reveal shape, and leaves a keyframe that hides alone', () => {
+    const reveal = '.panel { opacity: 0; animation-name: arrive; }';
+    const keyframeOnly = '@keyframes arrive { from { opacity: 0 } }\n.panel { animation-name: arrive }';
+
+    expect(revealedOnlyByItsAnimation(reveal)).toBe(true);
+    expect(revealedOnlyByItsAnimation(keyframeOnly)).toBe(false);
+  });
+
+  it('keeps a view-progress animation out of anything that scrolls instead of the page', () => {
+    const strays = everyAuthoredStylesheet()
+      .filter(
+        ({ source }) =>
+          VIEW_PROGRESS_TIMELINE.test(source) && MAKES_A_SCROLL_CONTAINER.test(source),
+      )
+      .map(
+        ({ path }) =>
+          `${path} reads view() inside a scroll container of its own, where the progress never advances; clip instead`,
+      );
+
+    expect(strays).toEqual([]);
+  });
+
+  it('catches overflow: hidden beside view(), and leaves overflow: clip alone', () => {
+    const animation = '.hero__image { animation-timeline: view() }';
+
+    expect(MAKES_A_SCROLL_CONTAINER.test(`.hero { overflow: hidden }${animation}`)).toBe(true);
+    expect(MAKES_A_SCROLL_CONTAINER.test(`.hero { overflow: clip }${animation}`)).toBe(false);
   });
 
   it('names only values that tokens.css declares', () => {

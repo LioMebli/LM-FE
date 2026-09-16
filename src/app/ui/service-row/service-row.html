@@ -1,0 +1,8 @@
+<ul class="services">
+  @for (service of services(); track service.name) {
+    <li class="service">
+      <h3 class="service__name">{{ service.name }}</h3>
+      <p class="service__detail">{{ service.detail }}</p>
+    </li>
+  }
+</ul>

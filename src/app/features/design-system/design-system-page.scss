@@ -169,6 +169,18 @@
   line-height: var(--sample);
 }
 
+.hero-stage {
+  block-size: 60svh;
+  min-block-size: 320px;
+  overflow: clip;
+  border-radius: var(--lm-radius-md);
+}
+
+.hero-stage app-hero-panel {
+  min-block-size: 0;
+  block-size: 100%;
+}
+
 .badge-stage {
   display: inline-block;
   padding: var(--lm-space-md);
