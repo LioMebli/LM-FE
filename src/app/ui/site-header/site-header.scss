@@ -9,6 +9,7 @@
   align-items: center;
   gap: var(--lm-space-sm);
   inline-size: 100%;
+  min-block-size: var(--lm-header-block-size);
   max-inline-size: var(--lm-content-max);
   margin-inline: auto;
   padding: var(--lm-space-sm) var(--lm-space-md);

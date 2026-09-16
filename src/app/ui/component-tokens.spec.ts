@@ -5,10 +5,11 @@ import { declaredTokenNames, referencedTokenNamesIn } from '../../testing/tokens
 import { UI_DIR, componentDirectories } from '../../testing/ui-components';
 
 const SHELL_STYLESHEET = 'src/styles.scss';
+const FEATURE_DIR = 'src/app/features';
 const TAP_TARGET_LITERAL = /\b44px\b/g;
 
-function componentStylesheets(): { path: string; source: string }[] {
-  return readdirSync(UI_DIR, { recursive: true, withFileTypes: true })
+function stylesheetsUnder(dir: string): { path: string; source: string }[] {
+  return readdirSync(dir, { recursive: true, withFileTypes: true })
     .filter((entry) => entry.isFile() && entry.name.endsWith('.scss'))
     .map((entry) => {
       const path = join(entry.parentPath, entry.name);
@@ -17,9 +18,14 @@ function componentStylesheets(): { path: string; source: string }[] {
     });
 }
 
+function componentStylesheets(): { path: string; source: string }[] {
+  return stylesheetsUnder(UI_DIR);
+}
+
 function everyAuthoredStylesheet(): { path: string; source: string }[] {
   return [
     ...componentStylesheets(),
+    ...stylesheetsUnder(FEATURE_DIR),
     { path: SHELL_STYLESHEET, source: readFileSync(SHELL_STYLESHEET, 'utf8') },
   ];
 }
@@ -36,22 +42,28 @@ const WIDE_LAYOUT_COMPONENTS = [
 
 const KEYFRAMES_BLOCK = /@keyframes[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}/g;
 
+const INNERMOST_RULE = /[^{}]*\{[^{}]*\}/g;
+
 const RUNS_AN_ANIMATION = /animation(?:-name)?\s*:/;
 
 const HIDDEN_BY_A_BASE_RULE = /(?:opacity:\s*0(?![\d.])|visibility:\s*hidden)/;
 
-const VIEW_PROGRESS_TIMELINE = /animation-timeline:\s*view\(/;
+const VIEW_PROGRESS_TIMELINE = /(?:animation-timeline:\s*view\(|view-timeline(?:-name|-axis|-inset)?\s*:)/;
 
 const MAKES_A_SCROLL_CONTAINER = /overflow(?:-block|-inline|-x|-y)?:\s*(?:auto|scroll|hidden)/;
 
-function baseRulesOf(source: string): string {
-  return source.replace(KEYFRAMES_BLOCK, '');
+function baseRulesOf(source: string): string[] {
+  return source.replace(KEYFRAMES_BLOCK, '').match(INNERMOST_RULE) ?? [];
 }
 
 function revealedOnlyByItsAnimation(source: string): boolean {
-  const base = baseRulesOf(source);
+  return baseRulesOf(source).some(
+    (rule) => RUNS_AN_ANIMATION.test(rule) && HIDDEN_BY_A_BASE_RULE.test(rule),
+  );
+}
 
-  return RUNS_AN_ANIMATION.test(base) && HIDDEN_BY_A_BASE_RULE.test(base);
+function viewTimelineInsideItsOwnScroller(source: string): boolean {
+  return VIEW_PROGRESS_TIMELINE.test(source) && MAKES_A_SCROLL_CONTAINER.test(source);
 }
 
 const VIEWPORT_WIDTH_UNIT = /[\d.]+vw\b/;
@@ -143,33 +155,40 @@ describe('the components’ design vocabulary', () => {
     expect(strays).toEqual([]);
   });
 
-  it('catches the hide-then-reveal shape, and leaves a keyframe that hides alone', () => {
+  it('catches the hide-then-reveal shape, and leaves both halves alone when they are apart', () => {
     const reveal = '.panel { opacity: 0; animation-name: arrive; }';
     const keyframeOnly = '@keyframes arrive { from { opacity: 0 } }\n.panel { animation-name: arrive }';
+    const unrelated = '.skip { opacity: 0 }\n.panel { animation-name: arrive }';
 
     expect(revealedOnlyByItsAnimation(reveal)).toBe(true);
     expect(revealedOnlyByItsAnimation(keyframeOnly)).toBe(false);
+    expect(revealedOnlyByItsAnimation(unrelated)).toBe(false);
   });
 
   it('keeps a view-progress animation out of anything that scrolls instead of the page', () => {
     const strays = everyAuthoredStylesheet()
-      .filter(
-        ({ source }) =>
-          VIEW_PROGRESS_TIMELINE.test(source) && MAKES_A_SCROLL_CONTAINER.test(source),
-      )
+      .filter(({ source }) => viewTimelineInsideItsOwnScroller(source))
       .map(
         ({ path }) =>
-          `${path} reads view() inside a scroll container of its own, where the progress never advances; clip instead`,
+          `${path} reads a view-progress timeline inside a scroll container of its own, where the progress never advances; clip instead`,
       );
 
     expect(strays).toEqual([]);
   });
 
-  it('catches overflow: hidden beside view(), and leaves overflow: clip alone', () => {
-    const animation = '.hero__image { animation-timeline: view() }';
+  it('needs both halves present, so neither regex can go blind and stay green', () => {
+    const scroller = '.hero { overflow: hidden }';
+    const clipped = '.hero { overflow: clip }';
 
-    expect(MAKES_A_SCROLL_CONTAINER.test(`.hero { overflow: hidden }${animation}`)).toBe(true);
-    expect(MAKES_A_SCROLL_CONTAINER.test(`.hero { overflow: clip }${animation}`)).toBe(false);
+    for (const timeline of [
+      '.hero__image { animation-timeline: view() }',
+      '.hero { view-timeline-name: --drift }',
+    ]) {
+      expect(viewTimelineInsideItsOwnScroller(`${scroller}${timeline}`)).toBe(true);
+      expect(viewTimelineInsideItsOwnScroller(`${clipped}${timeline}`)).toBe(false);
+    }
+
+    expect(viewTimelineInsideItsOwnScroller(`${scroller}.hero__image { scale: 1.1 }`)).toBe(false);
   });
 
   it('names only values that tokens.css declares', () => {
