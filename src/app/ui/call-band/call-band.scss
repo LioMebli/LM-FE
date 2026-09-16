@@ -7,7 +7,7 @@
 .band {
   display: grid;
   justify-items: center;
-  gap: var(--lm-space-md);
+  gap: var(--lm-space-lg);
   max-inline-size: var(--lm-content-max);
   margin-inline: auto;
   padding: var(--lm-space-xl) var(--lm-space-md);
@@ -85,7 +85,6 @@
     grid-auto-columns: auto;
     align-items: center;
     justify-content: center;
-    gap: var(--lm-space-lg);
     padding: var(--lm-space-2xl) var(--lm-space-md);
   }
 
