@@ -108,6 +108,31 @@ describe('TextField', () => {
     expect(input().getAttribute('inputmode')).toBe('numeric');
   });
 
+  it('stays a single-line input until it is asked for a number of rows', async () => {
+    await fixture.whenStable();
+
+    expect(host().querySelector('input.field__input')).not.toBeNull();
+    expect(host().querySelector('textarea')).toBeNull();
+
+    fixture.componentRef.setInput('rows', 4);
+    await fixture.whenStable();
+
+    expect(host().querySelector('input')).toBeNull();
+    expect(host().querySelector('textarea.field__input')?.getAttribute('rows')).toBe('4');
+  });
+
+  it('reports what was typed into the multi-line control as well', async () => {
+    fixture.componentRef.setInput('rows', 3);
+    await fixture.whenStable();
+
+    const area = host().querySelector<HTMLTextAreaElement>('.field__input')!;
+
+    area.value = 'Кухня служить другий рік.';
+    area.dispatchEvent(new Event('input'));
+
+    expect(fixture.componentInstance.value()).toBe('Кухня служить другий рік.');
+  });
+
   function host(): HTMLElement {
     return fixture.nativeElement as HTMLElement;
   }

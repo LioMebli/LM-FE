@@ -207,6 +207,42 @@
     </section>
 
     <section class="group">
+      <h3 class="group__title">Вибір матеріалу</h3>
+      <p class="group__note">
+        Обраний матеріал показує більше себе: на вузькій розкладці — довший опис, на широкій ще
+        й ширшу колонку, і та ширина міняється плавно. Рух вимикає загальне правило
+        <code>prefers-reduced-motion</code>. Фотографій немає, тож кожен малює порожнє квадратне
+        поле.
+      </p>
+      <app-material-picker [materials]="materialSamples" />
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Карусель відгуків</h3>
+      <p class="group__note">
+        Усі відгуки лежать поруч в одному ряду, тож висота не стрибає при гортанні, а найдовший
+        не обрізається. Гортає сама раз на шість секунд — і зупиняється назавжди після першого
+        дотику; під <code>prefers-reduced-motion</code> не починає зовсім. Нижче — три стани, бо
+        з одним відгуком крапок немає взагалі.
+      </p>
+      <app-testimonial-carousel [testimonials]="testimonialSamples" />
+      <div class="single-quote">
+        <app-testimonial-carousel [testimonials]="[testimonialSamples[0]]" />
+      </div>
+    </section>
+
+    <section class="group">
+      <h3 class="group__title">Форма відгуку</h3>
+      <p class="group__note">
+        Обидва поля обовʼязкові, і форма прямо каже, що відгук поки нікуди не йде. Відмова
+        малюється кольором помилки й відрізняється від успіху ще й словами — надішліть порожню
+        форму, щоб побачити. Поля — той самий компонент, що й у панелі фільтрів, лише другому
+        задано кількість рядків.
+      </p>
+      <app-review-form />
+    </section>
+
+    <section class="group">
       <h3 class="group__title">Кроки процесу</h3>
       <p class="group__note">
         Номер бере позицію пункту, а не поле: переставте пункти — і номери підуть за ними.

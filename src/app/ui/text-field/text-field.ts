@@ -16,6 +16,8 @@ export class TextField {
 
   readonly inputmode = input<InputMode>('text');
 
+  readonly rows = input<number>();
+
   readonly autocomplete = input('off');
 
   readonly value = model('');
@@ -23,6 +25,6 @@ export class TextField {
   protected readonly messageId = `text-field-message-${nextMessageId++}`;
 
   protected report(target: EventTarget | null): void {
-    this.value.set((target as HTMLInputElement).value);
+    this.value.set((target as HTMLInputElement | HTMLTextAreaElement).value);
   }
 }

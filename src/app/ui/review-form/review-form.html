@@ -1,0 +1,36 @@
+<form class="review" (submit)="send($event)">
+  <app-text-field
+    label="Імʼя"
+    autocomplete="given-name"
+    [formField]="reviewForm.name"
+    [error]="nameProblem()"
+  />
+
+  <app-text-field
+    label="Відгук"
+    [rows]="4"
+    [formField]="reviewForm.review"
+    [error]="reviewProblem()"
+  />
+
+  <p class="review__note">
+    Відгук поки нікуди не надсилається — ми ще готуємо цю частину сайту.
+  </p>
+
+  <p class="review__outcome" role="status">
+    @switch (outcome()) {
+      @case ('refused') {
+        <span class="review__outcome--refused">
+          Відгук не надіслано: заповніть обидва поля.
+        </span>
+      }
+      @case ('sent') {
+        <span class="review__outcome--sent">
+          Дякуємо, що написали. Зберігати відгуки сайт поки не вміє, тож цей текст нікуди не пішов.
+        </span>
+      }
+    }
+  </p>
+
+  <button class="review__send" type="submit">Надіслати</button>
+</form>

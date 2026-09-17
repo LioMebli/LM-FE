@@ -34,6 +34,7 @@ const WIDE_LAYOUT_COMPONENTS = [
   'call-band',
   'filter-sheet',
   'hero-panel',
+  'material-picker',
   'service-row',
   'site-footer',
   'site-header',

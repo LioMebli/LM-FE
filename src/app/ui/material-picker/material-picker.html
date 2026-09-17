@@ -1,0 +1,25 @@
+<ul class="materials">
+  @for (material of materials(); track material.name; let index = $index) {
+    <li class="materials__item" [class.materials__item--chosen]="index === selected()">
+      <button
+        class="material"
+        type="button"
+        [attr.aria-pressed]="index === selected()"
+        (click)="choose(index)"
+      >
+        <span class="material__media">
+          @if (material.image; as photo) {
+            <img class="material__image" [ngSrc]="photo.src" [alt]="photo.alt" fill />
+          }
+        </span>
+
+        <span class="material__body">
+          <span class="material__name">{{ material.name }}</span>
+          <span class="material__detail">
+            {{ index === selected() ? material.detail : material.summary }}
+          </span>
+        </span>
+      </button>
+    </li>
+  }
+</ul>

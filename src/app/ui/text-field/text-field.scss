@@ -26,6 +26,11 @@
   font-size: var(--lm-text-md);
 }
 
+.field__input--multiline {
+  padding-block: var(--lm-space-sm);
+  resize: vertical;
+}
+
 .field__input[aria-invalid='true'] {
   border-color: var(--lm-color-error);
   border-width: 2px;

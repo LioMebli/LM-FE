@@ -12,12 +12,15 @@ import { FilterChip } from '../../ui/filter-chip/filter-chip';
 import { FilterSheet } from '../../ui/filter-sheet/filter-sheet';
 import { HeroBanner } from '../../ui/hero-banner/hero-banner';
 import { HeroPanel } from '../../ui/hero-panel/hero-panel';
+import { Material, MaterialPicker } from '../../ui/material-picker/material-picker';
 import { PaginationLink } from '../../ui/pagination-link/pagination-link';
 import { ProcessStep, ProcessSteps } from '../../ui/process-steps/process-steps';
 import { ProductCard } from '../../ui/product-card/product-card';
 import { ProjectCard } from '../../ui/project-card/project-card';
+import { ReviewForm } from '../../ui/review-form/review-form';
 import { Service, ServiceRow } from '../../ui/service-row/service-row';
 import { SocialProfile } from '../../ui/shell.types';
+import { Testimonial, TestimonialCarousel } from '../../ui/testimonial-carousel/testimonial-carousel';
 import { SelectionLink } from '../../ui/selection-link/selection-link';
 import { SiteFooter } from '../../ui/site-footer/site-footer';
 import { StickyActionBar } from '../../ui/sticky-action-bar/sticky-action-bar';
@@ -175,6 +178,39 @@ const SHOWCASE_PROJECTS: readonly { name: string; lede: string }[] = [
   { name: 'Вітальня «Warm Wood»', lede: 'Поєднання дуба та мʼяких ліній.' },
 ];
 
+const SHOWCASE_MATERIALS: readonly Material[] = [
+  {
+    name: 'Натуральний дуб',
+    summary: 'Шпон із живою текстурою.',
+    detail: 'Шпон із живою текстурою, олійне покриття, тепла матова поверхня.',
+  },
+  {
+    name: 'Камінь і кварц',
+    summary: 'Стійкі поверхні.',
+    detail: 'Стійкі поверхні, що не бояться гарячого посуду й вологи.',
+  },
+  {
+    name: 'Довговічна фурнітура',
+    summary: 'Механізми з гарантією.',
+    detail: 'Механізми з гарантією на 25 років, плавне доведення.',
+  },
+];
+
+const SHOWCASE_TESTIMONIALS: readonly Testimonial[] = [
+  {
+    quote: '«Lio Mebli» зробили нашу кухню серцем дому. Тепер готувати — це медитація.',
+    author: 'Олена та Іван Т., Харків',
+  },
+  {
+    quote: 'Замір, проєкт і монтаж — усе точно в строк. Жодного «плюс-мінус тиждень».',
+    author: 'Андрій П., Полтава',
+  },
+  {
+    quote: 'Через два роки щоденного користування фасади виглядають як у перший день.',
+    author: 'Марія К., Львів',
+  },
+];
+
 const SHOWCASE_CATEGORIES: readonly string[] = [
   'Петлі',
   'Ручки меблеві',
@@ -208,12 +244,15 @@ const SHOWCASE_AVAILABILITY: readonly Availability[] = [
     FilterSheet,
     HeroBanner,
     HeroPanel,
+    MaterialPicker,
     PaginationLink,
     ProcessSteps,
     ProductCard,
     ProjectCard,
+    ReviewForm,
     SelectionLink,
     ServiceRow,
+    TestimonialCarousel,
     SiteFooter,
     StickyActionBar,
     TextField,
@@ -231,6 +270,8 @@ export class DesignSystemPage {
   protected readonly serviceSamples = SHOWCASE_SERVICES;
   protected readonly callSample = SHOWCASE_CALL;
   protected readonly projectSamples = SHOWCASE_PROJECTS;
+  protected readonly materialSamples = SHOWCASE_MATERIALS;
+  protected readonly testimonialSamples = SHOWCASE_TESTIMONIALS;
   protected readonly samplePhone = SHOWCASE_PHONE;
   protected readonly sampleAddress = SHOWCASE_ADDRESS;
   protected readonly sampleEmail = SHOWCASE_EMAIL;
