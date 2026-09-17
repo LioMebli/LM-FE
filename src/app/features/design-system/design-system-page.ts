@@ -10,7 +10,6 @@ import { CategoryCard } from '../../ui/category-card/category-card';
 import { CheckboxRow } from '../../ui/checkbox-row/checkbox-row';
 import { FilterChip } from '../../ui/filter-chip/filter-chip';
 import { FilterSheet } from '../../ui/filter-sheet/filter-sheet';
-import { HeroBanner } from '../../ui/hero-banner/hero-banner';
 import { HeroPanel } from '../../ui/hero-panel/hero-panel';
 import { Material, MaterialPicker } from '../../ui/material-picker/material-picker';
 import { PaginationLink } from '../../ui/pagination-link/pagination-link';
@@ -151,11 +150,6 @@ const SHOWCASE_STEPS: readonly ProcessStep[] = [
   { label: 'Третій крок', detail: 'І ще один.' },
 ];
 
-const SHOWCASE_HERO = {
-  heading: 'Заголовок сторінки',
-  lede: 'Одне речення під ним, достатньо довге, щоб перенестися на другий рядок при 360 px.',
-};
-
 const SHOWCASE_HERO_PANEL = {
   heading: 'Lio Mebli',
   lede: 'Створюємо простір, де кожен сантиметр має значення.',
@@ -242,7 +236,6 @@ const SHOWCASE_AVAILABILITY: readonly Availability[] = [
     CheckboxRow,
     FilterChip,
     FilterSheet,
-    HeroBanner,
     HeroPanel,
     MaterialPicker,
     PaginationLink,
@@ -265,7 +258,6 @@ export class DesignSystemPage {
   protected readonly tokenGroups = TOKEN_GROUPS;
   protected readonly cards = SHOWCASE_CARDS;
   protected readonly categories = SHOWCASE_CATEGORIES;
-  protected readonly heroSample = SHOWCASE_HERO;
   protected readonly heroPanelSample = SHOWCASE_HERO_PANEL;
   protected readonly serviceSamples = SHOWCASE_SERVICES;
   protected readonly callSample = SHOWCASE_CALL;
