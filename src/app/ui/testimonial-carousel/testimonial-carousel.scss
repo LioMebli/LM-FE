@@ -5,6 +5,7 @@
 .carousel {
   display: grid;
   gap: var(--lm-space-sm);
+  max-inline-size: var(--lm-text-max);
 }
 
 .carousel__window {
@@ -23,7 +24,6 @@
 
 .carousel__slide {
   flex: 0 0 100%;
-  padding-inline: var(--lm-space-xs);
 }
 
 .carousel__quote {
