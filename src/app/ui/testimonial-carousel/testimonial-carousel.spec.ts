@@ -60,12 +60,16 @@ describe('TestimonialCarousel', () => {
     expect(host.querySelector('.carousel__dots')).toBeNull();
   });
 
-  it('advances on its own while nobody has touched it', () => {
+  it('advances on its own while nobody has touched it, and keeps its period', () => {
     mount(TESTIMONIALS, { stillness: false });
 
     tick(6000);
 
     expect(shown()).toBe(1);
+
+    tick(6000);
+
+    expect(shown()).toBe(2);
   });
 
   it('stops advancing for good once somebody has touched it', () => {

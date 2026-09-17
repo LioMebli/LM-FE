@@ -1,6 +1,30 @@
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormField, form } from '@angular/forms/signals';
 
 import { TextField } from './text-field';
+
+@Component({
+  selector: 'app-prefilled-field-host',
+  imports: [FormField, TextField],
+  template: '<app-text-field label="Імʼя" [formField]="held.name" />',
+})
+class PrefilledFieldHost {
+  readonly model = signal({ name: 'Олена' });
+
+  readonly held = form(this.model);
+}
+
+@Component({
+  selector: 'app-empty-field-host',
+  imports: [FormField, TextField],
+  template: '<app-text-field label="Імʼя" [formField]="held.name" />',
+})
+class EmptyFieldHost {
+  readonly model = signal({ name: '' });
+
+  readonly held = form(this.model);
+}
 
 describe('TextField', () => {
   let fixture: ComponentFixture<TextField>;
@@ -141,3 +165,69 @@ describe('TextField', () => {
     return host().querySelector<HTMLInputElement>('.field__input')!;
   }
 });
+
+describe('TextField bound to a Signal Forms field', () => {
+  let fixture: ComponentFixture<PrefilledFieldHost>;
+  let control: HTMLInputElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [PrefilledFieldHost] }).compileComponents();
+
+    fixture = TestBed.createComponent(PrefilledFieldHost);
+    await fixture.whenStable();
+    control = controlOf(fixture);
+  });
+
+  it('shows what the field already holds, without the caller wiring a value binding', () => {
+    expect(control.value).toBe('Олена');
+  });
+
+  it('carries what was typed into the form model', async () => {
+    await type(fixture, 'Марія');
+
+    expect(fixture.componentInstance.model().name).toBe('Марія');
+  });
+
+  it('carries a write to the model back into the control, which is the direction a reset needs', async () => {
+    await type(fixture, 'Марія');
+
+    fixture.componentInstance.model.set({ name: '' });
+    await fixture.whenStable();
+
+    expect(fixture.componentInstance.held.name().value()).toBe('');
+    expect(control.value).toBe('');
+  });
+});
+
+describe('TextField reset to the value its field started with', () => {
+  let fixture: ComponentFixture<EmptyFieldHost>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [EmptyFieldHost] }).compileComponents();
+
+    fixture = TestBed.createComponent(EmptyFieldHost);
+    await fixture.whenStable();
+  });
+
+  it('clears the control as well as the field, which is the case a plain "reset" is made of', async () => {
+    await type(fixture, 'Олена');
+
+    fixture.componentInstance.model.set({ name: '' });
+    await fixture.whenStable();
+
+    expect(fixture.componentInstance.held.name().value()).toBe('');
+    expect(controlOf(fixture).value).toBe('');
+  });
+});
+
+function controlOf(fixture: ComponentFixture<unknown>): HTMLInputElement {
+  return (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>('.field__input')!;
+}
+
+async function type(fixture: ComponentFixture<unknown>, text: string): Promise<void> {
+  const control = controlOf(fixture);
+
+  control.value = text;
+  control.dispatchEvent(new Event('input'));
+  await fixture.whenStable();
+}

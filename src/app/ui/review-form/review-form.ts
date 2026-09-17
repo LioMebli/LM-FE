@@ -36,7 +36,7 @@ export class ReviewForm {
   protected send(event: Event): void {
     event.preventDefault();
 
-    if (this.reviewForm.name().invalid() || this.reviewForm.review().invalid()) {
+    if (this.reviewForm().invalid()) {
       this.outcome.set('refused');
 
       return;

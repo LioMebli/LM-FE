@@ -36,7 +36,7 @@ export class TestimonialCarousel {
   private startUnlessAskedNotTo(): void {
     const stillness = matchMedia('(prefers-reduced-motion: reduce)');
 
-    if (stillness.matches || this.testimonials().length < 2) {
+    if (this.interrupted() || stillness.matches || this.testimonials().length < 2) {
       return;
     }
 
