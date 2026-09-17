@@ -22,6 +22,18 @@ function componentStylesheets(): { path: string; source: string }[] {
   return stylesheetsUnder(UI_DIR);
 }
 
+function everyAuthoredTemplate(): { path: string; source: string }[] {
+  return [UI_DIR, FEATURE_DIR].flatMap((dir) =>
+    readdirSync(dir, { recursive: true, withFileTypes: true })
+      .filter((entry) => entry.isFile() && entry.name.endsWith('.html'))
+      .map((entry) => {
+        const path = join(entry.parentPath, entry.name);
+
+        return { path, source: readFileSync(path, 'utf8') };
+      }),
+  );
+}
+
 function everyAuthoredStylesheet(): { path: string; source: string }[] {
   return [
     ...componentStylesheets(),
@@ -164,6 +176,18 @@ describe('the components’ design vocabulary', () => {
     expect(revealedOnlyByItsAnimation(reveal)).toBe(true);
     expect(revealedOnlyByItsAnimation(keyframeOnly)).toBe(false);
     expect(revealedOnlyByItsAnimation(unrelated)).toBe(false);
+  });
+
+  it('keeps the hiding utility and the templates that reach for it attached to each other', () => {
+    const shell = readFileSync(SHELL_STYLESHEET, 'utf8');
+    const rule = /\.visually-hidden\s*\{([^}]*)\}/.exec(shell)?.[1] ?? '';
+    const reaching = everyAuthoredTemplate().filter(({ source }) =>
+      /class="[^"]*\bvisually-hidden\b/.test(source),
+    );
+
+    expect(rule).toContain('position: absolute');
+    expect(rule).toContain('clip-path: inset(50%)');
+    expect(reaching.map(({ path }) => path)).not.toEqual([]);
   });
 
   it('keeps a view-progress animation out of anything that scrolls instead of the page', () => {

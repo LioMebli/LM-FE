@@ -22,12 +22,15 @@ describe('HomePage', () => {
     fixture.detectChanges();
   });
 
-  it('carries every block the drawn page is made of, in the order it draws them', () => {
-    const blocks = [...host.querySelectorAll('[class*="home__"], app-hero-panel')]
+  it('renders the hero outside any section, because it is the one full-bleed block', () => {
+    const unwrapped = [...host.querySelectorAll('[class*="home__"], app-hero-panel')]
       .map((node) => node.tagName.toLowerCase())
       .filter((tag) => tag.startsWith('app-'));
 
-    expect(blocks).toEqual(['app-hero-panel']);
+    expect(unwrapped).toEqual(['app-hero-panel']);
+  });
+
+  it('carries every block the drawn page is made of, in the order it draws them', () => {
     expect(order()).toEqual([
       'app-hero-panel',
       'app-service-row',
@@ -58,8 +61,8 @@ describe('HomePage', () => {
   it('renders no way into the catalog, because the catalog has no route yet', () => {
     const links = [...host.querySelectorAll('a')].map((link) => link.getAttribute('href') ?? '');
 
-    expect(links.filter((href) => href.startsWith('/category'))).toEqual([]);
-    expect(links.every((href) => href.startsWith('tel:'))).toBe(true);
+    expect(links.length).toBeGreaterThan(0);
+    expect(links.filter((href) => !href.startsWith('tel:'))).toEqual([]);
   });
 
   it('opens the outline with one h1 and heads every section at the level below', () => {
@@ -87,8 +90,15 @@ describe('HomePage', () => {
   });
 
   it('names the business in the title and points the canonical link at the root', () => {
-    expect(document.title).toBe('Lio Mebli — LioMebli');
+    expect(document.title).toBe('Меблі на замовлення — LioMebli');
     expect(canonical()).toBe(`${environment.siteOrigin}/`);
+  });
+
+  it('says what the page is in the title rather than the brand twice', () => {
+    const brandMentions = document.title.split(/Lio\s*Mebli/i).length - 1;
+
+    expect(brandMentions).toBe(1);
+    expect(document.title).not.toContain(host.querySelector('h1')?.textContent?.trim());
   });
 
   it('addresses the visitor as «ви» and never as «ти»', () => {

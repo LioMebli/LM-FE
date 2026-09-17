@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 
 import { PageMetadata } from '../../core/seo/page-metadata';
-import { SITE_PHONE } from '../../core/site-contact';
+import { SITE_CALL_HOURS, SITE_PHONE } from '../../core/site-contact';
 import { CallBand } from '../../ui/call-band/call-band';
 import { HeroPanel } from '../../ui/hero-panel/hero-panel';
 import { Material, MaterialPicker } from '../../ui/material-picker/material-picker';
@@ -13,6 +13,8 @@ import { Service, ServiceRow } from '../../ui/service-row/service-row';
 import { Testimonial, TestimonialCarousel } from '../../ui/testimonial-carousel/testimonial-carousel';
 
 const HEADING = 'Lio Mebli';
+
+const TITLE = 'Меблі на замовлення';
 
 const LEDE = 'Створюємо простір, де кожен сантиметр має значення.';
 
@@ -33,8 +35,6 @@ const SERVICES: readonly Service[] = [
 const CALL_HEADING = 'Один дзвінок — і ми порахуємо вашу кухню';
 
 const CALL_LEDE = 'Безкоштовно підберемо планування й матеріали, назвемо ціну та строк.';
-
-const CALL_HOURS = 'Пн–Сб, 9:00–19:00';
 
 interface Project {
   name: string;
@@ -125,7 +125,7 @@ export class HomePage {
 
   protected readonly callLede = CALL_LEDE;
 
-  protected readonly callHours = CALL_HOURS;
+  protected readonly callHours = SITE_CALL_HOURS;
 
   protected readonly phone = SITE_PHONE;
 
@@ -140,6 +140,6 @@ export class HomePage {
   private readonly metadata = inject(PageMetadata);
 
   constructor() {
-    this.metadata.apply({ title: HEADING, path: '/', description: DESCRIPTION });
+    this.metadata.apply({ title: TITLE, path: '/', description: DESCRIPTION });
   }
 }
