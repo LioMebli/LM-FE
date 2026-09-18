@@ -10,7 +10,9 @@
 .field__caption {
   color: var(--lm-color-ink-muted);
   font-size: var(--lm-text-sm);
+  letter-spacing: 0.06em;
   line-height: var(--lm-leading-body);
+  text-transform: uppercase;
 }
 
 .field__input {

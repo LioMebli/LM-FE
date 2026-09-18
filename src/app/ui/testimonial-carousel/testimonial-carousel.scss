@@ -1,5 +1,15 @@
+@use 'breakpoints' as layout;
+
 :host {
+  --carousel-dot: 9px;
+
   display: block;
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --carousel-dot: 10px;
+  }
 }
 
 .carousel {
@@ -64,8 +74,8 @@
 
 .carousel__dot {
   display: block;
-  inline-size: var(--lm-space-sm);
-  block-size: var(--lm-space-sm);
+  inline-size: var(--carousel-dot);
+  block-size: var(--carousel-dot);
   border-radius: var(--lm-radius-pill);
   background: var(--lm-color-hairline);
   transition: background 0.22s ease;

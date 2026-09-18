@@ -17,6 +17,7 @@ export class TextField {
   readonly inputmode = input<InputMode>('text');
 
   readonly rows = input<number>();
+  readonly placeholder = input<string>();
 
   readonly autocomplete = input('off');
 

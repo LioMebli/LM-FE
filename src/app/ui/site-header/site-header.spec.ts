@@ -153,7 +153,7 @@ describe('SiteHeader', () => {
     expect(host().querySelector('.header__search .header__field')).not.toBeNull();
     expect(host().querySelector('.menu__search .header__field')).not.toBeNull();
 
-    for (const form of ['.header__search', '.menu__search']) {
+    for (const form of ['.header__search form', '.menu__search']) {
       const field = host().querySelector<HTMLInputElement>(`${form} .header__field`)!;
 
       field.value = 'ручка';
@@ -192,7 +192,7 @@ describe('SiteHeader', () => {
     const field = host().querySelector<HTMLInputElement>('.header__field')!;
 
     field.value = query;
-    host().querySelector<HTMLFormElement>('.header__search')!.dispatchEvent(
+    host().querySelector<HTMLFormElement>('.header__search form')!.dispatchEvent(
       new Event('submit', { cancelable: true }),
     );
   }

@@ -31,6 +31,9 @@
 .footer__link {
   inline-size: 100%;
   color: var(--lm-color-ink);
+  font-size: var(--lm-text-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .footer__list li:not(:last-child) .footer__link {

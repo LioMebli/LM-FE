@@ -27,7 +27,7 @@ describe('HeroPanel', () => {
   it('draws no photograph while there is none, rather than an image with no source', () => {
     fixture.detectChanges();
 
-    expect(host.querySelector('img')).toBeNull();
+    expect(host.querySelector('.hero__image')).toBeNull();
     expect(host.querySelector('.hero__media')).not.toBeNull();
   });
 
@@ -53,6 +53,18 @@ describe('HeroPanel', () => {
     fixture.detectChanges();
 
     expect(host.querySelector('.hero__media img')).not.toBeNull();
-    expect(host.querySelector('.hero__body img')).toBeNull();
+    expect(host.querySelector('.hero__body .hero__image')).toBeNull();
+  });
+
+  it('sets the brand mark beside the heading, and hides it from anyone reading the name', () => {
+    fixture.detectChanges();
+
+    const mark = host.querySelector('.hero__mark');
+    const lockup = host.querySelector('.hero__lockup');
+
+    expect(mark?.getAttribute('src')).toBe('lm-mark.svg');
+    expect(mark?.getAttribute('alt')).toBe('');
+    expect(lockup?.contains(mark ?? null)).toBe(true);
+    expect(lockup?.querySelector('h1')).not.toBeNull();
   });
 });

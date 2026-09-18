@@ -10,7 +10,8 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  background: var(--lm-color-page);
+  border-block-end: var(--lm-border-hairline);
+  background: var(--lm-color-hairline);
 }
 
 .service {
@@ -20,6 +21,13 @@
   padding: var(--lm-space-lg) var(--lm-space-md);
   background: var(--lm-color-surface);
   text-align: center;
+  transition: background 0.22s ease;
+}
+
+@media (hover: hover) {
+  .service:hover {
+    background: color-mix(in oklch, var(--lm-color-ink) 5%, var(--lm-color-surface));
+  }
 }
 
 .service__name {

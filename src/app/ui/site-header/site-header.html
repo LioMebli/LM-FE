@@ -1,12 +1,46 @@
 <header class="header">
   <app-brand-mark />
 
-  <ng-container [ngTemplateOutlet]="search" [ngTemplateOutletContext]="{ place: 'header' }" />
+  <div class="header__search" [attr.data-open]="searchOpen() ? '' : null">
+    <form role="search" (submit)="submitSearch($event, headerQuery.value)">
+      <input
+        #headerField
+        #headerQuery
+        class="header__field"
+        type="search"
+        autocomplete="off"
+        aria-label="Пошук товарів"
+        placeholder="Пошук"
+        (blur)="closeSearchWhenEmpty(headerQuery.value)"
+      />
+    </form>
+
+    <button class="header__magnifier" type="button" aria-label="Пошук" (click)="toggleSearch()">
+      <svg
+        class="header__glyph"
+        viewBox="0 0 20 20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <circle cx="8.5" cy="8.5" r="5.5" />
+        <path d="M12.8 12.8 17 17" />
+      </svg>
+    </button>
+  </div>
 
   <nav class="header__nav" aria-label="Розділи сайту">
     <ul class="header__row">
       @for (destination of destinations(); track destination.link) {
-        <li><a class="header__link" [routerLink]="destination.link">{{ destination.label }}</a></li>
+        <li>
+          <a
+            class="header__link"
+            [routerLink]="destination.link"
+            [fragment]="destination.fragment"
+          >{{ destination.label }}</a>
+        </li>
       }
     </ul>
   </nav>
@@ -43,13 +77,27 @@
         <app-action-button (pressed)="close()">Закрити</app-action-button>
       </div>
 
-      <ng-container [ngTemplateOutlet]="search" [ngTemplateOutletContext]="{ place: 'menu' }" />
+      <form class="menu__search" role="search" (submit)="submitSearch($event, menuQuery.value)">
+        <input
+          #menuQuery
+          class="header__field"
+          type="search"
+          autocomplete="off"
+          aria-label="Пошук товарів"
+          placeholder="Пошук"
+        />
+      </form>
 
       <nav class="menu__body">
         <ul class="menu__list">
           @for (destination of destinations(); track destination.link) {
             <li>
-              <a class="menu__link" [routerLink]="destination.link" (click)="close()">
+              <a
+                class="menu__link"
+                [routerLink]="destination.link"
+                [fragment]="destination.fragment"
+                (click)="close()"
+              >
                 {{ destination.label }}
               </a>
             </li>
@@ -63,20 +111,3 @@
     </div>
   </dialog>
 </header>
-
-<ng-template #search let-place="place">
-  <form
-    [class]="place === 'menu' ? 'menu__search' : 'header__search'"
-    role="search"
-    (submit)="submitSearch($event, field.value)"
-  >
-    <input
-      #field
-      class="header__field"
-      type="search"
-      autocomplete="off"
-      aria-label="Пошук товарів"
-      placeholder="Пошук"
-    />
-  </form>
-</ng-template>

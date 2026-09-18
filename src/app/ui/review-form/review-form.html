@@ -1,6 +1,7 @@
 <form class="review" (submit)="send($event)">
   <app-text-field
     label="Імʼя"
+    placeholder="Ваше імʼя"
     autocomplete="given-name"
     [formField]="reviewForm.name"
     [error]="nameProblem()"
@@ -8,6 +9,7 @@
 
   <app-text-field
     label="Відгук"
+    placeholder="Розкажіть про свій досвід"
     [rows]="4"
     [formField]="reviewForm.review"
     [error]="reviewProblem()"

@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, ElementRef, computed, input, output, viewChild } from '@angular/core';
+import { Component, ElementRef, computed, input, output, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { telHref } from '../../core/site-contact';
@@ -27,7 +27,22 @@ export class SiteHeader {
 
   protected readonly callHref = computed(() => telHref(this.phone()));
 
+  protected readonly searchOpen = signal(false);
+
   private readonly menu = viewChild.required<ElementRef<HTMLDialogElement>>('menu');
+
+  private readonly headerField = viewChild<ElementRef<HTMLInputElement>>('headerField');
+
+  protected toggleSearch(): void {
+    this.searchOpen.update((open) => !open);
+    this.headerField()?.nativeElement.focus();
+  }
+
+  protected closeSearchWhenEmpty(value: string): void {
+    if (!value.trim()) {
+      this.searchOpen.set(false);
+    }
+  }
 
   protected open(): void {
     this.menu().nativeElement.showModal();

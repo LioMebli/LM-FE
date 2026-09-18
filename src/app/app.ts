@@ -1,14 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 
-import { SITE_PHONE } from './core/site-contact';
+import { SITE_ADDRESS, SITE_EMAIL, SITE_PHONE } from './core/site-contact';
 import { NavDestination } from './ui/shell.types';
 import { SiteFooter } from './ui/site-footer/site-footer';
 import { SiteHeader } from './ui/site-header/site-header';
 
 const SEARCH_PARAM = 'q';
 
-const DESTINATIONS: readonly NavDestination[] = [{ label: 'Головна', link: '/' }];
+const DESTINATIONS: readonly NavDestination[] = [
+  { label: 'Каталог', link: '/', fragment: 'projects' },
+  { label: 'Про нас', link: '/', fragment: 'steps' },
+  { label: 'Контакти', link: '/', fragment: 'foot' },
+];
 
 @Component({
   selector: 'app-root',
@@ -20,6 +24,10 @@ export class App {
   protected readonly destinations = DESTINATIONS;
 
   protected readonly phone = SITE_PHONE;
+
+  protected readonly address = SITE_ADDRESS;
+
+  protected readonly email = SITE_EMAIL;
 
   private readonly router = inject(Router);
 

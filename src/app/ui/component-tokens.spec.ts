@@ -47,10 +47,12 @@ const WIDE_LAYOUT_COMPONENTS = [
   'filter-sheet',
   'hero-panel',
   'material-picker',
+  'review-form',
   'service-row',
   'site-footer',
   'site-header',
   'sticky-action-bar',
+  'testimonial-carousel',
 ];
 
 const KEYFRAMES_BLOCK = /@keyframes[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}/g;

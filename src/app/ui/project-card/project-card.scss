@@ -49,3 +49,13 @@
   text-wrap: pretty;
 }
 
+@media (hover: hover) {
+  .project:hover {
+    border-color: var(--lm-color-primary);
+  }
+
+  .project:hover .project__image {
+    scale: 1.05;
+  }
+}
+

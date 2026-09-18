@@ -1,7 +1,7 @@
 <footer class="footer">
   <div class="footer__brand">
     <app-brand-mark />
-    <p class="footer__rights">© Lio Mebli. Усі права захищені.</p>
+    <p class="footer__rights">© 2026. Усі права захищені.</p>
   </div>
 
   @if (destinations().length) {
@@ -9,7 +9,11 @@
       <ul class="footer__list">
         @for (destination of destinations(); track destination.link) {
           <li>
-            <a class="footer__link" [routerLink]="destination.link">{{ destination.label }}</a>
+            <a
+              class="footer__link"
+              [routerLink]="destination.link"
+              [fragment]="destination.fragment"
+            >{{ destination.label }}</a>
           </li>
         }
       </ul>

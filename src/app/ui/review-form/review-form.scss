@@ -1,3 +1,5 @@
+@use 'breakpoints' as layout;
+
 :host {
   display: block;
 }
@@ -6,6 +8,12 @@
   display: grid;
   gap: var(--lm-space-md);
   max-inline-size: var(--lm-text-max);
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  .review__send {
+    justify-self: end;
+  }
 }
 
 .review__note {
@@ -32,7 +40,6 @@
 }
 
 .review__send {
-  justify-self: start;
   padding-inline: var(--lm-space-lg);
   border: 0;
   border-radius: var(--lm-radius-pill);

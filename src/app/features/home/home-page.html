@@ -7,6 +7,7 @@
 
 <section class="home__call">
   <app-call-band
+    class="lm-reveal"
     [heading]="callHeading"
     [lede]="callLede"
     [phone]="phone"
@@ -14,13 +15,18 @@
   />
 </section>
 
-<section class="home__band" aria-labelledby="home-projects">
-  <h2 class="home__eyebrow" id="home-projects">Наші останні проєкти</h2>
+<section class="home__band" id="projects" aria-labelledby="home-projects">
+  <h2 class="home__eyebrow lm-reveal" id="home-projects">Наші останні проєкти</h2>
 
   <ul class="home__projects">
     @for (project of projects; track project.name) {
       <li>
-        <app-project-card [name]="project.name" [lede]="project.lede" [image]="project.image" />
+        <app-project-card
+          class="lm-reveal"
+          [name]="project.name"
+          [lede]="project.lede"
+          [image]="project.image"
+        />
       </li>
     }
   </ul>
@@ -28,24 +34,24 @@
 
 <section class="home__materials" aria-labelledby="home-materials">
   <div class="home__band">
-    <h2 class="home__eyebrow" id="home-materials">Якість, яку можна відчути</h2>
-    <p class="home__lede">Оберіть матеріал, щоб розглянути ближче.</p>
+    <h2 class="home__eyebrow lm-reveal" id="home-materials">Якість, яку можна відчути</h2>
+    <p class="home__lede">Натисніть на матеріал, щоб розглянути ближче.</p>
     <app-material-picker [materials]="materials" />
   </div>
 </section>
 
-<section class="home__band" aria-labelledby="home-steps">
-  <h2 class="home__eyebrow" id="home-steps">Три кроки до ваших ідеальних меблів</h2>
+<section class="home__band" id="steps" aria-labelledby="home-steps">
+  <h2 class="home__eyebrow lm-reveal" id="home-steps">Три кроки до ваших ідеальних меблів</h2>
   <app-process-steps [steps]="steps" />
 </section>
 
 <section class="home__reviews" aria-labelledby="home-reviews">
   <div class="home__band home__band--narrow">
-    <h2 class="home__eyebrow" id="home-reviews">Що говорять наші клієнти</h2>
-    <app-testimonial-carousel [testimonials]="testimonials" />
+    <h2 class="home__eyebrow lm-reveal" id="home-reviews">Що говорять наші клієнти</h2>
+    <app-testimonial-carousel class="lm-reveal" [testimonials]="testimonials" />
 
     <div class="home__form">
-      <app-review-form />
+      <app-review-form class="lm-reveal" />
     </div>
   </div>
 </section>

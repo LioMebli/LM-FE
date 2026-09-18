@@ -52,6 +52,19 @@
   text-align: center;
 }
 
+.hero__lockup {
+  display: flex;
+  align-items: center;
+  gap: var(--lm-space-md);
+}
+
+.hero__mark {
+  inline-size: auto;
+  block-size: 1.18em;
+  font-size: var(--lm-text-display-lg);
+  filter: invert(1);
+}
+
 .hero__heading {
   margin: 0;
   font-family: var(--lm-font-display);
@@ -92,6 +105,10 @@
 @media (min-width: layout.$lm-layout-wide) {
   .hero__body {
     padding: var(--lm-space-2xl) var(--lm-space-lg);
+  }
+
+  .hero__lockup {
+    gap: var(--lm-space-lg);
   }
 
   .hero__lede {
