@@ -13,6 +13,8 @@
   --lm-color-error: oklch(0.40 0.15 25);
   --lm-color-success: oklch(0.52 0.11 152);
 
+  --lm-color-hairline: oklch(0.85 0.010 75);
+
   --lm-border-hairline: 1px solid oklch(0.85 0.010 75);
   --lm-border-control: 1px solid oklch(0.59 0.012 75);
 

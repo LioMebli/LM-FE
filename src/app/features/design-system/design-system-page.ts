@@ -56,6 +56,7 @@ export const TOKEN_GROUPS: readonly TokenGroup[] = [
       '--lm-color-link',
       '--lm-color-error',
       '--lm-color-success',
+      '--lm-color-hairline',
     ],
   },
   { title: 'Відгук на курсор', sample: 'colour', names: ['--lm-hover-veil'] },
