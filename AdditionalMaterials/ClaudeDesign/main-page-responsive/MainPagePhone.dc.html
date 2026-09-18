@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- phone layout of the responsive main page; mounted by MainPageResponsive.dc.html below 860px -->
+<helmet><script src="./ds-base.js"></script><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;600;700&amp;display=swap"><style>*{box-sizing:border-box}body{margin:0}img{display:block;max-width:100%}a{color:oklch(0.20 0.012 75)}a:hover{color:oklch(0.54 0.09 62)}html{scrollbar-width:none}html::-webkit-scrollbar{width:0;height:0}@keyframes lmReveal{from{opacity:0;transform:translateY(52px)}to{opacity:1;transform:none}}.lm-reveal{animation:lmReveal 1.15s cubic-bezier(.22,.7,.25,1) both;animation-timeline:view();animation-range:entry 2% cover 42%}@media (prefers-reduced-motion:reduce){.lm-reveal{animation:none}}#lm-head{transform:translateY(-100%);opacity:0;transition:transform .45s cubic-bezier(.22,.7,.25,1),opacity .35s ease}#lm-head[data-on="1"]{transform:none;opacity:1}#lm-blob{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:calc(1 - var(--lm-p,0));mask:radial-gradient(63% 40% at 50% 45%,#000 34%,rgba(0,0,0,.5) 66%,transparent 100%);-webkit-mask:radial-gradient(63% 40% at 50% 45%,#000 34%,rgba(0,0,0,.5) 66%,transparent 100%)}#lm-blob img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(2px) saturate(.95) brightness(.35);transform:scale(calc(1.12 + var(--lm-q,0) * 0.06)) translateY(calc(-2% + var(--lm-q,0) * 6%))}#lm-hero-copy{z-index:2;opacity:calc(1 - var(--lm-p,0));transform:translateY(calc(var(--lm-p,0) * -48px))}#lm-hero-img{transform:scale(calc(1.12 + var(--lm-q,0) * 0.06)) translateY(calc(-2% + var(--lm-q,0) * 6%))}#lm-scrim{opacity:0;pointer-events:none;transition:opacity .3s ease}#lm-scrim[data-on="1"]{opacity:1;pointer-events:auto}#lm-drawer{transform:translateX(100%);transition:transform .38s cubic-bezier(.22,.7,.25,1)}#lm-drawer[data-on="1"]{transform:none}.lm-burger i{display:block;width:22px;height:2px;background:currentColor;border-radius:2px;transition:transform .3s ease,opacity .2s ease}.lm-burger[data-on="1"] i:nth-child(1){transform:translateY(7px) rotate(45deg)}.lm-burger[data-on="1"] i:nth-child(2){opacity:0}.lm-burger[data-on="1"] i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}.lm-dot{background:oklch(0.85 0.010 75)}.lm-dot[data-active="1"]{background:oklch(0.54 0.09 62)}.lm-track[data-slide="1"]{transform:translateX(-100%)}.lm-track[data-slide="2"]{transform:translateX(-200%)}.lm-field:focus{outline:2px solid oklch(0.54 0.09 62);outline-offset:1px;border-color:oklch(0.54 0.09 62)}.lm-field::placeholder{color:oklch(0.59 0.012 75)}.lm-search input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none;width:12px;height:12px;cursor:pointer;background:oklch(0.46 0.014 75);mask:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1 1 11 11M11 1 1 11' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}</style></helmet>
+<div style="background:oklch(0.98 0.008 75);color:oklch(0.20 0.012 75);font-family:'Onest',system-ui,sans-serif;font-size:16px;line-height:1.5;min-height:100vh;overflow-x:hidden">
+<header id="lm-head" style="position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;gap:12px;padding:8px 12px;background:oklch(0.98 0.008 75);border-bottom:1px solid oklch(0.85 0.010 75)">
+<a href="#top" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:oklch(0.20 0.012 75)"><img src="../../lm-logo.svg" width="22" height="32" alt=""><span style="font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.2">Lio Mebli</span></a>
+<div style="display:flex;align-items:center;gap:4px;margin-left:auto">
+<a href="#foot" aria-label="Телефонувати" style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;color:oklch(0.20 0.012 75)"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2.8h-3v3c0 6.1 5 11.1 11.1 11.1h3v-3l-3.6-1.2-1.8 1.8a13 13 0 0 1-6.1-6.1l1.8-1.8Z"></path></svg></a>
+<button onClick="{{ toggleMenu }}" class="lm-burger" data-on="{{ menuOpen }}" aria-label="Меню" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:44px;height:44px;padding:0;background:none;border:0;color:oklch(0.20 0.012 75);cursor:pointer"><i></i><i></i><i></i></button>
+</div>
+</header>
+
+<div id="lm-scrim" data-on="{{ menuOpen }}" onClick="{{ closeMenu }}" style="position:fixed;inset:0;z-index:38;background:oklch(0.20 0.012 75 / 0.5)"></div>
+<aside id="lm-drawer" data-on="{{ menuOpen }}" style="position:fixed;top:0;right:0;bottom:0;z-index:39;width:min(78vw,300px);display:flex;flex-direction:column;gap:24px;padding:20px;background:oklch(1 0.003 75);border-left:1px solid oklch(0.85 0.010 75)">
+<button onClick="{{ closeMenu }}" aria-label="Закрити меню" style="display:flex;align-items:center;justify-content:center;align-self:flex-end;width:48px;height:48px;padding:0;background:oklch(0.98 0.008 75);border:1px solid oklch(0.85 0.010 75);border-radius:999px;color:oklch(0.20 0.012 75);font:inherit;font-size:26px;line-height:1;cursor:pointer;transition:background .18s,border-color .18s" style-active="background:oklch(0.95 0.008 75)"><span style="display: block; transform: translateY(-2px); height: 20px">×</span></button>
+<div class="lm-search" style="display:flex;align-items:center;gap:8px"><input class="lm-field" type="search" placeholder="Пошук" aria-label="Пошук" style="width:100%;height:40px;padding:0 14px;border:1px solid oklch(0.59 0.012 75);border-radius:999px;background:oklch(0.98 0.008 75);color:oklch(0.20 0.012 75);font:inherit;font-size:15px"></div>
+<nav style="display:flex;flex-direction:column;gap:4px;font-size:15px;letter-spacing:.06em;text-transform:uppercase">
+<a href="#projects" onClick="{{ closeMenu }}" style="display:flex;align-items:center;min-height:48px;text-decoration:none;color:oklch(0.20 0.012 75);border-bottom:1px solid oklch(0.85 0.010 75)">Каталог</a>
+<a href="#steps" onClick="{{ closeMenu }}" style="display:flex;align-items:center;min-height:48px;text-decoration:none;color:oklch(0.20 0.012 75);border-bottom:1px solid oklch(0.85 0.010 75)">Про нас</a>
+<a href="#foot" onClick="{{ closeMenu }}" style="display:flex;align-items:center;min-height:48px;text-decoration:none;color:oklch(0.20 0.012 75);border-bottom:1px solid oklch(0.85 0.010 75)">Контакти</a>
+</nav>
+<button onClick="{{ addToCart }}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;background:none;border:1px solid oklch(0.59 0.012 75);border-radius:999px;color:oklch(0.20 0.012 75);font:inherit;font-size:15px;cursor:pointer">Підбірка<span style="font-weight:700">{{ cart }}</span></button>
+<a href="tel:+380671234567" style="margin-top:auto;font-family:Georgia,'Times New Roman',serif;font-size:18px;text-decoration:none;color:oklch(0.20 0.012 75)">+38 (067) 123-45-67</a>
+</aside>
+
+<section id="top" style="position:relative;height:100svh;min-height:480px;display:grid;place-items:center;overflow:hidden">
+<img id="lm-hero-img" src="./hero-kitchen.jpg" alt="Кухня Lio Mebli" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform">
+<div id="lm-blob"><img src="./hero-kitchen.jpg" alt=""></div>
+<div style="position:absolute;inset:0;background:linear-gradient(to bottom,oklch(0.20 0.012 75 / 0.30),oklch(0.20 0.012 75 / 0.62))"></div>
+<div id="lm-hero-copy" style="position:relative;text-align:center;padding:32px 20px;color:oklch(0.99 0.005 75);will-change:transform,opacity">
+<div style="display:flex;align-items:center;justify-content:center;gap:14px"><img src="./lm-mark.svg" alt="" style="width:auto;height:clamp(40px,11vw,56px);filter:invert(1)"><h1 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:clamp(34px,11vw,48px);font-weight:400;line-height:1.15;letter-spacing:-0.01em">Lio Mebli</h1></div>
+<p style="max-width:24ch;margin:14px auto 0;font-size:16px;text-wrap:pretty">Створюємо простір, де кожен сантиметр має значення.</p>
+</div>
+</section>
+
+<section style="display:grid;gap:1px;background:oklch(0.85 0.010 75);border-bottom:1px solid oklch(0.85 0.010 75)">
+<div class="lm-reveal" style="padding:24px 20px;background:oklch(1 0.003 75)"><h3 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:400;line-height:1.2;text-align:center">Проєктування</h3><p style="margin:6px 0 0;color:oklch(0.46 0.014 75);text-align:center">Індивідуальні рішення під ваш простір.</p></div>
+<div class="lm-reveal" style="padding:24px 20px;background:oklch(1 0.003 75)"><h3 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:400;line-height:1.2;text-align:center">Виготовлення</h3><p style="margin:6px 0 0;color:oklch(0.46 0.014 75);text-align:center">Чесні матеріали й власне виробництво.</p></div>
+<div class="lm-reveal" style="padding:24px 20px;background:oklch(1 0.003 75)"><h3 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:400;line-height:1.2;text-align:center">Монтаж</h3><p style="margin:6px 0 0;color:oklch(0.46 0.014 75);text-align:center">Привозимо, збираємо, прибираємо за собою.</p></div>
+</section>
+
+<section style="border-bottom:1px solid oklch(0.85 0.010 75)">
+<div class="lm-reveal" style="display:grid;gap:16px;padding:40px 16px;text-align:center">
+<h2 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:26px;font-weight:400;line-height:1.2;text-wrap:pretty">Один дзвінок — і ми порахуємо вашу кухню</h2>
+<p style="margin:0;font-size:15px;color:oklch(0.46 0.014 75);text-wrap:pretty">Безкоштовна консультація: підберемо планування, матеріали й фурнітуру під ваш простір і бюджет, назвемо точну ціну та строк.</p>
+<a href="tel:+380671234567" style="display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;background:oklch(0.54 0.09 62);border:1px solid oklch(0.54 0.09 62);border-radius:999px;color:oklch(0.99 0.005 75);font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2.8h-3v3c0 6.1 5 11.1 11.1 11.1h3v-3l-3.6-1.2-1.8 1.8a13 13 0 0 1-6.1-6.1l1.8-1.8Z"></path></svg>Зателефонувати</a>
+<span style="font-size:14px;color:oklch(0.46 0.014 75)">Пн–Сб, 9:00–19:00 · +38 (067) 123-45-67</span>
+</div>
+</section>
+
+<section id="projects" style="padding:48px 16px">
+<h2 class="lm-reveal" style="margin:0 0 20px;text-align:center;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:oklch(0.46 0.014 75)">Наші останні проєкти</h2>
+<div style="display:grid;gap:16px">
+<article class="lm-reveal" style="background:oklch(1 0.003 75);border:1px solid oklch(0.85 0.010 75);border-radius:8px;overflow:hidden">
+<div style="aspect-ratio:4/3;overflow:hidden"><img src="../../photos/12-kuhnia-interno.jpg" alt="Кухня Anthracite Minimal" style="width:100%;height:100%;object-fit:cover"></div>
+<div style="padding:14px"><h3 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:400;line-height:1.2">Кухня «Anthracite Minimal»</h3><p style="margin:6px 0 0;font-size:15px;color:oklch(0.46 0.014 75)">Матові фасади та інтегроване освітлення.</p></div>
+</article>
+<article class="lm-reveal" style="background:oklch(1 0.003 75);border:1px solid oklch(0.85 0.010 75);border-radius:8px;overflow:hidden">
+<div style="aspect-ratio:4/3;overflow:hidden"><img src="../../photos/11-kuhnia-vudlain.jpg" alt="Вітальня Warm Wood" style="width:100%;height:100%;object-fit:cover"></div>
+<div style="padding:14px"><h3 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:400;line-height:1.2">Вітальня «Warm Wood»</h3><p style="margin:6px 0 0;font-size:15px;color:oklch(0.46 0.014 75)">Поєднання дуба та мʼяких ліній.</p></div>
+</article>
+</div>
+<div style="margin-top:24px;text-align:center"><a href="#foot" style="display:flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border:1px solid oklch(0.85 0.010 75);border-radius:999px;color:oklch(0.20 0.012 75);font-size:14px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none">Переглянути весь каталог</a></div>
+</section>
+
+<section style="background:oklch(1 0.003 75);border-block:1px solid oklch(0.85 0.010 75)">
+<div style="padding:48px 16px">
+<h2 class="lm-reveal" style="margin:0 0 6px;text-align:center;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:oklch(0.46 0.014 75)">Якість, яку можна відчути</h2>
+<p style="margin:0 0 20px;text-align:center;font-size:15px;color:oklch(0.46 0.014 75)">Торкніться матеріалу, щоб розглянути ближче.</p>
+<div style="display:grid;gap:12px">
+<button onClick="{{ pickA }}" data-active="{{ actA }}" style="display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center;padding:8px;background:none;border:1px solid oklch(0.85 0.010 75);border-radius:8px;text-align:left;font:inherit;color:oklch(0.20 0.012 75);cursor:pointer;transition:border-color .22s,background .22s">
+<div style="aspect-ratio:1;border-radius:6px;overflow:hidden"><img src="../../photos/09-panel-dub.jpg" alt="Натуральний дуб" style="width:100%;height:100%;object-fit:cover"></div>
+<div><span style="display:block;font-weight:700">Натуральний дуб</span><span style="display:block;margin-top:2px;font-size:14px;color:oklch(0.46 0.014 75)">{{ textA }}</span></div>
+</button>
+<button onClick="{{ pickB }}" data-active="{{ actB }}" style="display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center;padding:8px;background:none;border:1px solid oklch(0.85 0.010 75);border-radius:8px;text-align:left;font:inherit;color:oklch(0.20 0.012 75);cursor:pointer;transition:border-color .22s,background .22s">
+<div style="aspect-ratio:1;border-radius:6px;overflow:hidden"><img src="../../photos/10-panel-kamin.jpg" alt="Камінь і кварц" style="width:100%;height:100%;object-fit:cover"></div>
+<div><span style="display:block;font-weight:700">Камінь і кварц</span><span style="display:block;margin-top:2px;font-size:14px;color:oklch(0.46 0.014 75)">{{ textB }}</span></div>
+</button>
+<button onClick="{{ pickC }}" data-active="{{ actC }}" style="display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center;padding:8px;background:none;border:1px solid oklch(0.85 0.010 75);border-radius:8px;text-align:left;font:inherit;color:oklch(0.20 0.012 75);cursor:pointer;transition:border-color .22s,background .22s">
+<div style="aspect-ratio:1;border-radius:6px;overflow:hidden"><img src="../../photos/07-stilnytsia-a.jpg" alt="Довговічна фурнітура" style="width:100%;height:100%;object-fit:cover"></div>
+<div><span style="display:block;font-weight:700">Довговічна фурнітура</span><span style="display:block;margin-top:2px;font-size:14px;color:oklch(0.46 0.014 75)">{{ textC }}</span></div>
+</button>
+</div>
+</div>
+</section>
+
+<section id="steps" style="padding:48px 16px">
+<h2 class="lm-reveal" style="margin:0 0 20px;text-align:center;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:oklch(0.46 0.014 75)">Три кроки до твоїх ідеальних меблів</h2>
+<div style="display:grid;gap:16px">
+<div class="lm-reveal" style="display:flex;gap:14px;align-items:flex-start"><span style="font-family:Georgia,'Times New Roman',serif;font-size:44px;line-height:1;color:oklch(0.54 0.09 62)">1</span><div><h3 style="margin:0;font-size:17px">Замір</h3><p style="margin:2px 0 0;font-size:15px;color:oklch(0.46 0.014 75)">Приїжджаємо, коли зручно тобі.</p></div></div>
+<div class="lm-reveal" style="display:flex;gap:14px;align-items:flex-start"><span style="font-family:Georgia,'Times New Roman',serif;font-size:44px;line-height:1;color:oklch(0.54 0.09 62)">2</span><div><h3 style="margin:0;font-size:17px">Проєкт</h3><p style="margin:2px 0 0;font-size:15px;color:oklch(0.46 0.014 75)">Малюємо 3D-модель, враховуючи кожен сантиметр.</p></div></div>
+<div class="lm-reveal" style="display:flex;gap:14px;align-items:flex-start"><span style="font-family:Georgia,'Times New Roman',serif;font-size:44px;line-height:1;color:oklch(0.54 0.09 62)">3</span><div><h3 style="margin:0;font-size:17px">Монтаж</h3><p style="margin:2px 0 0;font-size:15px;color:oklch(0.46 0.014 75)">Привозимо, збираємо, прибираємо за собою.</p></div></div>
+</div>
+</section>
+
+<section style="background:oklch(1 0.003 75);border-block:1px solid oklch(0.85 0.010 75)">
+<div style="padding:40px 16px">
+<h2 class="lm-reveal" style="margin:0 0 18px;text-align:center;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:oklch(0.46 0.014 75)">Що говорять наші клієнти</h2>
+<div class="lm-reveal" style="overflow:hidden">
+<div class="lm-track" data-slide="{{ review }}" style="display:flex;transition:transform .45s ease">
+<figure style="flex:0 0 100%;margin:0;padding-inline:4px"><blockquote style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:1.4;text-wrap:pretty">«Lio Mebli» зробили нашу кухню серцем дому. Тепер готувати — це медитація.</blockquote><figcaption style="margin-top:10px;font-size:14px;color:oklch(0.46 0.014 75)">— Олена та Іван Т., Харків</figcaption></figure>
+<figure style="flex:0 0 100%;margin:0;padding-inline:4px"><blockquote style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:1.4;text-wrap:pretty">Замір, проєкт і монтаж — усе точно в строк. Жодного «плюс-мінус тиждень».</blockquote><figcaption style="margin-top:10px;font-size:14px;color:oklch(0.46 0.014 75)">— Андрій П., Полтава</figcaption></figure>
+<figure style="flex:0 0 100%;margin:0;padding-inline:4px"><blockquote style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:1.4;text-wrap:pretty">Через два роки щоденного користування фасади виглядають як у перший день.</blockquote><figcaption style="margin-top:10px;font-size:14px;color:oklch(0.46 0.014 75)">— Марія К., Львів</figcaption></figure>
+</div>
+</div>
+<div style="display:flex;justify-content:center;gap:4px;margin-top:8px">
+<button onClick="{{ go0 }}" aria-label="Відгук 1" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer"><span class="lm-dot" data-active="{{ act0 }}" style="display:block;width:9px;height:9px;border-radius:999px;transition:background .22s"></span></button>
+<button onClick="{{ go1 }}" aria-label="Відгук 2" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer"><span class="lm-dot" data-active="{{ act1 }}" style="display:block;width:9px;height:9px;border-radius:999px;transition:background .22s"></span></button>
+<button onClick="{{ go2 }}" aria-label="Відгук 3" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer"><span class="lm-dot" data-active="{{ act2 }}" style="display:block;width:9px;height:9px;border-radius:999px;transition:background .22s"></span></button>
+</div>
+<form onSubmit="{{ submitReview }}" class="lm-reveal" style="display:grid;gap:12px;margin-top:24px;padding-top:24px;border-top:1px solid oklch(0.85 0.010 75)">
+<label style="display:grid;gap:6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:oklch(0.46 0.014 75)">Ім'я<input class="lm-field" type="text" name="name" value="{{ formName }}" onChange="{{ onName }}" placeholder="Ваше ім'я" style="height:44px;padding:0 14px;border:1px solid oklch(0.59 0.012 75);border-radius:999px;background:oklch(0.98 0.008 75);color:oklch(0.20 0.012 75);font:inherit;font-size:15px"></label>
+<label style="display:grid;gap:6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:oklch(0.46 0.014 75)">Відгук<textarea class="lm-field" name="review" rows="4" value="{{ formText }}" onChange="{{ onText }}" placeholder="Розкажіть про свій досвід" style="padding:10px 14px;border:1px solid oklch(0.59 0.012 75);border-radius:8px;background:oklch(0.98 0.008 75);color:oklch(0.20 0.012 75);font:inherit;font-size:15px;resize:vertical"></textarea></label>
+<span style="font-size:14px;color:oklch(0.46 0.010 152)">{{ formNote }}</span>
+<button type="submit" style="min-height:48px;background:oklch(0.20 0.012 75);border:1px solid oklch(0.20 0.012 75);border-radius:999px;color:oklch(0.99 0.005 75);font:inherit;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">Надіслати</button>
+</form>
+</div>
+</section>
+
+<footer id="foot" style="border-top:1px solid oklch(0.85 0.010 75)">
+<div style="display:grid;gap:24px;padding:32px 16px 40px">
+<div><a href="#top" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:oklch(0.20 0.012 75)"><img src="../../lm-logo.svg" width="22" height="32" alt=""><span style="font-family:Georgia,'Times New Roman',serif;font-size:17px">Lio Mebli</span></a><p style="margin:12px 0 0;font-size:14px;color:oklch(0.46 0.014 75)">© 2026. Усі права захищені.</p></div>
+<nav style="display:grid;font-size:14px;letter-spacing:.06em;text-transform:uppercase"><a href="#projects" style="display:flex;align-items:center;min-height:44px;text-decoration:none;color:oklch(0.20 0.012 75);border-bottom:1px solid oklch(0.85 0.010 75)">Каталог</a><a href="#steps" style="display:flex;align-items:center;min-height:44px;text-decoration:none;color:oklch(0.20 0.012 75);border-bottom:1px solid oklch(0.85 0.010 75)">Про нас</a><a href="#foot" style="display:flex;align-items:center;min-height:44px;text-decoration:none;color:oklch(0.20 0.012 75)">Контакти</a></nav>
+<div style="display:grid;gap:6px"><a href="tel:+380671234567" style="font-family:Georgia,'Times New Roman',serif;font-size:18px;text-decoration:none;color:oklch(0.20 0.012 75)">+38 (067) 123-45-67</a><span style="font-size:14px;color:oklch(0.46 0.014 75)">вул. Сумська 10, Харків</span><a href="mailto:info@liomebli.ua" style="font-size:14px;color:oklch(0.20 0.012 75)">info@liomebli.ua</a></div>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:844},&quot;reviewAutoplay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Відгуки&quot;},&quot;reviewInterval&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:6,&quot;min&quot;:3,&quot;max&quot;:15,&quot;step&quot;:1,&quot;unit&quot;:&quot;с&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Відгуки&quot;}}">
+class Component extends DCLogic {
+  state = { mat: 1, review: 0, cart: 0, menu: false, fName: '', fText: '', sent: false };
+  onScroll = () => {
+    if (this.raf) return;
+    this.raf = requestAnimationFrame(() => {
+      this.raf = null;
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      const vh = window.innerHeight || 800;
+      const head = document.getElementById('lm-head');
+      if (head) head.setAttribute('data-on', y > 56 ? '1' : '0');
+      const root = document.documentElement;
+      root.style.setProperty('--lm-p', Math.min(1, y / (vh * 0.62)).toFixed(4));
+      root.style.setProperty('--lm-q', Math.min(1, y / vh).toFixed(4));
+    });
+  };
+  toggleMenu = () => this.setState(s => ({ menu: !s.menu }));
+  closeMenu = () => this.setState({ menu: false });
+  onName = e => this.setState({ fName: e.target.value, sent: false });
+  onText = e => this.setState({ fText: e.target.value, sent: false });
+  submitReview = e => {
+    e.preventDefault();
+    if (!(this.state.fName || '').trim() || !(this.state.fText || '').trim()) { this.setState({ sent: 'err' }); return; }
+    this.setState({ fName: '', fText: '', sent: true });
+  };
+  componentDidMount() {
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll);
+    this.onScroll();
+    if (this.props.reviewAutoplay ?? true) {
+      const ms = (this.props.reviewInterval ?? 6) * 1000;
+      this.timer = setInterval(() => this.setState(s => ({ review: (s.review + 1) % 3 })), ms);
+    }
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    cancelAnimationFrame(this.raf);
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onScroll);
+  }
+  pick(i) { clearInterval(this.timer); this.setState({ mat: i }); }
+  go(i) { clearInterval(this.timer); this.setState({ review: i }); }
+  renderVals() {
+    const act = i => (this.state.mat === i ? '1' : '0');
+    const dot = i => (this.state.review === i ? '1' : '0');
+    return {
+      cart: this.state.cart,
+      addToCart: () => this.setState(s => ({ cart: s.cart + 1 })),
+      menuOpen: this.state.menu ? '1' : '0',
+      toggleMenu: this.toggleMenu,
+      closeMenu: this.closeMenu,
+      actA: act(0), actB: act(1), actC: act(2),
+      pickA: () => this.pick(0), pickB: () => this.pick(1), pickC: () => this.pick(2),
+      textA: this.state.mat === 0 ? 'Шпон із живою текстурою, олійне покриття, тепла матова поверхня.' : 'Шпон із живою текстурою.',
+      textB: this.state.mat === 1 ? 'Стійкі поверхні, що не боятьcя гарячого посуду й вологи.' : 'Стійкі поверхні.',
+      textC: this.state.mat === 2 ? 'Механізми з гарантією на 25 років, плавне доведення.' : 'Механізми з гарантією.',
+      review: String(this.state.review),
+      act0: dot(0), act1: dot(1), act2: dot(2),
+      go0: () => this.go(0), go1: () => this.go(1), go2: () => this.go(2),
+      formName: this.state.fName || '',
+      formText: this.state.fText || '',
+      formNote: this.state.sent === true ? 'Дякуємо за відгук!' : this.state.sent === 'err' ? 'Заповніть обидва поля' : '',
+      onName: this.onName, onText: this.onText, submitReview: this.submitReview
+    };
+  }
+}
+</script>
+</body>
+</html>
