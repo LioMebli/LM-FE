@@ -2,6 +2,7 @@
 
 :host {
   --carousel-dot: 9px;
+  --carousel-quote: var(--lm-text-lg);
 
   display: block;
 }
@@ -9,6 +10,7 @@
 @media (min-width: layout.$lm-layout-wide) {
   :host {
     --carousel-dot: 10px;
+    --carousel-quote: 19px;
   }
 }
 
@@ -46,7 +48,7 @@
   margin: 0;
   max-inline-size: var(--lm-text-max);
   font-family: var(--lm-font-display);
-  font-size: var(--lm-text-lg);
+  font-size: var(--carousel-quote);
   line-height: var(--lm-leading-display);
   text-wrap: pretty;
 }

@@ -47,6 +47,8 @@ const WIDE_LAYOUT_COMPONENTS = [
   'filter-sheet',
   'hero-panel',
   'material-picker',
+  'process-steps',
+  'project-card',
   'review-form',
   'service-row',
   'site-footer',

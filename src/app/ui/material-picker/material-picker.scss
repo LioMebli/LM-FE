@@ -4,13 +4,14 @@
   --material-thumb: 6rem;
   --material-min: 12.5rem;
   --material-grown: 2.2;
+  --material-gap: 12px;
 
   display: block;
 }
 
 .materials {
   display: grid;
-  gap: var(--lm-space-md);
+  gap: var(--material-gap);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -75,6 +76,10 @@
 }
 
 @media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --material-gap: var(--lm-space-md);
+  }
+
   .materials {
     display: flex;
     flex-wrap: wrap;

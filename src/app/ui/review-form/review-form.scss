@@ -7,7 +7,8 @@
 .review {
   display: grid;
   gap: var(--lm-space-md);
-  max-inline-size: var(--lm-text-max);
+  max-inline-size: 35rem;
+  margin-inline: auto;
 }
 
 @media (min-width: layout.$lm-layout-wide) {

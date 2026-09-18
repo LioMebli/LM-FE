@@ -1,6 +1,9 @@
 @use 'breakpoints' as layout;
 
 :host {
+  --band-heading: 26px;
+  --band-lede: 15px;
+
   display: block;
 }
 
@@ -24,7 +27,7 @@
   margin: 0;
   max-inline-size: var(--lm-text-max);
   font-family: var(--lm-font-display);
-  font-size: var(--lm-text-display);
+  font-size: var(--band-heading);
   font-weight: var(--lm-weight-regular);
   line-height: var(--lm-leading-display);
   text-wrap: pretty;
@@ -34,7 +37,7 @@
   margin: 0;
   max-inline-size: var(--lm-text-max);
   color: var(--lm-color-ink-muted);
-  font-size: var(--lm-text-md);
+  font-size: var(--band-lede);
   text-wrap: pretty;
 }
 
@@ -80,6 +83,11 @@
 }
 
 @media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --band-heading: var(--lm-text-display);
+    --band-lede: var(--lm-text-md);
+  }
+
   .band {
     grid-auto-flow: column;
     grid-auto-columns: auto;

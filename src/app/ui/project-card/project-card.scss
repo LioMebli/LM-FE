@@ -1,6 +1,18 @@
+@use 'breakpoints' as layout;
+
 :host {
+  --project-heading: 21px;
+  --project-lede: 15px;
+
   display: block;
   block-size: 100%;
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --project-heading: var(--lm-text-xl);
+    --project-lede: var(--lm-text-md);
+  }
 }
 
 .project {
@@ -36,7 +48,7 @@
 .project__name {
   margin: 0;
   font-family: var(--lm-font-display);
-  font-size: var(--lm-text-xl);
+  font-size: var(--project-heading);
   font-weight: var(--lm-weight-regular);
   line-height: var(--lm-leading-display);
 }
@@ -45,7 +57,7 @@
   margin: 0;
   max-inline-size: var(--lm-text-max);
   color: var(--lm-color-ink-muted);
-  font-size: var(--lm-text-md);
+  font-size: var(--project-lede);
   text-wrap: pretty;
 }
 

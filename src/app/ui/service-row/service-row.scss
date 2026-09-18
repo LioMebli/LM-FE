@@ -1,6 +1,10 @@
 @use 'breakpoints' as layout;
 
 :host {
+  --service-heading: 21px;
+  --service-gap: 6px;
+  --service-padding: 24px 20px;
+
   display: block;
 }
 
@@ -17,8 +21,8 @@
 .service {
   display: grid;
   justify-items: center;
-  gap: var(--lm-space-sm);
-  padding: var(--lm-space-lg) var(--lm-space-md);
+  gap: var(--service-gap);
+  padding: var(--service-padding);
   background: var(--lm-color-surface);
   text-align: center;
   transition: background 0.22s ease;
@@ -33,7 +37,7 @@
 .service__name {
   margin: 0;
   font-family: var(--lm-font-display);
-  font-size: var(--lm-text-xl);
+  font-size: var(--service-heading);
   font-weight: var(--lm-weight-regular);
   line-height: var(--lm-leading-display);
 }
@@ -47,6 +51,12 @@
 }
 
 @media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --service-heading: var(--lm-text-xl);
+    --service-gap: var(--lm-space-sm);
+    --service-padding: 2rem var(--lm-space-lg);
+  }
+
   .services {
     grid-auto-flow: column;
     grid-auto-columns: 1fr;

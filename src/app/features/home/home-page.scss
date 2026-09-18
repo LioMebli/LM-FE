@@ -1,17 +1,28 @@
 @use 'breakpoints' as layout;
 
 :host {
+  --home-eyebrow: 13px;
+  --home-band-padding: 3rem var(--lm-space-md);
+  --home-band-narrow: 47.5rem;
+
   display: block;
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --home-eyebrow: var(--lm-text-sm);
+    --home-band-padding: 4.5rem var(--lm-space-md);
+  }
 }
 
 .home__band {
   max-inline-size: var(--lm-content-max);
   margin-inline: auto;
-  padding: var(--lm-space-2xl) var(--lm-space-md);
+  padding: var(--home-band-padding);
 }
 
 .home__band--narrow {
-  max-inline-size: calc(var(--lm-content-max) / 2);
+  max-inline-size: var(--home-band-narrow);
 }
 
 .home__services {
@@ -31,7 +42,7 @@
 .home__eyebrow {
   margin: 0 0 var(--lm-space-lg);
   color: var(--lm-color-ink-muted);
-  font-size: var(--lm-text-sm);
+  font-size: var(--home-eyebrow);
   font-weight: var(--lm-weight-bold);
   letter-spacing: 0.14em;
   text-align: center;
