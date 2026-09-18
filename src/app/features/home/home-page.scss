@@ -23,6 +23,7 @@
     --home-reviews-padding: 3rem;
     --home-lede-space: 2rem;
   }
+
 }
 
 .home__band {
@@ -101,5 +102,19 @@
 @media (min-width: layout.$lm-layout-wide) {
   .home__projects {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.home__lede--point {
+  display: none;
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  .home__lede--touch {
+    display: none;
+  }
+
+  .home__lede--point {
+    display: block;
   }
 }

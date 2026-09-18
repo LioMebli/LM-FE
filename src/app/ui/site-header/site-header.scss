@@ -12,7 +12,7 @@
   min-block-size: var(--lm-header-block-size);
   max-inline-size: var(--lm-content-max);
   margin-inline: auto;
-  padding: var(--lm-space-sm) var(--lm-space-md);
+  padding: var(--lm-space-sm) 12px;
   border-block-end: var(--lm-border-hairline);
   background: var(--lm-color-page);
 }
@@ -84,6 +84,13 @@ app-brand-mark {
   gap: var(--lm-space-md);
 }
 
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--lm-space-xs);
+  margin-inline-start: auto;
+}
+
 .header__link {
   color: var(--lm-color-ink);
   font-size: var(--lm-text-sm);
@@ -92,7 +99,27 @@ app-brand-mark {
 }
 
 .header__opener {
+  display: flex;
+  flex-direction: column;
   flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  inline-size: var(--lm-tap-target-min);
+  block-size: var(--lm-tap-target-min);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--lm-color-ink);
+  cursor: pointer;
+}
+
+.header__bar {
+  display: block;
+  inline-size: 22px;
+  block-size: 2px;
+  border-radius: 2px;
+  background: currentcolor;
 }
 
 .menu {
@@ -162,11 +189,33 @@ app-brand-mark {
   text-transform: uppercase;
 }
 
+.menu__selection {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lm-space-sm);
+  min-block-size: 48px;
+  margin-inline: var(--lm-space-md);
+  border: var(--lm-border-control);
+  border-radius: var(--lm-radius-pill);
+  background: none;
+  color: var(--lm-color-ink);
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.menu__count {
+  font-weight: var(--lm-weight-bold);
+}
+
 .menu__phone {
   flex-shrink: 0;
   margin-block-start: auto;
   padding: var(--lm-space-md);
   color: var(--lm-color-ink);
+  font-family: var(--lm-font-display);
   font-size: var(--lm-text-lg);
   font-variant-numeric: lining-nums tabular-nums;
 }
@@ -174,6 +223,7 @@ app-brand-mark {
 @media (min-width: layout.$lm-layout-wide) {
   .header {
     gap: var(--lm-space-lg);
+    padding-inline: var(--lm-space-md);
   }
 
   .header__row {

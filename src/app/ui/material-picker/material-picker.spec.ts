@@ -27,8 +27,8 @@ describe('MaterialPicker', () => {
     const controls = host.querySelectorAll('.material');
 
     expect(controls).toHaveLength(2);
-    expect(controls[0].getAttribute('aria-pressed')).toBe('true');
-    expect(controls[1].getAttribute('aria-pressed')).toBe('false');
+    expect(controls[0].getAttribute('aria-pressed')).toBe('false');
+    expect(controls[1].getAttribute('aria-pressed')).toBe('true');
   });
 
   it('shows more of the chosen material and less of the others', async () => {
@@ -38,12 +38,12 @@ describe('MaterialPicker', () => {
     const details = () =>
       [...host.querySelectorAll('.material__detail')].map((node) => node.textContent?.trim());
 
-    expect(details()).toEqual([MATERIALS[0].detail, MATERIALS[1].summary]);
+    expect(details()).toEqual([MATERIALS[0].summary, MATERIALS[1].detail]);
 
-    host.querySelectorAll<HTMLButtonElement>('.material')[1].click();
+    host.querySelectorAll<HTMLButtonElement>('.material')[0].click();
     await fixture.whenStable();
 
-    expect(details()).toEqual([MATERIALS[0].summary, MATERIALS[1].detail]);
+    expect(details()).toEqual([MATERIALS[0].detail, MATERIALS[1].summary]);
   });
 
   it('renders nothing at all when it was given no materials', async () => {

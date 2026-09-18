@@ -1,6 +1,9 @@
 @use 'breakpoints' as layout;
 
 :host {
+  --hero-heading: var(--lm-text-display-lg);
+  --hero-measure: 24ch;
+
   display: grid;
   min-block-size: 100svh;
 }
@@ -61,14 +64,14 @@
 .hero__mark {
   inline-size: auto;
   block-size: 1.18em;
-  font-size: var(--lm-text-display-lg);
+  font-size: var(--hero-heading);
   filter: invert(1);
 }
 
 .hero__heading {
   margin: 0;
   font-family: var(--lm-font-display);
-  font-size: var(--lm-text-display-lg);
+  font-size: var(--hero-heading);
   font-weight: var(--lm-weight-regular);
   letter-spacing: -0.01em;
   line-height: 1.15;
@@ -76,7 +79,7 @@
 
 .hero__lede {
   margin: 0;
-  max-inline-size: var(--lm-text-max);
+  max-inline-size: var(--hero-measure);
   font-size: var(--lm-text-md);
   text-wrap: pretty;
 }
@@ -104,6 +107,11 @@
 }
 
 @media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --hero-heading: var(--lm-text-display-hero);
+    --hero-measure: 30ch;
+  }
+
   .hero__body {
     gap: var(--lm-space-md);
     padding: var(--lm-space-2xl) var(--lm-space-lg);

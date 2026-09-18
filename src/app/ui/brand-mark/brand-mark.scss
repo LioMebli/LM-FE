@@ -1,5 +1,17 @@
+@use 'breakpoints' as layout;
+
 :host {
+  --brand-mark: 22px;
+  --brand-name: 17px;
+
   display: block;
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --brand-mark: 26px;
+    --brand-name: var(--lm-text-lg);
+  }
 }
 
 .brand {
@@ -12,16 +24,13 @@
 
 .brand__mark {
   display: block;
-  inline-size: 38px;
+  inline-size: var(--brand-mark);
   block-size: auto;
-  margin-block: -7px;
-  margin-inline-end: -7px;
 }
 
 .brand__name {
-  padding-inline-start: 7px;
   font-family: var(--lm-font-display);
-  font-size: var(--lm-text-lg);
+  font-size: var(--brand-name);
   line-height: var(--lm-leading-display);
   white-space: nowrap;
 }

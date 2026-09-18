@@ -76,6 +76,7 @@ export const TOKEN_GROUPS: readonly TokenGroup[] = [
       '--lm-text-xl',
       '--lm-text-display',
       '--lm-text-display-lg',
+      '--lm-text-display-hero',
     ],
   },
   { title: 'Інтерліньяж', sample: 'leading', names: ['--lm-leading-body', '--lm-leading-display'] },

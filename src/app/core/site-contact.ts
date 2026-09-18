@@ -1,4 +1,4 @@
-export const SITE_PHONE = '+380000000000';
+export const SITE_PHONE = '+38 (000) 000-00-00';
 
 export const SITE_CALL_HOURS = 'Пн–Сб, 9:00–19:00';
 

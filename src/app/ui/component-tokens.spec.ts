@@ -43,6 +43,7 @@ function everyAuthoredStylesheet(): { path: string; source: string }[] {
 }
 
 const WIDE_LAYOUT_COMPONENTS = [
+  'brand-mark',
   'call-band',
   'filter-sheet',
   'hero-panel',

@@ -34,6 +34,15 @@
   box-sizing: border-box;
 }
 
+html {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  inline-size: 0;
+  block-size: 0;
+}
+
 body {
   margin: 0;
   background: var(--lm-color-page);
@@ -75,8 +84,13 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--lm-color-link);
-  outline-offset: 2px;
+  outline: 2px solid var(--lm-color-primary);
+  outline-offset: 1px;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+  border-color: var(--lm-color-primary);
 }
 
 .visually-hidden {

@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 
 import { Photograph } from '../media.types';
@@ -19,9 +19,13 @@ export interface Material {
 export class MaterialPicker {
   readonly materials = input.required<readonly Material[]>();
 
-  protected readonly selected = signal(0);
+  private readonly picked = signal<number | null>(null);
+
+  protected readonly selected = computed(
+    () => this.picked() ?? Math.floor(this.materials().length / 2),
+  );
 
   protected choose(index: number): void {
-    this.selected.set(index);
+    this.picked.set(index);
   }
 }

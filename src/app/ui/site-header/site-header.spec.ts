@@ -111,7 +111,7 @@ describe('SiteHeader', () => {
 
     expect(menu().open).toBe(false);
 
-    host().querySelector<HTMLButtonElement>('.header__opener button')!.click();
+    host().querySelector<HTMLButtonElement>('.header__opener')!.click();
 
     expect(menu().open).toBe(true);
 
@@ -127,7 +127,7 @@ describe('SiteHeader', () => {
   it('closes the menu when a destination in it is taken', async () => {
     await fixture.whenStable();
 
-    host().querySelector<HTMLButtonElement>('.header__opener button')!.click();
+    host().querySelector<HTMLButtonElement>('.header__opener')!.click();
     host().querySelector<HTMLAnchorElement>('.menu__link')!.click();
 
     expect(menu().open).toBe(false);
