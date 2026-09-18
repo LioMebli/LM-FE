@@ -6,7 +6,7 @@
 
 .review {
   display: grid;
-  gap: var(--lm-space-md);
+  gap: 12px;
   max-inline-size: 35rem;
   margin-inline: auto;
 }
@@ -47,9 +47,9 @@
   background: var(--lm-color-ink);
   color: var(--lm-color-on-dark);
   font: inherit;
-  font-size: var(--lm-text-md);
+  font-size: var(--lm-text-sm);
   font-weight: var(--lm-weight-bold);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
 }

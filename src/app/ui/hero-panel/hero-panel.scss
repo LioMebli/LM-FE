@@ -46,8 +46,8 @@
   position: relative;
   display: grid;
   justify-items: center;
-  gap: var(--lm-space-md);
-  padding: var(--lm-space-lg) var(--lm-space-md);
+  gap: 14px;
+  padding: 2rem 20px;
   color: var(--lm-color-on-dark);
   text-align: center;
 }
@@ -55,7 +55,7 @@
 .hero__lockup {
   display: flex;
   align-items: center;
-  gap: var(--lm-space-md);
+  gap: 14px;
 }
 
 .hero__mark {
@@ -70,7 +70,8 @@
   font-family: var(--lm-font-display);
   font-size: var(--lm-text-display-lg);
   font-weight: var(--lm-weight-regular);
-  line-height: var(--lm-leading-display);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
 }
 
 .hero__lede {
@@ -104,11 +105,16 @@
 
 @media (min-width: layout.$lm-layout-wide) {
   .hero__body {
+    gap: var(--lm-space-md);
     padding: var(--lm-space-2xl) var(--lm-space-lg);
   }
 
   .hero__lockup {
     gap: var(--lm-space-lg);
+  }
+
+  .hero__heading {
+    line-height: var(--lm-leading-display);
   }
 
   .hero__lede {

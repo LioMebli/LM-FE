@@ -5,6 +5,8 @@
   --step-label: 17px;
   --step-gap: var(--lm-space-md);
   --step-inline-gap: 14px;
+  --step-body-gap: 2px;
+  --step-padding: 0;
 
   display: block;
 }
@@ -15,6 +17,8 @@
     --step-label: var(--lm-text-lg);
     --step-gap: 2rem;
     --step-inline-gap: var(--lm-space-md);
+    --step-body-gap: var(--lm-space-xs);
+    --step-padding: var(--lm-space-md);
   }
 }
 
@@ -33,11 +37,13 @@
   display: flex;
   align-items: flex-start;
   gap: var(--step-inline-gap);
+  padding: var(--step-padding);
+  border-radius: var(--lm-radius-md);
 }
 
 .step__body {
   display: grid;
-  gap: var(--lm-space-xs);
+  gap: var(--step-body-gap);
 }
 
 .step__ordinal {

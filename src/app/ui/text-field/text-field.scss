@@ -1,15 +1,27 @@
+@use 'breakpoints' as layout;
+
 :host {
+  --field-caption: 12px;
+  --field-height: var(--lm-tap-target-min);
+
   display: block;
 }
 
+@media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --field-caption: 13px;
+    --field-height: 40px;
+  }
+}
+
 .field__label {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  gap: 6px;
 }
 
 .field__caption {
   color: var(--lm-color-ink-muted);
-  font-size: var(--lm-text-sm);
+  font-size: var(--field-caption);
   letter-spacing: 0.06em;
   line-height: var(--lm-leading-body);
   text-transform: uppercase;
@@ -17,19 +29,19 @@
 
 .field__input {
   inline-size: 100%;
-  min-block-size: var(--lm-tap-target-min);
-  margin-block-start: var(--lm-space-xs);
-  padding-inline: var(--lm-space-md);
+  min-block-size: var(--field-height);
+  padding-inline: 14px;
   border: var(--lm-border-control);
-  border-radius: var(--lm-radius-md);
-  background: var(--lm-color-surface);
+  border-radius: var(--lm-radius-pill);
+  background: var(--lm-color-page);
   color: var(--lm-color-ink);
   font: inherit;
   font-size: var(--lm-text-md);
 }
 
 .field__input--multiline {
-  padding-block: var(--lm-space-sm);
+  padding-block: 10px;
+  border-radius: var(--lm-radius-md);
   resize: vertical;
 }
 

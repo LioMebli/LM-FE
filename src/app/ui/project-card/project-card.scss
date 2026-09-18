@@ -3,6 +3,8 @@
 :host {
   --project-heading: 21px;
   --project-lede: 15px;
+  --project-body: 14px;
+  --project-body-gap: 6px;
 
   display: block;
   block-size: 100%;
@@ -12,6 +14,8 @@
   :host {
     --project-heading: var(--lm-text-xl);
     --project-lede: var(--lm-text-md);
+    --project-body: var(--lm-space-md);
+    --project-body-gap: var(--lm-space-sm);
   }
 }
 
@@ -41,8 +45,8 @@
 
 .project__body {
   display: grid;
-  gap: var(--lm-space-sm);
-  padding: var(--lm-space-md);
+  gap: var(--project-body-gap);
+  padding: var(--project-body);
 }
 
 .project__name {

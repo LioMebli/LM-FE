@@ -172,6 +172,20 @@ app-brand-mark {
 }
 
 @media (min-width: layout.$lm-layout-wide) {
+  .header {
+    gap: var(--lm-space-lg);
+  }
+
+  .header__row {
+    gap: var(--lm-space-lg);
+  }
+
+  .header__magnifier {
+    inline-size: 36px;
+    min-inline-size: 36px;
+    block-size: 36px;
+  }
+
   .header__nav {
     display: block;
   }

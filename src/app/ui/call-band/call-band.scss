@@ -3,6 +3,8 @@
 :host {
   --band-heading: 26px;
   --band-lede: 15px;
+  --band-gap: var(--lm-space-md);
+  --band-call: 15px;
 
   display: block;
 }
@@ -10,7 +12,7 @@
 .band {
   display: grid;
   justify-items: center;
-  gap: var(--lm-space-lg);
+  gap: var(--band-gap);
   max-inline-size: var(--lm-content-max);
   margin-inline: auto;
   padding: var(--lm-space-xl) var(--lm-space-md);
@@ -52,14 +54,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--lm-space-sm);
+  gap: 10px;
   inline-size: 100%;
   min-block-size: calc(var(--lm-tap-target-min) + var(--lm-space-sm));
   padding-inline: var(--lm-space-lg);
   border-radius: var(--lm-radius-pill);
   background: var(--lm-color-primary);
   color: var(--lm-color-on-dark);
-  font-size: var(--lm-text-md);
+  font-size: var(--band-call);
   font-weight: var(--lm-weight-bold);
   letter-spacing: 0.06em;
   text-decoration: none;
@@ -86,6 +88,7 @@
   :host {
     --band-heading: var(--lm-text-display);
     --band-lede: var(--lm-text-md);
+    --band-gap: 2rem;
   }
 
   .band {
@@ -102,5 +105,6 @@
 
   .band__call {
     inline-size: auto;
+    padding-inline: 2rem;
   }
 }

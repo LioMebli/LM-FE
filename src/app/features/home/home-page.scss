@@ -2,8 +2,13 @@
 
 :host {
   --home-eyebrow: 13px;
+  --home-eyebrow-space: 20px;
   --home-band-padding: 3rem var(--lm-space-md);
   --home-band-narrow: 47.5rem;
+  --home-materials-space: 6px;
+  --home-reviews-space: 18px;
+  --home-reviews-padding: 2.5rem;
+  --home-lede-space: 20px;
 
   display: block;
 }
@@ -11,7 +16,12 @@
 @media (min-width: layout.$lm-layout-wide) {
   :host {
     --home-eyebrow: var(--lm-text-sm);
+    --home-eyebrow-space: 2rem;
     --home-band-padding: 4.5rem var(--lm-space-md);
+    --home-materials-space: var(--lm-space-sm);
+    --home-reviews-space: var(--lm-space-lg);
+    --home-reviews-padding: 3rem;
+    --home-lede-space: 2rem;
   }
 }
 
@@ -39,8 +49,20 @@
   border-block: var(--lm-border-hairline);
 }
 
+.home__materials .home__eyebrow {
+  margin-block-end: var(--home-materials-space);
+}
+
+.home__reviews .home__eyebrow {
+  margin-block-end: var(--home-reviews-space);
+}
+
+.home__reviews .home__band {
+  padding-block: var(--home-reviews-padding);
+}
+
 .home__eyebrow {
-  margin: 0 0 var(--lm-space-lg);
+  margin: 0 0 var(--home-eyebrow-space);
   color: var(--lm-color-ink-muted);
   font-size: var(--home-eyebrow);
   font-weight: var(--lm-weight-bold);
@@ -50,7 +72,7 @@
 }
 
 .home__lede {
-  margin: 0 0 var(--lm-space-lg);
+  margin: 0 0 var(--home-lede-space);
   max-inline-size: var(--lm-text-max);
   margin-inline: auto;
   color: var(--lm-color-ink-muted);

@@ -3,6 +3,7 @@
 :host {
   --carousel-dot: 9px;
   --carousel-quote: var(--lm-text-lg);
+  --carousel-dots-gap: var(--lm-space-xs);
 
   display: block;
 }
@@ -11,6 +12,7 @@
   :host {
     --carousel-dot: 10px;
     --carousel-quote: 19px;
+    --carousel-dots-gap: var(--lm-space-sm);
   }
 }
 
@@ -49,7 +51,7 @@
   max-inline-size: var(--lm-text-max);
   font-family: var(--lm-font-display);
   font-size: var(--carousel-quote);
-  line-height: var(--lm-leading-display);
+  line-height: 1.4;
   text-wrap: pretty;
 }
 
@@ -61,7 +63,7 @@
 .carousel__dots {
   display: flex;
   justify-content: center;
-  gap: var(--lm-space-sm);
+  gap: var(--carousel-dots-gap);
 }
 
 .carousel__pick {

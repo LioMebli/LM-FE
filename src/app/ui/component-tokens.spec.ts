@@ -55,6 +55,7 @@ const WIDE_LAYOUT_COMPONENTS = [
   'site-header',
   'sticky-action-bar',
   'testimonial-carousel',
+  'text-field',
 ];
 
 const KEYFRAMES_BLOCK = /@keyframes[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}/g;
