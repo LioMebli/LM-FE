@@ -68,6 +68,10 @@
   font-weight: var(--lm-weight-bold);
 }
 
+.material__detail--wide {
+  display: none;
+}
+
 .material__detail {
   color: var(--lm-color-ink-muted);
   font-size: var(--lm-text-sm);
@@ -97,7 +101,7 @@
 
   .material {
     grid-template-columns: none;
-    align-content: start;
+    align-content: center;
     gap: 0;
     padding: 0;
   }
@@ -109,5 +113,13 @@
 
   .material__body {
     padding: var(--lm-space-md);
+  }
+
+  .material__detail--picked {
+    display: none;
+  }
+
+  .material__detail--wide {
+    display: block;
   }
 }

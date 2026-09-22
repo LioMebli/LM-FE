@@ -7,6 +7,7 @@ export interface Material {
   name: string;
   summary: string;
   detail: string;
+  wideDetail?: string;
   image?: Photograph;
 }
 

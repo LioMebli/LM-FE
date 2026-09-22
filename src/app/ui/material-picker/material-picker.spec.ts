@@ -36,7 +36,7 @@ describe('MaterialPicker', () => {
     await fixture.whenStable();
 
     const details = () =>
-      [...host.querySelectorAll('.material__detail')].map((node) => node.textContent?.trim());
+      [...host.querySelectorAll('.material__detail--picked')].map((node) => node.textContent?.trim());
 
     expect(details()).toEqual([MATERIALS[0].summary, MATERIALS[1].detail]);
 

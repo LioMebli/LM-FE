@@ -15,8 +15,12 @@
 
         <span class="material__body">
           <span class="material__name">{{ material.name }}</span>
-          <span class="material__detail">
+          <span class="material__detail material__detail--picked">
             {{ index === selected() ? material.detail : material.summary }}
+          </span>
+
+          <span class="material__detail material__detail--wide">
+            {{ material.wideDetail ?? material.detail }}
           </span>
         </span>
       </button>
