@@ -48,6 +48,14 @@ describe('ProcessSteps', () => {
     expect(host.querySelectorAll('ol > li')).toHaveLength(3);
   });
 
+  it('heads each step, so the section reads as three steps and not as one paragraph', () => {
+    fixture.detectChanges();
+
+    const headings = [...host.querySelectorAll('h3.step__label')].map((h) => h.textContent?.trim());
+
+    expect(headings).toEqual(STEPS.map((step) => step.label));
+  });
+
   it('renders each detail whole, because a clamped line hides the copy problem', () => {
     fixture.detectChanges();
 

@@ -70,11 +70,13 @@
 }
 
 .step__label {
+  margin: 0;
   font-size: var(--step-label);
   font-weight: var(--lm-weight-bold);
 }
 
 .step__detail {
-  font-size: var(--step-detail);
+  margin: 0;
   color: var(--lm-color-ink-muted);
+  font-size: var(--step-detail);
 }
