@@ -480,6 +480,16 @@ describe('runSiteChecks', () => {
     expect(failures).toContainEqual(expect.stringContaining('cdn.example.com, a third-party host'));
   });
 
+  it('refuses a release that carries the drawing the comparison mirrors into public/', async () => {
+    await givenAGoodRelease();
+    await mkdir(join(inputs.outputDir, '__mockup'), { recursive: true });
+    await writeFile(join(inputs.outputDir, '__mockup', 'phone.html'), '<p>drawing</p>', 'utf8');
+
+    const { failures } = await runSiteChecks(inputs);
+
+    expect(failures).toEqual([expect.stringContaining('__mockup')]);
+  });
+
   async function givenAGoodRelease() {
     await writeManifest({ categories: CATEGORIES, products: PRODUCTS });
     await writeFile(inputs.shellIndexPath, page({ title: SHELL_TITLE }), 'utf8');

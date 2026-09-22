@@ -21,6 +21,10 @@
   display: grid;
 }
 
+.footer__list li {
+  display: grid;
+}
+
 .footer__link {
   inline-size: 100%;
   min-block-size: var(--lm-tap-target-min);

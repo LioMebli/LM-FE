@@ -19,6 +19,10 @@ const UNPUBLISHED_ROUTES = new Map([
 
 const MAX_INITIAL_SCRIPT_BYTES = 250_000;
 
+/* Written into public/ by tools/render-mockup.mjs so the drawing and the site can be read
+   side by side from one origin. It is a working copy, not part of the site. */
+const DRAWING_MIRROR = '__mockup';
+
 const AVAILABILITY_LABELS = ['В наявності', 'Під замовлення', 'Знято з виробництва'];
 
 const ESCAPED_TEXT = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '\u00A0': '&nbsp;' };
@@ -67,9 +71,22 @@ export async function runSiteChecks({ manifestPath, outputDir, shellIndexPath, s
       ...checkCanonicals(pages, siteOrigin),
       ...thirdPartyHosts.failures,
       ...initialScripts.failures,
+      ...(await checkTheDrawingIsNotPublished(outputDir)),
     ],
     notes: [...duplicateTitleNotes(pages), ...thirdPartyHosts.notes, ...initialScripts.notes],
   };
+}
+
+async function checkTheDrawingIsNotPublished(outputDir) {
+  try {
+    await readdir(join(outputDir, DRAWING_MIRROR));
+  } catch {
+    return [];
+  }
+
+  return [
+    `${outputDir}/${DRAWING_MIRROR} is in the build - the drawing is a working copy for comparison, and publishing it would put a second homepage on the site`,
+  ];
 }
 
 function checkCatalogIsNotEmpty({ categories = [], products = [] }, manifestPath) {

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<title>Сайт і макет поруч</title>
+<style>
+  * { box-sizing: border-box }
+  body { margin: 0; font: 13px system-ui, sans-serif; background: #222; color: #eee }
+  header { display: flex; gap: 16px; align-items: baseline; padding: 6px 10px }
+  .pair { display: flex; gap: 10px; padding: 0 10px 10px; align-items: flex-start }
+  figure { margin: 0 }
+  figcaption { padding: 4px 0 }
+  iframe { border: 0; background: #fff; display: block }
+</style>
+</head>
+<body>
+<header>
+  <strong>ліворуч — сайт, праворуч — макет</strong>
+  <span id="size"></span>
+</header>
+<div class="pair">
+  <figure><figcaption>сайт</figcaption><iframe id="site"></iframe></figure>
+  <figure><figcaption>макет</figcaption><iframe id="drawn"></iframe></figure>
+</div>
+<script>
+  const params = new URLSearchParams(location.search);
+  const width = Number(params.get('w') ?? 360);
+  const height = Number(params.get('h') ?? 780);
+  const drawing = width >= 860 ? 'wide' : 'phone';
+
+  for (const [id, src] of [['site', '/'], ['drawn', `/__mockup/${drawing}.html`]]) {
+    const frame = document.getElementById(id);
+    frame.width = width;
+    frame.height = height;
+    frame.src = src;
+  }
+
+  document.getElementById('size').textContent = `${width}×${height}, макет ${drawing}`;
+</script>
+</body>
+</html>

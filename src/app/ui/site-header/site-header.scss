@@ -54,10 +54,6 @@ app-brand-mark {
   display: none;
 }
 
-.header__selection {
-  flex-shrink: 0;
-}
-
 .header__call {
   display: inline-flex;
   flex-shrink: 0;
@@ -196,7 +192,7 @@ app-brand-mark {
 .menu__field {
   inline-size: 100%;
   block-size: 40px;
-  padding-inline: 14px;
+  padding: 0 14px;
   border: var(--lm-border-control);
   border-radius: var(--lm-radius-pill);
   background: var(--lm-color-page);
@@ -222,8 +218,8 @@ app-brand-mark {
   text-decoration: none;
 }
 
-.menu__selection {
-  display: flex;
+.menu__selection,
+.header__selection {
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
@@ -236,6 +232,10 @@ app-brand-mark {
   font: inherit;
   font-size: 15px;
   cursor: pointer;
+}
+
+.menu__selection {
+  display: flex;
 }
 
 .menu__count {

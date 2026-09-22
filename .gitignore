@@ -43,3 +43,6 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# The drawing mirrored beside the site for comparison - tools/render-mockup.mjs writes it
+/public/__mockup/

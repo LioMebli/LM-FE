@@ -98,13 +98,11 @@
 
 @keyframes lm-hero-drifts {
   from {
-    scale: var(--hero-drift-from);
-    translate: 0 -2%;
+    transform: scale(var(--hero-drift-from)) translateY(-2%);
   }
 
   to {
-    scale: var(--hero-drift-to);
-    translate: 0 4%;
+    transform: scale(var(--hero-drift-to)) translateY(4%);
   }
 }
 
@@ -117,7 +115,7 @@
 @keyframes lm-hero-lifts {
   to {
     opacity: 0;
-    translate: 0 var(--hero-lift);
+    transform: translateY(var(--hero-lift));
   }
 }
 
