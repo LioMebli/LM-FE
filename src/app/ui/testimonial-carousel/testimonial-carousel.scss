@@ -3,7 +3,10 @@
 :host {
   --carousel-dot: 9px;
   --carousel-quote: var(--lm-text-lg);
+  --carousel-quote-gap: 10px;
+  --carousel-slide-padding: var(--lm-space-xs);
   --carousel-dots-gap: var(--lm-space-xs);
+  --carousel-dots-margin: var(--lm-space-sm);
 
   display: block;
 }
@@ -12,14 +15,16 @@
   :host {
     --carousel-dot: 10px;
     --carousel-quote: 19px;
+    --carousel-quote-gap: 12px;
+    --carousel-slide-padding: var(--lm-space-sm);
     --carousel-dots-gap: var(--lm-space-sm);
+    --carousel-dots-margin: var(--lm-space-md);
   }
 }
 
 .carousel {
   display: grid;
-  gap: var(--lm-space-sm);
-  max-inline-size: var(--lm-text-max);
+  gap: var(--carousel-dots-margin);
 }
 
 .carousel__window {
@@ -38,17 +43,17 @@
 
 .carousel__slide {
   flex: 0 0 100%;
+  padding-inline: var(--carousel-slide-padding);
 }
 
 .carousel__quote {
   display: grid;
-  gap: var(--lm-space-sm);
+  gap: var(--carousel-quote-gap);
   margin: 0;
 }
 
 .carousel__words {
   margin: 0;
-  max-inline-size: var(--lm-text-max);
   font-family: var(--lm-font-display);
   font-size: var(--carousel-quote);
   line-height: 1.4;

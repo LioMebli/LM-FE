@@ -1,16 +1,13 @@
-import { NgTemplateOutlet } from '@angular/common';
 import { Component, ElementRef, computed, input, output, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { telHref } from '../../core/site-contact';
 import { NavDestination } from '../shell.types';
-import { ActionButton } from '../action-button/action-button';
 import { BrandMark } from '../brand-mark/brand-mark';
-import { SelectionLink } from '../selection-link/selection-link';
 
 @Component({
   selector: 'app-site-header',
-  imports: [ActionButton, BrandMark, NgTemplateOutlet, RouterLink, SelectionLink],
+  imports: [BrandMark, RouterLink],
   templateUrl: './site-header.html',
   styleUrl: './site-header.scss',
 })
@@ -20,8 +17,6 @@ export class SiteHeader {
   readonly phone = input<string>();
 
   readonly selectionCount = input<number>();
-
-  readonly selectionLink = input<string>();
 
   readonly searched = output<string>();
 

@@ -28,11 +28,6 @@
   transition: background 0.22s ease;
 }
 
-@media (hover: hover) {
-  .service:hover {
-    background: color-mix(in oklch, var(--lm-color-ink) 5%, var(--lm-color-surface));
-  }
-}
 
 .service__name {
   margin: 0;
@@ -57,7 +52,12 @@
   }
 
   .services {
-    grid-auto-flow: column;
-    grid-auto-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  @media (hover: hover) {
+    .service:hover {
+      background: var(--lm-color-page-hover);
+    }
   }
 }

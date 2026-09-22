@@ -1,4 +1,9 @@
-<app-site-header [destinations]="destinations" [phone]="phone" (searched)="search($event)" />
+<app-site-header
+  [destinations]="destinations"
+  [phone]="phone"
+  [selectionCount]="selectionCount"
+  (searched)="search($event)"
+/>
 
 <main>
   <router-outlet />

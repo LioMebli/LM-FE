@@ -7,6 +7,7 @@
   --step-inline-gap: 14px;
   --step-body-gap: 2px;
   --step-padding: 0;
+  --step-detail: 15px;
 
   display: block;
 }
@@ -19,6 +20,21 @@
     --step-inline-gap: var(--lm-space-md);
     --step-body-gap: var(--lm-space-xs);
     --step-padding: var(--lm-space-md);
+    --step-detail: var(--lm-text-md);
+  }
+
+  .steps {
+    --step-min: 240px;
+  }
+
+  .step {
+    transition: background 0.22s ease;
+  }
+
+  @media (hover: hover) {
+    .step:hover {
+      background: var(--lm-color-surface);
+    }
   }
 }
 
@@ -59,6 +75,6 @@
 }
 
 .step__detail {
-  font-size: var(--lm-text-md);
+  font-size: var(--step-detail);
   color: var(--lm-color-ink-muted);
 }

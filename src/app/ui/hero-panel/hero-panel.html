@@ -5,8 +5,13 @@
     }
   </span>
 
+  <span class="hero__blob" aria-hidden="true">
+    @if (image(); as photo) {
+      <img class="hero__blob-image" [ngSrc]="photo.src" alt="" fill />
+    }
+  </span>
+
   <span class="hero__veil"></span>
-  <span class="hero__blob"></span>
 
   <div class="hero__body">
     <div class="hero__lockup">

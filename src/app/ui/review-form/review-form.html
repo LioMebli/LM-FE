@@ -19,20 +19,22 @@
     Відгук поки нікуди не надсилається — ми ще готуємо цю частину сайту.
   </p>
 
-  <p class="review__outcome" role="status">
-    @switch (outcome()) {
-      @case ('refused') {
-        <span class="review__outcome--refused">
-          Відгук не надіслано: заповніть обидва поля.
-        </span>
+  <div class="review__footing">
+    <p class="review__outcome" role="status">
+      @switch (outcome()) {
+        @case ('refused') {
+          <span class="review__outcome--refused">
+            Відгук не надіслано: заповніть обидва поля.
+          </span>
+        }
+        @case ('sent') {
+          <span class="review__outcome--sent">
+            Дякуємо, що написали. Зберігати відгуки сайт поки не вміє, тож цей текст нікуди не пішов.
+          </span>
+        }
       }
-      @case ('sent') {
-        <span class="review__outcome--sent">
-          Дякуємо, що написали. Зберігати відгуки сайт поки не вміє, тож цей текст нікуди не пішов.
-        </span>
-      }
-    }
-  </p>
+    </p>
 
-  <button class="review__send" type="submit">Надіслати</button>
+    <button class="review__send" type="submit">Надіслати</button>
+  </div>
 </form>

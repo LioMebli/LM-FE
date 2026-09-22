@@ -58,11 +58,11 @@ describe('HomePage', () => {
     expect(host.querySelector('app-sticky-action-bar')).toBeNull();
   });
 
-  it('renders no way into the catalog, because the catalog has no route yet', () => {
-    const links = [...host.querySelectorAll('a')].map((link) => link.getAttribute('href') ?? '');
+  it('offers the way into the catalog the drawing draws, and sends it where the drawing does', () => {
+    const control = host.querySelector<HTMLAnchorElement>('.home__catalog')!;
 
-    expect(links.length).toBeGreaterThan(0);
-    expect(links.filter((href) => !href.startsWith('tel:'))).toEqual([]);
+    expect(control.textContent?.trim()).toBe('Переглянути весь каталог');
+    expect(control.getAttribute('href')).toBe('/#foot');
   });
 
   it('opens the outline with one h1 and heads every section at the level below', () => {

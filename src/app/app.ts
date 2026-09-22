@@ -23,6 +23,8 @@ const DESTINATIONS: readonly NavDestination[] = [
 export class App {
   protected readonly destinations = DESTINATIONS;
 
+  protected readonly selectionCount = 0;
+
   protected readonly phone = SITE_PHONE;
 
   protected readonly address = SITE_ADDRESS;

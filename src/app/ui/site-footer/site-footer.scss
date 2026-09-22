@@ -2,7 +2,8 @@
 
 :host {
   display: block;
-  --footer-column-min: 14rem;
+  --footer-column-min: 220px;
+  --footer-rights-gap: 12px;
 }
 
 .footer {
@@ -17,23 +18,17 @@
 }
 
 .footer__list {
-  display: flex;
-  flex-direction: column;
-}
-
-.footer__link,
-.footer__phone,
-.footer__email,
-.footer__social {
-  min-block-size: var(--lm-tap-target-footer);
+  display: grid;
 }
 
 .footer__link {
   inline-size: 100%;
+  min-block-size: var(--lm-tap-target-min);
   color: var(--lm-color-ink);
   font-size: var(--lm-text-sm);
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 .footer__list li:not(:last-child) .footer__link {
@@ -41,9 +36,8 @@
 }
 
 .footer__contacts {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  display: grid;
+  justify-items: start;
   gap: 6px;
   font-style: normal;
 }
@@ -53,6 +47,7 @@
   font-family: var(--lm-font-display);
   font-size: var(--lm-text-lg);
   font-variant-numeric: lining-nums tabular-nums;
+  text-decoration: none;
 }
 
 .footer__address {
@@ -65,15 +60,8 @@
   font-size: var(--lm-text-sm);
 }
 
-.footer__brand {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--lm-space-md);
-}
-
 .footer__rights {
-  margin: 12px 0 0;
+  margin: var(--footer-rights-gap) 0 0;
   color: var(--lm-color-ink-muted);
   font-size: var(--lm-text-sm);
 }
@@ -84,7 +72,24 @@
   gap: var(--lm-space-md);
 }
 
+.footer__social {
+  min-block-size: var(--lm-tap-target-footer);
+}
+
+@media (hover: hover) {
+  .footer__link:hover,
+  .footer__phone:hover,
+  .footer__email:hover {
+    box-shadow: none;
+    color: var(--lm-color-primary);
+  }
+}
+
 @media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --footer-rights-gap: var(--lm-space-md);
+  }
+
   .footer {
     grid-template-columns: repeat(auto-fit, minmax(var(--footer-column-min), 1fr));
     gap: 2rem;
@@ -95,7 +100,15 @@
     gap: var(--lm-space-sm);
   }
 
+  .footer__link {
+    min-block-size: 0;
+  }
+
   .footer__list li:not(:last-child) .footer__link {
     border-block-end: 0;
+  }
+
+  .footer__contacts {
+    gap: var(--lm-space-sm);
   }
 }

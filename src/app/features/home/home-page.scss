@@ -9,6 +9,9 @@
   --home-reviews-space: 18px;
   --home-reviews-padding: 2.5rem;
   --home-lede-space: 20px;
+  --home-lede: 15px;
+  --home-more-space: var(--lm-space-lg);
+  --home-form-space: var(--lm-space-lg);
 
   display: block;
 }
@@ -22,6 +25,9 @@
     --home-reviews-space: var(--lm-space-lg);
     --home-reviews-padding: 3rem;
     --home-lede-space: 2rem;
+    --home-lede: var(--lm-text-md);
+    --home-more-space: 2rem;
+    --home-form-space: 2rem;
   }
 
 }
@@ -36,9 +42,6 @@
   max-inline-size: var(--home-band-narrow);
 }
 
-.home__services {
-  border-block-end: var(--lm-border-hairline);
-}
 
 .home__call {
   border-block-end: var(--lm-border-hairline);
@@ -74,10 +77,8 @@
 
 .home__lede {
   margin: 0 0 var(--home-lede-space);
-  max-inline-size: var(--lm-text-max);
-  margin-inline: auto;
   color: var(--lm-color-ink-muted);
-  font-size: var(--lm-text-md);
+  font-size: var(--home-lede);
   text-align: center;
 }
 
@@ -94,14 +95,53 @@
 }
 
 .home__form {
-  margin-block-start: var(--lm-space-xl);
-  padding-block-start: var(--lm-space-xl);
+  margin-block-start: var(--home-form-space);
+  padding-block-start: var(--home-form-space);
   border-block-start: var(--lm-border-hairline);
+}
+
+.home__more {
+  margin: var(--home-more-space) 0 0;
+  text-align: center;
+}
+
+.home__catalog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 48px;
+  padding-inline: var(--lm-space-lg);
+  border: var(--lm-border-hairline);
+  border-radius: var(--lm-radius-pill);
+  color: var(--lm-color-ink);
+  font-size: var(--lm-text-sm);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background 0.18s,
+    border-color 0.18s,
+    color 0.18s;
+}
+
+@media (hover: hover) {
+  .home__catalog:hover {
+    border-color: var(--lm-color-ink);
+    background: var(--lm-color-ink);
+    box-shadow: none;
+    color: var(--lm-color-on-dark);
+  }
 }
 
 @media (min-width: layout.$lm-layout-wide) {
   .home__projects {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .home__catalog {
+    display: inline-flex;
+    min-block-size: 0;
+    padding: 12px 28px;
   }
 }
 

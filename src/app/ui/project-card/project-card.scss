@@ -35,7 +35,6 @@
   display: block;
   aspect-ratio: 4 / 3;
   overflow: clip;
-  background: var(--lm-color-page);
 }
 
 .project__image {
@@ -59,7 +58,6 @@
 
 .project__lede {
   margin: 0;
-  max-inline-size: var(--lm-text-max);
   color: var(--lm-color-ink-muted);
   font-size: var(--project-lede);
   text-wrap: pretty;

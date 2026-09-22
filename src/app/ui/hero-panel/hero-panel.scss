@@ -3,18 +3,25 @@
 :host {
   --hero-heading: var(--lm-text-display-lg);
   --hero-measure: 24ch;
+  --hero-mark: var(--lm-hero-mark);
+  --hero-min-block: 480px;
+  --hero-lockup-gap: 14px;
+  --hero-body-padding: 2rem 20px;
+  --hero-lift: -48px;
+  --hero-veil-end: 62%;
+  --hero-drift-from: 1.12;
+  --hero-drift-to: 1.18;
 
-  display: grid;
-  min-block-size: 100svh;
+  display: block;
 }
 
 .hero {
   position: relative;
   display: grid;
   place-items: center;
+  block-size: 100svh;
+  min-block-size: var(--hero-min-block);
   overflow: clip;
-  padding-block-start: var(--lm-header-block-size);
-  background: var(--lm-color-ink);
 }
 
 .hero__media,
@@ -24,7 +31,8 @@
   inset: 0;
 }
 
-.hero__image {
+.hero__image,
+.hero__blob-image {
   object-fit: cover;
 }
 
@@ -32,25 +40,30 @@
   background: linear-gradient(
     to bottom,
     color-mix(in oklch, var(--lm-color-ink) 30%, transparent),
-    color-mix(in oklch, var(--lm-color-ink) 62%, transparent)
+    color-mix(in oklch, var(--lm-color-ink) var(--hero-veil-end), transparent)
   );
 }
 
 .hero__blob {
-  background: radial-gradient(
+  pointer-events: none;
+  mask: radial-gradient(
     63% 40% at 50% 45%,
-    color-mix(in oklch, var(--lm-color-ink) 62%, transparent) 34%,
-    color-mix(in oklch, var(--lm-color-ink) 31%, transparent) 66%,
+    rgb(0 0 0) 34%,
+    rgb(0 0 0 / 50%) 66%,
     transparent 100%
   );
+}
+
+.hero__blob-image {
+  filter: blur(2px) saturate(0.95) brightness(0.35);
 }
 
 .hero__body {
   position: relative;
   display: grid;
   justify-items: center;
-  gap: 14px;
-  padding: 2rem 20px;
+  gap: var(--hero-lockup-gap);
+  padding: var(--hero-body-padding);
   color: var(--lm-color-on-dark);
   text-align: center;
 }
@@ -58,13 +71,12 @@
 .hero__lockup {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: var(--hero-lockup-gap);
 }
 
 .hero__mark {
   inline-size: auto;
-  block-size: 1.18em;
-  font-size: var(--hero-heading);
+  block-size: var(--hero-mark);
   filter: invert(1);
 }
 
@@ -86,23 +98,55 @@
 
 @keyframes lm-hero-drifts {
   from {
-    scale: 1.12;
+    scale: var(--hero-drift-from);
     translate: 0 -2%;
   }
 
   to {
-    scale: 1.18;
+    scale: var(--hero-drift-to);
     translate: 0 4%;
   }
 }
 
-@supports (animation-timeline: view()) {
-  .hero__image {
+@keyframes lm-hero-recedes {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes lm-hero-lifts {
+  to {
+    opacity: 0;
+    translate: 0 var(--hero-lift);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .hero__image,
+  .hero__blob-image {
     animation-name: lm-hero-drifts;
     animation-duration: auto;
     animation-timing-function: linear;
     animation-fill-mode: both;
-    animation-timeline: view();
+    animation-timeline: scroll(root block);
+    animation-range: 0 100svh;
+  }
+
+  .hero__blob,
+  .hero__body {
+    animation-duration: auto;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 62svh;
+  }
+
+  .hero__blob {
+    animation-name: lm-hero-recedes;
+  }
+
+  .hero__body {
+    animation-name: lm-hero-lifts;
   }
 }
 
@@ -110,15 +154,18 @@
   :host {
     --hero-heading: var(--lm-text-display-hero);
     --hero-measure: 30ch;
-  }
-
-  .hero__body {
-    gap: var(--lm-space-md);
-    padding: var(--lm-space-2xl) var(--lm-space-lg);
+    --hero-mark: var(--lm-hero-mark-wide);
+    --hero-min-block: 560px;
+    --hero-lockup-gap: var(--lm-space-md);
+    --hero-body-padding: var(--lm-space-2xl) var(--lm-space-lg);
+    --hero-lift: -64px;
+    --hero-veil-end: 60%;
+    --hero-drift-from: 1.14;
+    --hero-drift-to: 1.2;
   }
 
   .hero__lockup {
-    gap: var(--lm-space-lg);
+    gap: var(--lm-hero-lockup-gap-wide);
   }
 
   .hero__heading {

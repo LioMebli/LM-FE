@@ -17,7 +17,7 @@
 
     <button class="header__magnifier" type="button" aria-label="Пошук" (click)="toggleSearch()">
       <svg
-        class="header__glyph"
+        class="header__glyph header__glyph--search"
         viewBox="0 0 20 20"
         fill="none"
         stroke="currentColor"
@@ -45,11 +45,11 @@
     </ul>
   </nav>
 
-  <app-selection-link
-    class="header__selection"
-    [count]="selectionCount()"
-    [link]="selectionLink()"
-  />
+  @if (selectionCount() !== undefined) {
+    <button class="header__selection menu__selection" type="button">
+      Підбірка <span class="menu__count">{{ selectionCount() }}</span>
+    </button>
+  }
 
   <div class="header__actions">
     @if (phone()) {
@@ -83,47 +83,44 @@
   </div>
 
   <dialog #menu class="menu" aria-label="Розділи сайту">
-    <div class="menu__frame">
-      <div class="menu__head">
-        <h2 class="menu__title">Розділи</h2>
-        <app-action-button (pressed)="close()">Закрити</app-action-button>
-      </div>
+    <button class="menu__close" type="button" aria-label="Закрити меню" (click)="close()">
+      <span class="menu__cross">×</span>
+    </button>
 
-      <form class="menu__search" role="search" (submit)="submitSearch($event, menuQuery.value)">
-        <input
-          #menuQuery
-          class="header__field"
-          type="search"
-          autocomplete="off"
-          aria-label="Пошук товарів"
-          placeholder="Пошук"
-        />
-      </form>
+    <form class="menu__search" role="search" (submit)="submitSearch($event, menuQuery.value)">
+      <input
+        #menuQuery
+        class="menu__field"
+        type="search"
+        autocomplete="off"
+        aria-label="Пошук товарів"
+        placeholder="Пошук"
+      />
+    </form>
 
-      <nav class="menu__body">
-        <ul class="menu__list">
-          @for (destination of destinations(); track destination.link) {
-            <li>
-              <a
-                class="menu__link"
-                [routerLink]="destination.link"
-                [fragment]="destination.fragment"
-                (click)="close()"
-              >
-                {{ destination.label }}
-              </a>
-            </li>
-          }
-        </ul>
-      </nav>
+    <nav class="menu__body">
+      <ul class="menu__list">
+        @for (destination of destinations(); track destination.link) {
+          <li>
+            <a
+              class="menu__link"
+              [routerLink]="destination.link"
+              [fragment]="destination.fragment"
+              (click)="close()"
+            >
+              {{ destination.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
 
-      <button class="menu__selection" type="button">
-        Підбірка <span class="menu__count">{{ selectionCount() ?? 0 }}</span>
-      </button>
+    <button class="menu__selection" type="button">
+      Підбірка <span class="menu__count">{{ selectionCount() ?? 0 }}</span>
+    </button>
 
-      @if (phone()) {
-        <a class="menu__phone" [href]="callHref()">{{ phone() }}</a>
-      }
-    </div>
+    @if (phone()) {
+      <a class="menu__phone" [href]="callHref()">{{ phone() }}</a>
+    }
   </dialog>
 </header>

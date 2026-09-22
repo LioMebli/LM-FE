@@ -5,6 +5,7 @@
   --material-min: 12.5rem;
   --material-grown: 2.2;
   --material-gap: 12px;
+  --material-body-gap: 2px;
 
   display: block;
 }
@@ -25,13 +26,13 @@
   display: grid;
   grid-template-columns: var(--material-thumb) 1fr;
   align-items: center;
-  gap: var(--lm-space-md);
+  gap: var(--material-gap);
   inline-size: 100%;
   overflow: clip;
   padding: var(--lm-space-sm);
   border: var(--lm-border-hairline);
   border-radius: var(--lm-radius-md);
-  background: var(--lm-color-surface);
+  background: none;
   color: var(--lm-color-ink);
   font: inherit;
   text-align: start;
@@ -51,7 +52,6 @@
   aspect-ratio: 1;
   overflow: clip;
   border-radius: 6px;
-  background: var(--lm-color-page);
 }
 
 .material__image {
@@ -60,7 +60,7 @@
 
 .material__body {
   display: grid;
-  gap: var(--lm-space-xs);
+  gap: var(--material-body-gap);
 }
 
 .material__name {
@@ -69,7 +69,6 @@
 }
 
 .material__detail {
-  max-inline-size: var(--lm-text-max);
   color: var(--lm-color-ink-muted);
   font-size: var(--lm-text-sm);
   text-wrap: pretty;
@@ -78,6 +77,7 @@
 @media (min-width: layout.$lm-layout-wide) {
   :host {
     --material-gap: var(--lm-space-md);
+    --material-body-gap: var(--lm-space-xs);
   }
 
   .materials {

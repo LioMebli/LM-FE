@@ -73,28 +73,26 @@ describe('SiteHeader', () => {
     expect(host().querySelector('.menu__phone')).toBeNull();
   });
 
-  it('offers the selection only when told both how many and where', async () => {
+  it('draws the count it is given, and draws a zero rather than hiding on one', async () => {
     fixture.componentRef.setInput('selectionCount', 3);
-    fixture.componentRef.setInput('selectionLink', '/pidbirka');
     await fixture.whenStable();
 
-    const control = host().querySelector<HTMLAnchorElement>('.header__selection .selection')!;
+    const control = host().querySelector<HTMLButtonElement>('.header__selection')!;
 
-    expect(control.getAttribute('href')).toBe('/pidbirka');
     expect(control.textContent?.replace(/\s+/g, ' ').trim()).toBe('Підбірка 3');
+
+    fixture.componentRef.setInput('selectionCount', 0);
+    await fixture.whenStable();
+
+    expect(
+      host().querySelector('.header__selection')!.textContent?.replace(/\s+/g, ' ').trim(),
+    ).toBe('Підбірка 0');
   });
 
-  it('passes both halves through or neither, rather than deciding for the control', async () => {
-    fixture.componentRef.setInput('selectionCount', 3);
+  it('renders no selection control when it was given no count', async () => {
     await fixture.whenStable();
 
-    expect(host().querySelector('.header__selection .selection')).toBeNull();
-
-    fixture.componentRef.setInput('selectionCount', undefined);
-    fixture.componentRef.setInput('selectionLink', '/pidbirka');
-    await fixture.whenStable();
-
-    expect(host().querySelector('.header__selection .selection')).toBeNull();
+    expect(host().querySelector('.header__selection')).toBeNull();
   });
 
   it('still shows the wordmark and the call when it is given no destination at all', async () => {
@@ -115,9 +113,9 @@ describe('SiteHeader', () => {
 
     expect(menu().open).toBe(true);
 
-    const close = host().querySelector<HTMLButtonElement>('.menu__head app-action-button button')!;
+    const close = host().querySelector<HTMLButtonElement>('.menu__close')!;
 
-    expect(close.textContent?.trim()).toBe('Закрити');
+    expect(close.getAttribute('aria-label')).toBe('Закрити меню');
 
     close.click();
 
@@ -151,10 +149,13 @@ describe('SiteHeader', () => {
     await fixture.whenStable();
 
     expect(host().querySelector('.header__search .header__field')).not.toBeNull();
-    expect(host().querySelector('.menu__search .header__field')).not.toBeNull();
+    expect(host().querySelector('.menu__search .menu__field')).not.toBeNull();
 
-    for (const form of ['.header__search form', '.menu__search']) {
-      const field = host().querySelector<HTMLInputElement>(`${form} .header__field`)!;
+    for (const [form, field_] of [
+      ['.header__search form', '.header__field'],
+      ['.menu__search', '.menu__field'],
+    ]) {
+      const field = host().querySelector<HTMLInputElement>(`${form} ${field_}`)!;
 
       field.value = 'ручка';
       host()

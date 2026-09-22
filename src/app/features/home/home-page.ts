@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { PageMetadata } from '../../core/seo/page-metadata';
 import { SITE_CALL_HOURS, SITE_PHONE } from '../../core/site-contact';
@@ -106,6 +107,7 @@ const TESTIMONIALS: readonly Testimonial[] = [
     ProcessSteps,
     ProjectCard,
     ReviewForm,
+    RouterLink,
     ServiceRow,
     TestimonialCarousel,
   ],

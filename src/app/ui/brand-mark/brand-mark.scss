@@ -2,6 +2,7 @@
 
 :host {
   --brand-mark: 22px;
+  --brand-mark-block: 32px;
   --brand-name: 17px;
 
   display: block;
@@ -10,6 +11,7 @@
 @media (min-width: layout.$lm-layout-wide) {
   :host {
     --brand-mark: 26px;
+    --brand-mark-block: 38px;
     --brand-name: var(--lm-text-lg);
   }
 }
@@ -25,7 +27,7 @@
 .brand__mark {
   display: block;
   inline-size: var(--brand-mark);
-  block-size: auto;
+  block-size: var(--brand-mark-block);
 }
 
 .brand__name {
