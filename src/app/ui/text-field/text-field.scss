@@ -52,9 +52,12 @@
 
 .field__message {
   display: block;
-  min-block-size: calc(var(--lm-text-sm) * var(--lm-leading-body));
   margin-block-start: var(--lm-space-xs);
   color: var(--lm-color-error);
   font-size: var(--lm-text-sm);
   line-height: var(--lm-leading-body);
+}
+
+.field__message:empty {
+  display: none;
 }

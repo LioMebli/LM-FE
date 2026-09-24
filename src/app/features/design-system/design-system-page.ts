@@ -101,7 +101,7 @@ export const TOKEN_GROUPS: readonly TokenGroup[] = [
   {
     title: 'Зона дотику',
     sample: 'space',
-    names: ['--lm-tap-target-min', '--lm-tap-target-chip', '--lm-tap-target-footer'],
+    names: ['--lm-tap-target-min', '--lm-tap-target-chip'],
   },
   { title: 'Ширина змісту', sample: 'space', names: ['--lm-content-max', '--lm-text-max'] },
   { title: 'Проміжок у лого героя', sample: 'space', names: ['--lm-hero-lockup-gap-wide'] },

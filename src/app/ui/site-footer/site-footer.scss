@@ -47,6 +47,7 @@
 }
 
 .footer__phone {
+  min-block-size: 0;
   color: var(--lm-color-ink);
   font-family: var(--lm-font-display);
   font-size: var(--lm-text-lg);
@@ -60,6 +61,7 @@
 }
 
 .footer__email {
+  min-block-size: 0;
   color: var(--lm-color-ink);
   font-size: var(--lm-text-sm);
 }
@@ -77,7 +79,7 @@
 }
 
 .footer__social {
-  min-block-size: var(--lm-tap-target-footer);
+  min-block-size: var(--lm-tap-target-min);
 }
 
 @media (hover: hover) {

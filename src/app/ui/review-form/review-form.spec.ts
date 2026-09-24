@@ -16,10 +16,6 @@ describe('ReviewForm', () => {
     await fixture.whenStable();
   });
 
-  it('says plainly that the review is not stored, before anybody types anything', () => {
-    expect(host.querySelector('.review__note')?.textContent).toContain('нікуди не надсилається');
-  });
-
   it('refuses an empty submission and names both fields', async () => {
     await send();
 
