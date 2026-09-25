@@ -36,7 +36,7 @@
   background: var(--lm-color-page);
   color: var(--lm-color-ink);
   font: inherit;
-  font-size: 15px;
+  font-size: var(--lm-text-compact);
 }
 
 .field__input--multiline {

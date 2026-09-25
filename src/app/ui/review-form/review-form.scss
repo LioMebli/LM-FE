@@ -69,10 +69,6 @@
     translate 0.18s;
 }
 
-.review__send:active {
-  translate: 0 0;
-}
-
 @media (hover: hover) {
   .review__send:hover {
     border-color: var(--lm-color-primary);
@@ -80,4 +76,8 @@
     box-shadow: none;
     translate: 0 -2px;
   }
+}
+
+.review__send:active {
+  translate: 0 0;
 }

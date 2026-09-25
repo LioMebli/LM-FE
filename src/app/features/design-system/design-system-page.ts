@@ -74,6 +74,7 @@ export const TOKEN_GROUPS: readonly TokenGroup[] = [
     sample: 'size',
     names: [
       '--lm-text-sm',
+      '--lm-text-compact',
       '--lm-text-md',
       '--lm-text-lg',
       '--lm-text-xl',

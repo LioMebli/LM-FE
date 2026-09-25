@@ -7,7 +7,7 @@
   --step-inline-gap: 14px;
   --step-body-gap: 2px;
   --step-padding: 0;
-  --step-detail: 15px;
+  --step-detail: var(--lm-text-compact);
 
   display: block;
 }

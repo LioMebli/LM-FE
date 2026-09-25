@@ -1,4 +1,5 @@
 import { readFile, readdir } from 'node:fs/promises';
+import { MIRROR as DRAWING_MIRROR } from './render-mockup.mjs';
 import { join, relative, sep } from 'node:path';
 import { gzipSync } from 'node:zlib';
 
@@ -19,9 +20,6 @@ const UNPUBLISHED_ROUTES = new Map([
 
 const MAX_INITIAL_SCRIPT_BYTES = 250_000;
 
-/* Written into public/ by tools/render-mockup.mjs so the drawing and the site can be read
-   side by side from one origin. It is a working copy, not part of the site. */
-const DRAWING_MIRROR = '__mockup';
 
 const AVAILABILITY_LABELS = ['В наявності', 'Під замовлення', 'Знято з виробництва'];
 
@@ -58,6 +56,7 @@ export async function runSiteChecks({ manifestPath, outputDir, shellIndexPath, s
   const shellTitle = await readShellTitle(shellIndexPath);
   const initialScripts = await checkInitialScripts(outputDir, pages.get(CATALOG_ROOT_ROUTE));
   const thirdPartyHosts = await checkNoThirdPartyHosts(outputDir, pages, siteOrigin);
+  const drawingMirror = await checkTheDrawingIsNotPublished(outputDir);
 
   return {
     failures: [
@@ -71,22 +70,32 @@ export async function runSiteChecks({ manifestPath, outputDir, shellIndexPath, s
       ...checkCanonicals(pages, siteOrigin),
       ...thirdPartyHosts.failures,
       ...initialScripts.failures,
-      ...(await checkTheDrawingIsNotPublished(outputDir)),
+      ...drawingMirror.failures,
     ],
-    notes: [...duplicateTitleNotes(pages), ...thirdPartyHosts.notes, ...initialScripts.notes],
+    notes: [
+      ...duplicateTitleNotes(pages),
+      ...thirdPartyHosts.notes,
+      ...initialScripts.notes,
+      ...drawingMirror.notes,
+    ],
   };
 }
 
 async function checkTheDrawingIsNotPublished(outputDir) {
+  const mirror = join(outputDir, DRAWING_MIRROR);
+
   try {
-    await readdir(join(outputDir, DRAWING_MIRROR));
+    await readdir(mirror);
   } catch {
-    return [];
+    return { failures: [], notes: [`Checked ${mirror} for the drawing mirror: not present`] };
   }
 
-  return [
-    `${outputDir}/${DRAWING_MIRROR} is in the build - the drawing is a working copy for comparison, and publishing it would put a second homepage on the site`,
-  ];
+  return {
+    failures: [
+      `${mirror} is in the build - the drawing is a working copy for comparison, and publishing it would put a second homepage on the site`,
+    ],
+    notes: [],
+  };
 }
 
 function checkCatalogIsNotEmpty({ categories = [], products = [] }, manifestPath) {

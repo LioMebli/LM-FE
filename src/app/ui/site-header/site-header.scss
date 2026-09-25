@@ -198,14 +198,14 @@ app-brand-mark {
   background: var(--lm-color-page);
   color: var(--lm-color-ink);
   font: inherit;
-  font-size: 15px;
+  font-size: var(--lm-text-compact);
 }
 
 .menu__list {
   display: flex;
   flex-direction: column;
   gap: var(--lm-space-xs);
-  font-size: 15px;
+  font-size: var(--lm-text-compact);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -230,7 +230,7 @@ app-brand-mark {
   background: none;
   color: var(--lm-color-ink);
   font: inherit;
-  font-size: 15px;
+  font-size: var(--lm-text-compact);
   cursor: pointer;
 }
 

@@ -2,11 +2,11 @@
 
 :host {
   --band-heading: 26px;
-  --band-lede: 15px;
+  --band-lede: var(--lm-text-compact);
   --band-gap: var(--lm-space-md);
   --band-copy-gap: var(--lm-space-md);
   --band-action-gap: var(--lm-space-md);
-  --band-call: 15px;
+  --band-call: var(--lm-text-compact);
 
   display: block;
 }

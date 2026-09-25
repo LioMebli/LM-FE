@@ -20,6 +20,23 @@ describe('MaterialPicker', () => {
     host = fixture.nativeElement as HTMLElement;
   });
 
+  it('says the wide line where there is one, and the long one where there is not', async () => {
+    fixture.componentRef.setInput('materials', [
+      { ...MATERIALS[0], wideDetail: 'Шпон із живою текстурою, олійне покриття.' },
+      MATERIALS[1],
+    ]);
+    await fixture.whenStable();
+
+    const wide = [...host.querySelectorAll('.material__detail--wide')].map((node) =>
+      node.textContent?.trim(),
+    );
+
+    expect(wide).toEqual([
+      'Шпон із живою текстурою, олійне покриття.',
+      'Стійкі поверхні, що не бояться гарячого посуду й вологи.',
+    ]);
+  });
+
   it('offers one control per material and marks the chosen one', async () => {
     fixture.componentRef.setInput('materials', MATERIALS);
     await fixture.whenStable();

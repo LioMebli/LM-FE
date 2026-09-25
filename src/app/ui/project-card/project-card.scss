@@ -2,7 +2,7 @@
 
 :host {
   --project-heading: 21px;
-  --project-lede: 15px;
+  --project-lede: var(--lm-text-compact);
   --project-body: 14px;
   --project-body-gap: 6px;
 

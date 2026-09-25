@@ -1,19 +1,10 @@
-/* Turns a .dc.html drawing into a plain page our dev server can serve from the same
-   origin, so the drawing and the site can be read side by side in two frames.
-
-   Run it with `node tools/render-mockup.mjs`, then `npm start` and open
-   /__mockup/compare.html?w=360 — the site and the drawing stand in two frames of the same
-   width. public/__mockup/ is gitignored, and site-checks.mjs fails a release that carries
-   it, so the working copy can never become a second homepage.
-
-   Why it exists: three passes comparing rendered properties each missed what reading the
-   two pages side by side finds in a minute. specs/LM-147/tasks.md phase 5c. */
-
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DRAWINGS = 'AdditionalMaterials/ClaudeDesign/main-page-responsive';
-const OUT = 'public/__mockup';
+export const MIRROR = '__mockup';
+
+const OUT = `public/${MIRROR}`;
 
 const PHOTOGRAPHS = {
   './hero-kitchen.jpg': '/images/hero-kitchen.webp',
@@ -26,9 +17,7 @@ const PHOTOGRAPHS = {
   './lm-mark.svg': '/lm-mark.svg',
 };
 
-/* The drawing's own defaults, read out of its <script type="text/x-dc">: the second
-   material is chosen, the first review is shown, the cart is empty, the menu is shut. */
-const VALUES = {
+const DRAWING_DEFAULTS = {
   menuOpen: '0',
   cart: '0',
   actA: '0',
@@ -59,7 +48,7 @@ function render(name) {
     .replace(/\sref="\{\{[^}]*\}\}"/g, '')
     .replace(/\sstyle-(hover|active)="[^"]*"/g, '')
     .replace(/\{\{\s*([a-zA-Z0-9]+)\s*\}\}/g, (whole, key) =>
-      key in VALUES ? VALUES[key] : whole,
+      key in DRAWING_DEFAULTS ? DRAWING_DEFAULTS[key] : whole,
     );
 
   const head = helmet
@@ -88,7 +77,9 @@ ${body}
   writeFileSync(join(OUT, `${name === 'MainPagePhone' ? 'phone' : 'wide'}.html`), page, 'utf8');
 }
 
-render('MainPagePhone');
-render('MainPageWide');
-copyFileSync('tools/mockup-compare.html', join(OUT, 'compare.html'));
-console.log('written to', OUT);
+if (import.meta.main) {
+  render('MainPagePhone');
+  render('MainPageWide');
+  copyFileSync('tools/mockup-compare.html', join(OUT, 'compare.html'));
+  console.log('written to', OUT);
+}
