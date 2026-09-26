@@ -24,6 +24,18 @@ describe('HeroPanel', () => {
     expect(host.querySelector('h1')?.textContent?.trim()).toBe('Lio Mebli');
   });
 
+  it('steps down to the level it is given, so a page already holding an h1 keeps holding one', () => {
+    fixture.componentRef.setInput('headingLevel', 4);
+    fixture.detectChanges();
+
+    const heading = host.querySelector('.hero__heading')!;
+
+    expect(host.querySelectorAll('h1')).toHaveLength(0);
+    expect(heading.getAttribute('role')).toBe('heading');
+    expect(heading.getAttribute('aria-level')).toBe('4');
+    expect(heading.textContent?.trim()).toBe('Lio Mebli');
+  });
+
   it('draws no photograph while there is none, rather than an image with no source', () => {
     fixture.detectChanges();
 

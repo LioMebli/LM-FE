@@ -81,8 +81,6 @@ export const TOKEN_GROUPS: readonly TokenGroup[] = [
       '--lm-text-display',
       '--lm-text-display-lg',
       '--lm-text-display-hero',
-      '--lm-hero-mark',
-      '--lm-hero-mark-wide',
     ],
   },
   { title: 'Інтерліньяж', sample: 'leading', names: ['--lm-leading-body', '--lm-leading-display'] },
@@ -105,7 +103,11 @@ export const TOKEN_GROUPS: readonly TokenGroup[] = [
     names: ['--lm-tap-target-min', '--lm-tap-target-chip'],
   },
   { title: 'Ширина змісту', sample: 'space', names: ['--lm-content-max', '--lm-text-max'] },
-  { title: 'Проміжок у лого героя', sample: 'space', names: ['--lm-hero-lockup-gap-wide'] },
+  {
+    title: 'Знак у герої',
+    sample: 'space',
+    names: ['--lm-hero-mark', '--lm-hero-mark-wide', '--lm-hero-lockup-gap-wide'],
+  },
   { title: 'Висота шапки', sample: 'space', names: ['--lm-header-block-size'] },
   {
     title: 'Радіус',

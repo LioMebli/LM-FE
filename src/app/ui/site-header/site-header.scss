@@ -83,6 +83,7 @@ app-brand-mark {
   color: var(--lm-color-ink);
   font-size: var(--lm-text-sm);
   letter-spacing: 0.06em;
+  text-decoration: none;
   text-transform: uppercase;
 }
 
@@ -111,7 +112,6 @@ app-brand-mark {
 }
 
 .menu {
-  display: flex;
   flex-direction: column;
   gap: var(--lm-space-lg);
   inline-size: min(78%, 300px);
@@ -132,6 +132,7 @@ app-brand-mark {
 }
 
 .menu[open] {
+  display: flex;
   translate: 0 0;
 }
 
@@ -198,7 +199,7 @@ app-brand-mark {
   background: var(--lm-color-page);
   color: var(--lm-color-ink);
   font: inherit;
-  font-size: var(--lm-text-compact);
+  font-size: var(--lm-text-md);
 }
 
 .menu__list {

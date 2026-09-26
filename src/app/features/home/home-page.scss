@@ -77,6 +77,8 @@
 
 .home__lede {
   margin: 0 0 var(--home-lede-space);
+  max-inline-size: var(--lm-text-max);
+  margin-inline: auto;
   color: var(--lm-color-ink-muted);
   font-size: var(--home-lede);
   text-align: center;

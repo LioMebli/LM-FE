@@ -58,6 +58,7 @@
 
 .project__lede {
   margin: 0;
+  max-inline-size: var(--lm-text-max);
   color: var(--lm-color-ink-muted);
   font-size: var(--project-lede);
   text-wrap: pretty;

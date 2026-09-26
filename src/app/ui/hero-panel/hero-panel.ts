@@ -15,4 +15,6 @@ export class HeroPanel {
   readonly lede = input.required<string>();
 
   readonly image = input<Photograph>();
+
+  readonly headingLevel = input<number>(1);
 }

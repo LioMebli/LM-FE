@@ -16,7 +16,13 @@
   <div class="hero__body">
     <div class="hero__lockup">
       <img class="hero__mark" src="lm-mark.svg" alt="" />
-      <h1 class="hero__heading">{{ heading() }}</h1>
+      @if (headingLevel() === 1) {
+        <h1 class="hero__heading">{{ heading() }}</h1>
+      } @else {
+        <p class="hero__heading" role="heading" [attr.aria-level]="headingLevel()">
+          {{ heading() }}
+        </p>
+      }
     </div>
 
     <p class="hero__lede">{{ lede() }}</p>
