@@ -1,0 +1,30 @@
+<section class="carousel" aria-label="Відгуки клієнтів">
+  <div class="carousel__window">
+    <ul class="carousel__track" [style.--shown]="index()">
+      @for (testimonial of testimonials(); track testimonial.quote) {
+        <li class="carousel__slide" [attr.aria-hidden]="testimonial !== testimonials()[index()]">
+          <figure class="carousel__quote">
+            <blockquote class="carousel__words">{{ testimonial.quote }}</blockquote>
+            <figcaption class="carousel__author">— {{ testimonial.author }}</figcaption>
+          </figure>
+        </li>
+      }
+    </ul>
+  </div>
+
+  @if (testimonials().length > 1) {
+    <div class="carousel__dots">
+      @for (testimonial of testimonials(); track testimonial.quote; let position = $index) {
+        <button
+          class="carousel__pick"
+          type="button"
+          [attr.aria-label]="'Відгук ' + (position + 1)"
+          [attr.aria-current]="position === index() ? 'true' : null"
+          (click)="show(position)"
+        >
+          <span class="carousel__dot"></span>
+        </button>
+      }
+    </div>
+  }
+</section>

@@ -1,0 +1,131 @@
+@use 'breakpoints' as layout;
+
+:host {
+  --band-heading: 26px;
+  --band-lede: var(--lm-text-compact);
+  --band-gap: var(--lm-space-md);
+  --band-copy-gap: var(--lm-space-md);
+  --band-action-gap: var(--lm-space-md);
+  --band-call: var(--lm-text-compact);
+
+  display: block;
+}
+
+.band {
+  display: grid;
+  justify-items: center;
+  gap: var(--band-gap);
+  max-inline-size: var(--lm-content-max);
+  margin-inline: auto;
+  padding: var(--lm-space-xl) var(--lm-space-md);
+  text-align: center;
+}
+
+.band__copy {
+  display: grid;
+  justify-items: center;
+  gap: var(--band-copy-gap);
+}
+
+.band__heading {
+  margin: 0;
+  font-family: var(--lm-font-display);
+  font-size: var(--band-heading);
+  font-weight: var(--lm-weight-regular);
+  line-height: var(--lm-leading-display);
+  text-wrap: pretty;
+}
+
+.band__lede {
+  margin: 0;
+  max-inline-size: 52ch;
+  color: var(--lm-color-ink-muted);
+  font-size: var(--band-lede);
+  text-wrap: pretty;
+}
+
+.band__action {
+  display: grid;
+  justify-items: center;
+  gap: var(--band-action-gap);
+  inline-size: 100%;
+}
+
+.band__call {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  inline-size: 100%;
+  min-block-size: calc(var(--lm-tap-target-min) + var(--lm-space-sm));
+  padding-inline: var(--lm-space-lg);
+  border: 1px solid var(--lm-color-primary);
+  border-radius: var(--lm-radius-pill);
+  background: var(--lm-color-primary);
+  color: var(--lm-color-on-dark);
+  font-size: var(--band-call);
+  font-weight: var(--lm-weight-bold);
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background 0.18s,
+    border-color 0.18s;
+}
+
+.band__glyph {
+  flex-shrink: 0;
+  inline-size: 18px;
+  block-size: 18px;
+}
+
+.band__hours {
+  margin: 0;
+  color: var(--lm-color-ink-muted);
+  font-size: var(--lm-text-sm);
+}
+
+.band__phone {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+@media (hover: hover) {
+  .band__call:hover {
+    border-color: var(--lm-color-primary-hover);
+    background: var(--lm-color-primary-hover);
+    box-shadow: none;
+    color: var(--lm-color-on-dark);
+  }
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --band-heading: var(--lm-text-display);
+    --band-lede: var(--lm-text-md);
+    --band-gap: 2rem;
+    --band-copy-gap: 12px;
+    --band-action-gap: var(--lm-space-sm);
+  }
+
+  .band {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: var(--lm-space-2xl) var(--lm-space-md);
+  }
+
+  .band__copy {
+    flex: 1 1 420px;
+    min-inline-size: 0;
+  }
+
+  .band__action {
+    inline-size: auto;
+  }
+
+  .band__call {
+    inline-size: auto;
+    padding-inline: 2rem;
+  }
+}

@@ -1,0 +1,30 @@
+<section class="hero">
+  <span class="hero__media">
+    @if (image(); as photo) {
+      <img class="hero__image" [ngSrc]="photo.src" [alt]="photo.alt" fill priority />
+    }
+  </span>
+
+  <span class="hero__blob" aria-hidden="true">
+    @if (image(); as photo) {
+      <img class="hero__blob-image" [ngSrc]="photo.src" alt="" fill />
+    }
+  </span>
+
+  <span class="hero__veil"></span>
+
+  <div class="hero__body">
+    <div class="hero__lockup">
+      <img class="hero__mark" src="lm-mark.svg" alt="" />
+      @if (headingLevel() === 1) {
+        <h1 class="hero__heading">{{ heading() }}</h1>
+      } @else {
+        <p class="hero__heading" role="heading" [attr.aria-level]="headingLevel()">
+          {{ heading() }}
+        </p>
+      }
+    </div>
+
+    <p class="hero__lede">{{ lede() }}</p>
+  </div>
+</section>

@@ -1,0 +1,63 @@
+@use 'breakpoints' as layout;
+
+:host {
+  --service-heading: 21px;
+  --service-gap: 6px;
+  --service-padding: 24px 20px;
+
+  display: block;
+}
+
+.services {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-block-end: var(--lm-border-hairline);
+  background: var(--lm-color-hairline);
+}
+
+.service {
+  display: grid;
+  justify-items: center;
+  gap: var(--service-gap);
+  padding: var(--service-padding);
+  background: var(--lm-color-surface);
+  text-align: center;
+  transition: background 0.22s ease;
+}
+
+
+.service__name {
+  margin: 0;
+  font-family: var(--lm-font-display);
+  font-size: var(--service-heading);
+  font-weight: var(--lm-weight-regular);
+  line-height: var(--lm-leading-display);
+}
+
+.service__detail {
+  margin: 0;
+  color: var(--lm-color-ink-muted);
+  font-size: var(--lm-text-md);
+  text-wrap: pretty;
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --service-heading: var(--lm-text-xl);
+    --service-gap: var(--lm-space-sm);
+    --service-padding: 2rem var(--lm-space-lg);
+  }
+
+  .services {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  @media (hover: hover) {
+    .service:hover {
+      background: var(--lm-color-page-hover);
+    }
+  }
+}

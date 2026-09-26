@@ -1,22 +1,62 @@
-<app-hero-banner [heading]="heading" [lede]="lede" />
+<app-hero-panel [heading]="heading" [lede]="lede" [image]="hero" />
 
-@if (categories().length) {
-  <section class="home__categories">
-    <h2 class="home__heading">Категорії</h2>
+<section class="home__services" aria-labelledby="home-services">
+  <h2 class="visually-hidden" id="home-services">Що ми робимо</h2>
+  <app-service-row [services]="services" />
+</section>
 
-    <ul class="home__grid" role="list">
-      @for (category of categories(); track category.id) {
-        <li>
-          <app-category-card [name]="category.name" [link]="'/category/' + category.id" />
-        </li>
-      }
-    </ul>
-  </section>
-}
+<section class="home__call">
+  <app-call-band
+    class="lm-reveal"
+    [heading]="callHeading"
+    [lede]="callLede"
+    [phone]="phone"
+    [hours]="callHours"
+  />
+</section>
 
-<section class="home__process">
-  <h2 class="home__heading">Як зробити замовлення</h2>
+<section class="home__band" id="projects" aria-labelledby="home-projects">
+  <h2 class="home__eyebrow lm-reveal" id="home-projects">Наші останні проєкти</h2>
+
+  <ul class="home__projects">
+    @for (project of projects; track project.name) {
+      <li>
+        <app-project-card
+          class="lm-reveal"
+          [name]="project.name"
+          [lede]="project.lede"
+          [image]="project.image"
+        />
+      </li>
+    }
+  </ul>
+
+  <p class="home__more">
+    <a class="home__catalog" routerLink="/" fragment="foot">Переглянути весь каталог</a>
+  </p>
+</section>
+
+<section class="home__materials" aria-labelledby="home-materials">
+  <div class="home__band">
+    <h2 class="home__eyebrow lm-reveal" id="home-materials">Якість, яку можна відчути</h2>
+    <p class="home__lede home__lede--touch">Торкніться матеріалу, щоб розглянути ближче.</p>
+    <p class="home__lede home__lede--point">Натисніть на матеріал, щоб розглянути ближче.</p>
+    <app-material-picker [materials]="materials" />
+  </div>
+</section>
+
+<section class="home__band" id="steps" aria-labelledby="home-steps">
+  <h2 class="home__eyebrow lm-reveal" id="home-steps">Три кроки до ваших ідеальних меблів</h2>
   <app-process-steps [steps]="steps" />
 </section>
 
-<app-sticky-action-bar [phone]="phone" />
+<section class="home__reviews" aria-labelledby="home-reviews">
+  <div class="home__band home__band--narrow">
+    <h2 class="home__eyebrow lm-reveal" id="home-reviews">Що говорять наші клієнти</h2>
+    <app-testimonial-carousel class="lm-reveal" [testimonials]="testimonials" />
+
+    <div class="home__form">
+      <app-review-form class="lm-reveal" />
+    </div>
+  </div>
+</section>

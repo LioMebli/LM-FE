@@ -1,3 +1,5 @@
+@use 'breakpoints' as layout;
+
 :host {
   --showcase-frame: 480px;
 
@@ -35,7 +37,7 @@
 }
 
 .ds__intro p {
-  max-inline-size: 60ch;
+  max-inline-size: var(--lm-text-max);
 }
 
 .ds__section {
@@ -45,6 +47,7 @@
 }
 
 .ds__note {
+  max-inline-size: var(--lm-text-max);
   color: var(--lm-color-ink-muted);
   font-size: var(--lm-text-sm);
 }
@@ -61,7 +64,7 @@
 }
 
 .group__note {
-  max-inline-size: 60ch;
+  max-inline-size: var(--lm-text-max);
   margin-block-start: 0;
   color: var(--lm-color-ink-muted);
   font-size: var(--lm-text-sm);
@@ -166,6 +169,43 @@
 .leading-sample {
   display: block;
   line-height: var(--sample);
+}
+
+.project-grid {
+  display: grid;
+  gap: var(--lm-space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-grid > li {
+  display: grid;
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  .project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.single-quote {
+  max-inline-size: var(--lm-text-max);
+  margin-block-start: var(--lm-space-lg);
+  padding-block-start: var(--lm-space-lg);
+  border-block-start: var(--lm-border-hairline);
+}
+
+.hero-stage {
+  block-size: 60svh;
+  min-block-size: 320px;
+  overflow: clip;
+  border-radius: var(--lm-radius-md);
+}
+
+.hero-stage app-hero-panel {
+  min-block-size: 0;
+  block-size: 100%;
 }
 
 .badge-stage {

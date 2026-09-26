@@ -13,15 +13,29 @@
   --lm-color-error: oklch(0.40 0.15 25);
   --lm-color-success: oklch(0.52 0.11 152);
 
+  --lm-color-hairline: oklch(0.85 0.010 75);
+  --lm-color-control: oklch(0.59 0.012 75);
+  --lm-color-page-hover: oklch(0.95 0.008 75);
+  --lm-color-primary-hover: oklch(0.46 0.09 68);
+
   --lm-border-hairline: 1px solid oklch(0.85 0.010 75);
   --lm-border-control: 1px solid oklch(0.59 0.012 75);
 
+  --lm-font-body: Onest, system-ui, sans-serif;
   --lm-font-display: Georgia, "Times New Roman", serif;
 
   --lm-text-sm: 14px;
+  --lm-text-compact: 15px;
   --lm-text-md: 16px;
   --lm-text-lg: 18px;
   --lm-text-xl: 24px;
+  --lm-text-display: clamp(28px, 3.4vw, 40px);
+  --lm-text-display-lg: clamp(34px, 11vw, 48px);
+  --lm-text-display-hero: clamp(44px, 8vw, 88px);
+
+  --lm-hero-mark: clamp(40px, 11vw, 56px);
+  --lm-hero-mark-wide: clamp(56px, 9vw, 104px);
+  --lm-hero-lockup-gap-wide: clamp(16px, 3vw, 32px);
 
   --lm-leading-body: 1.5;
   --lm-leading-display: 1.2;
@@ -32,12 +46,16 @@
   --lm-space-xs: 4px;
   --lm-space-sm: 8px;
   --lm-space-md: 16px;
+  --lm-space-lg: 24px;
+  --lm-space-xl: 40px;
+  --lm-space-2xl: 64px;
 
-  --lm-content-max: 60rem;
+  --lm-content-max: 70rem;
+  --lm-text-max: 53ch;
+  --lm-header-block-size: calc(var(--lm-tap-target-min) + var(--lm-space-sm) * 2 + 1px);
 
   --lm-tap-target-min: 44px;
   --lm-tap-target-chip: 22px;
-  --lm-tap-target-footer: 32px;
 
   --lm-radius-md: 8px;
   --lm-radius-lg: 16px;

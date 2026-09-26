@@ -1,0 +1,76 @@
+@use 'breakpoints' as layout;
+
+:host {
+  --project-heading: 21px;
+  --project-lede: var(--lm-text-compact);
+  --project-body: 14px;
+  --project-body-gap: 6px;
+
+  display: block;
+  block-size: 100%;
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --project-heading: var(--lm-text-xl);
+    --project-lede: var(--lm-text-md);
+    --project-body: var(--lm-space-md);
+    --project-body-gap: var(--lm-space-sm);
+  }
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  overflow: clip;
+  border: var(--lm-border-hairline);
+  border-radius: var(--lm-radius-md);
+  background: var(--lm-color-surface);
+  transition: border-color 0.22s ease;
+}
+
+.project__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: clip;
+}
+
+.project__image {
+  object-fit: cover;
+  transition: scale 0.5s ease;
+}
+
+.project__body {
+  display: grid;
+  gap: var(--project-body-gap);
+  padding: var(--project-body);
+}
+
+.project__name {
+  margin: 0;
+  font-family: var(--lm-font-display);
+  font-size: var(--project-heading);
+  font-weight: var(--lm-weight-regular);
+  line-height: var(--lm-leading-display);
+}
+
+.project__lede {
+  margin: 0;
+  max-inline-size: var(--lm-text-max);
+  color: var(--lm-color-ink-muted);
+  font-size: var(--project-lede);
+  text-wrap: pretty;
+}
+
+@media (hover: hover) {
+  .project:hover {
+    border-color: var(--lm-color-primary);
+  }
+
+  .project:hover .project__image {
+    scale: 1.05;
+  }
+}
+

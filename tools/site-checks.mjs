@@ -1,4 +1,5 @@
 import { readFile, readdir } from 'node:fs/promises';
+import { MIRROR as DRAWING_MIRROR } from './render-mockup.mjs';
 import { join, relative, sep } from 'node:path';
 import { gzipSync } from 'node:zlib';
 
@@ -19,6 +20,7 @@ const UNPUBLISHED_ROUTES = new Map([
 
 const MAX_INITIAL_SCRIPT_BYTES = 250_000;
 
+
 const AVAILABILITY_LABELS = ['В наявності', 'Під замовлення', 'Знято з виробництва'];
 
 const ESCAPED_TEXT = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '\u00A0': '&nbsp;' };
@@ -35,6 +37,13 @@ const LINK_TAG = /<link[^>]*>/g;
 const HREF = /href="([^"]*)"/;
 const SRC = /src="([^"]*)"/;
 
+const SUBRESOURCE_ELEMENT = /<(?:link|script|img|source|iframe|video|audio)\b[^>]*>/gi;
+const STYLESHEET_LINK = /<link[^>]*rel="stylesheet"[^>]*>/gi;
+const STYLE_BLOCK = /<style[^>]*>([\s\S]*?)<\/style>/gi;
+const SRCSET = /srcset="([^"]*)"/;
+const CSS_URL = /url\(\s*['"]?([^'")]+)['"]?\s*\)/g;
+const NON_FETCHING_SCHEME = /^(?:data|about|mailto|tel|blob|javascript):/i;
+
 export async function runSiteChecks({ manifestPath, outputDir, shellIndexPath, siteOrigin }) {
   const manifest = await readManifest(manifestPath);
   const emptyCatalog = checkCatalogIsNotEmpty(manifest, manifestPath);
@@ -46,6 +55,8 @@ export async function runSiteChecks({ manifestPath, outputDir, shellIndexPath, s
   const pages = await readProducedPages(outputDir);
   const shellTitle = await readShellTitle(shellIndexPath);
   const initialScripts = await checkInitialScripts(outputDir, pages.get(CATALOG_ROOT_ROUTE));
+  const thirdPartyHosts = await checkNoThirdPartyHosts(outputDir, pages, siteOrigin);
+  const drawingMirror = await checkTheDrawingIsNotPublished(outputDir);
 
   return {
     failures: [
@@ -57,9 +68,33 @@ export async function runSiteChecks({ manifestPath, outputDir, shellIndexPath, s
       ...(await checkRobots(outputDir, siteOrigin)),
       ...checkTitles(pages, shellTitle),
       ...checkCanonicals(pages, siteOrigin),
+      ...thirdPartyHosts.failures,
       ...initialScripts.failures,
+      ...drawingMirror.failures,
     ],
-    notes: [...duplicateTitleNotes(pages), ...initialScripts.notes],
+    notes: [
+      ...duplicateTitleNotes(pages),
+      ...thirdPartyHosts.notes,
+      ...initialScripts.notes,
+      ...drawingMirror.notes,
+    ],
+  };
+}
+
+async function checkTheDrawingIsNotPublished(outputDir) {
+  const mirror = join(outputDir, DRAWING_MIRROR);
+
+  try {
+    await readdir(mirror);
+  } catch {
+    return { failures: [], notes: [`Checked ${mirror} for the drawing mirror: not present`] };
+  }
+
+  return {
+    failures: [
+      `${mirror} is in the build - the drawing is a working copy for comparison, and publishing it would put a second homepage on the site`,
+    ],
+    notes: [],
   };
 }
 
@@ -248,6 +283,114 @@ function checkCanonicals(pages, siteOrigin) {
       ? []
       : [`${route} names "${href}" as its canonical address, not "${expected}"`];
   });
+}
+
+async function checkNoThirdPartyHosts(outputDir, pages, siteOrigin) {
+  const failures = [];
+  const stylesheets = new Set();
+  let inlineBlocks = 0;
+
+  for (const [route, html] of pages) {
+    failures.push(
+      ...offendingReferences(subresourceReferencesIn(html), siteOrigin).map(
+        ({ reference, host }) => `${route} loads ${reference} from ${host}, a third-party host`,
+      ),
+    );
+
+    for (const style of inlineStylesIn(html)) {
+      inlineBlocks += 1;
+      failures.push(
+        ...offendingReferences(cssReferencesIn(style), siteOrigin).map(
+          ({ reference, host }) =>
+            `${route} has inline CSS loading ${reference} from ${host}, a third-party host`,
+        ),
+      );
+    }
+
+    for (const href of stylesheetHrefsIn(html)) {
+      if (thirdPartyHostOf(href, siteOrigin) === undefined) {
+        stylesheets.add(href.replace(/^\//, ''));
+      }
+    }
+  }
+
+  for (const stylesheet of stylesheets) {
+    const source = await readIfPresent(join(outputDir, stylesheet));
+
+    if (source === undefined) {
+      failures.push(
+        `${stylesheet} is linked as a stylesheet but could not be read, so nothing checked it`,
+      );
+      continue;
+    }
+
+    failures.push(
+      ...offendingReferences(cssReferencesIn(source), siteOrigin).map(
+        ({ reference, host }) =>
+          `${stylesheet} loads ${reference} from ${host}, a third-party host`,
+      ),
+    );
+  }
+
+  return {
+    failures,
+    notes: [
+      `Third-party hosts: read ${pages.size} page(s), ${stylesheets.size} stylesheet(s) and ` +
+        `${inlineBlocks} inline style block(s)`,
+    ],
+  };
+}
+
+function cssReferencesIn(source) {
+  return [...source.matchAll(CSS_URL)].map(([, reference]) => reference);
+}
+
+function inlineStylesIn(html) {
+  return [...html.matchAll(STYLE_BLOCK)].map(([, contents]) => contents);
+}
+
+function offendingReferences(references, siteOrigin) {
+  return references
+    .map((reference) => ({ reference, host: thirdPartyHostOf(reference, siteOrigin) }))
+    .filter(({ host }) => host !== undefined);
+}
+
+function subresourceReferencesIn(html) {
+  return [...html.matchAll(SUBRESOURCE_ELEMENT)]
+    .flatMap(([tag]) => [HREF.exec(tag)?.[1], SRC.exec(tag)?.[1], ...srcsetReferencesIn(tag)])
+    .filter((reference) => reference !== undefined && reference !== '');
+}
+
+function srcsetReferencesIn(tag) {
+  return (SRCSET.exec(tag)?.[1] ?? '')
+    .split(',')
+    .map((candidate) => candidate.trim().split(/\s+/)[0])
+    .filter((reference) => reference !== '');
+}
+
+function stylesheetHrefsIn(html) {
+  return [...html.matchAll(STYLESHEET_LINK)]
+    .map(([tag]) => HREF.exec(tag)?.[1])
+    .filter((href) => href !== undefined && href !== '');
+}
+
+function thirdPartyHostOf(reference, siteOrigin) {
+  if (reference.startsWith('#') || NON_FETCHING_SCHEME.test(reference)) {
+    return undefined;
+  }
+
+  let resolved;
+
+  try {
+    resolved = new URL(reference, siteOrigin);
+  } catch {
+    return undefined;
+  }
+
+  const site = new URL(siteOrigin).hostname;
+  const ours = resolved.hostname === site || resolved.hostname.endsWith(`.${site}`);
+
+  return ours ? undefined : resolved.hostname;
 }
 
 async function checkInitialScripts(outputDir, catalogRoot) {

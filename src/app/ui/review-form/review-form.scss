@@ -1,0 +1,83 @@
+@use 'breakpoints' as layout;
+
+:host {
+  display: block;
+}
+
+.review {
+  --review-send-block: 48px;
+
+  display: grid;
+  gap: 12px;
+  max-inline-size: 35rem;
+  margin-inline: auto;
+}
+
+.review__footing {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  .review {
+    --review-send-block: 40px;
+  }
+
+  .review__footing {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--lm-space-md);
+  }
+
+  .review__send {
+    padding-inline: 26px;
+  }
+}
+
+.review__outcome {
+  margin: 0;
+  font-size: var(--lm-text-sm);
+  text-wrap: pretty;
+}
+
+.review__outcome--refused {
+  color: var(--lm-color-error);
+  font-weight: var(--lm-weight-bold);
+}
+
+.review__outcome--sent {
+  color: var(--lm-color-success);
+}
+
+.review__send {
+  min-block-size: var(--review-send-block);
+  padding-inline: var(--lm-space-lg);
+  border: 1px solid var(--lm-color-ink);
+  border-radius: var(--lm-radius-pill);
+  background: var(--lm-color-ink);
+  color: var(--lm-color-on-dark);
+  font: inherit;
+  font-size: var(--lm-text-sm);
+  font-weight: var(--lm-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.18s,
+    border-color 0.18s,
+    translate 0.18s;
+}
+
+@media (hover: hover) {
+  .review__send:hover {
+    border-color: var(--lm-color-primary);
+    background: var(--lm-color-primary);
+    box-shadow: none;
+    translate: 0 -2px;
+  }
+}
+
+.review__send:active {
+  translate: 0 0;
+}

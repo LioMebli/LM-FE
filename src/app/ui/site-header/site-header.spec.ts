@@ -46,20 +46,117 @@ describe('SiteHeader', () => {
     expect(labels('.menu__link')).toEqual([]);
   });
 
+  it('dials the phone it is given, rather than scrolling to where a number is printed', async () => {
+    fixture.componentRef.setInput('phone', '+380671234567');
+    await fixture.whenStable();
+
+    for (const selector of ['.header__call', '.menu__phone']) {
+      expect(host().querySelector<HTMLAnchorElement>(selector)!.getAttribute('href')).toBe(
+        'tel:+380671234567',
+      );
+    }
+  });
+
+  it('gives the call glyph a label, since it carries no text of its own', async () => {
+    fixture.componentRef.setInput('phone', '+380671234567');
+    await fixture.whenStable();
+
+    expect(host().querySelector('.header__call')!.getAttribute('aria-label')).toBe(
+      'Зателефонувати',
+    );
+  });
+
+  it('renders no call control when it was given no phone', async () => {
+    await fixture.whenStable();
+
+    expect(host().querySelector('.header__call')).toBeNull();
+    expect(host().querySelector('.menu__phone')).toBeNull();
+  });
+
+  it('draws the count it is given, and draws a zero rather than hiding on one', async () => {
+    fixture.componentRef.setInput('selectionCount', 3);
+    await fixture.whenStable();
+
+    const control = host().querySelector<HTMLButtonElement>('.header__selection')!;
+
+    expect(control.textContent?.replace(/\s+/g, ' ').trim()).toBe('Підбірка 3');
+
+    fixture.componentRef.setInput('selectionCount', 0);
+    await fixture.whenStable();
+
+    expect(
+      host().querySelector('.header__selection')!.textContent?.replace(/\s+/g, ' ').trim(),
+    ).toBe('Підбірка 0');
+  });
+
+  it('renders no selection control when it was given no count', async () => {
+    await fixture.whenStable();
+
+    expect(host().querySelector('.header__selection')).toBeNull();
+  });
+
+  it('still shows the wordmark and the call when it is given no destination at all', async () => {
+    fixture.componentRef.setInput('destinations', []);
+    fixture.componentRef.setInput('phone', '+380671234567');
+    await fixture.whenStable();
+
+    expect(host().querySelector('app-brand-mark .brand')).not.toBeNull();
+    expect(host().querySelector('.header__call')).not.toBeNull();
+  });
+
   it('opens the menu as a modal and closes it by a labelled control', async () => {
     await fixture.whenStable();
 
     expect(menu().open).toBe(false);
 
-    host().querySelector<HTMLButtonElement>('.header__opener button')!.click();
+    host().querySelector<HTMLButtonElement>('.header__opener')!.click();
 
     expect(menu().open).toBe(true);
 
-    const close = host().querySelector<HTMLButtonElement>('.menu__head app-action-button button')!;
+    const close = host().querySelector<HTMLButtonElement>('.menu__close')!;
 
-    expect(close.textContent?.trim()).toBe('Закрити');
+    expect(close.getAttribute('aria-label')).toBe('Закрити меню');
 
     close.click();
+
+    expect(menu().open).toBe(false);
+  });
+
+  it('closes on a tap beside it and stays on a tap inside it, padding included', async () => {
+    await fixture.whenStable();
+    givenTheDrawerOccupies({ left: 60, right: 360, top: 0, bottom: 780 });
+
+    const tap = (x: number, y: number) =>
+      menu().dispatchEvent(new MouseEvent('click', { clientX: x, clientY: y, bubbles: true }));
+
+    host().querySelector<HTMLButtonElement>('.header__opener')!.click();
+    tap(64, 8);
+
+    expect(menu().open).toBe(true);
+
+    tap(30, 400);
+
+    expect(menu().open).toBe(false);
+  });
+
+  it('closes when swiped away to the right, and stays for a short or vertical drag', async () => {
+    await fixture.whenStable();
+
+    const swipe = (fromX: number, toX: number, toY = 0) => {
+      menu().dispatchEvent(new PointerEvent('pointerdown', { clientX: fromX, clientY: 0, bubbles: true }));
+      menu().dispatchEvent(new PointerEvent('pointerup', { clientX: toX, clientY: toY, bubbles: true }));
+    };
+
+    host().querySelector<HTMLButtonElement>('.header__opener')!.click();
+    swipe(100, 130);
+
+    expect(menu().open).toBe(true);
+
+    swipe(100, 140, 200);
+
+    expect(menu().open).toBe(true);
+
+    swipe(100, 200);
 
     expect(menu().open).toBe(false);
   });
@@ -67,7 +164,7 @@ describe('SiteHeader', () => {
   it('closes the menu when a destination in it is taken', async () => {
     await fixture.whenStable();
 
-    host().querySelector<HTMLButtonElement>('.header__opener button')!.click();
+    host().querySelector<HTMLButtonElement>('.header__opener')!.click();
     host().querySelector<HTMLAnchorElement>('.menu__link')!.click();
 
     expect(menu().open).toBe(false);
@@ -84,6 +181,30 @@ describe('SiteHeader', () => {
     expect(asked).toEqual(['ручка']);
   });
 
+  it('offers the search in the bar and in the menu, and both report the same way', async () => {
+    const asked: string[] = [];
+
+    fixture.componentInstance.searched.subscribe((query) => asked.push(query));
+    await fixture.whenStable();
+
+    expect(host().querySelector('.header__search .header__field')).not.toBeNull();
+    expect(host().querySelector('.menu__search .menu__field')).not.toBeNull();
+
+    for (const [form, field_] of [
+      ['.header__search form', '.header__field'],
+      ['.menu__search', '.menu__field'],
+    ]) {
+      const field = host().querySelector<HTMLInputElement>(`${form} ${field_}`)!;
+
+      field.value = 'ручка';
+      host()
+        .querySelector<HTMLFormElement>(form)!
+        .dispatchEvent(new Event('submit', { cancelable: true }));
+    }
+
+    expect(asked).toEqual(['ручка', 'ручка']);
+  });
+
   it('says nothing when the search is submitted empty', async () => {
     const asked: string[] = [];
 
@@ -94,6 +215,11 @@ describe('SiteHeader', () => {
 
     expect(asked).toEqual([]);
   });
+
+  function givenTheDrawerOccupies(box: { left: number; right: number; top: number; bottom: number }): void {
+    menu().getBoundingClientRect = () =>
+      ({ ...box, width: box.right - box.left, height: box.bottom - box.top, x: box.left, y: box.top }) as DOMRect;
+  }
 
   function host(): HTMLElement {
     return fixture.nativeElement as HTMLElement;
@@ -111,7 +237,7 @@ describe('SiteHeader', () => {
     const field = host().querySelector<HTMLInputElement>('.header__field')!;
 
     field.value = query;
-    host().querySelector<HTMLFormElement>('.header__search')!.dispatchEvent(
+    host().querySelector<HTMLFormElement>('.header__search form')!.dispatchEvent(
       new Event('submit', { cancelable: true }),
     );
   }

@@ -44,7 +44,11 @@ describe('App', () => {
   it('holds one destination list and hands the same one to both header and footer', async () => {
     await fixture.whenStable();
 
-    expect(header().destinations()).toEqual([{ label: 'Головна', link: '/' }]);
+    expect(header().destinations()).toEqual([
+      { label: 'Каталог', link: '/', fragment: 'projects' },
+      { label: 'Про нас', link: '/', fragment: 'steps' },
+      { label: 'Контакти', link: '/', fragment: 'foot' },
+    ]);
     expect(footer().destinations()).toBe(header().destinations());
   });
 

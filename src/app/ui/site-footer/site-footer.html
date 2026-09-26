@@ -1,20 +1,39 @@
 <footer class="footer">
-  <app-brand-mark />
+  <div>
+    <app-brand-mark />
+    <p class="footer__rights">© 2026. Усі права захищені.</p>
+  </div>
 
   @if (destinations().length) {
     <nav class="footer__nav" aria-label="Розділи сайту внизу сторінки">
       <ul class="footer__list">
         @for (destination of destinations(); track destination.link) {
           <li>
-            <a class="footer__link" [routerLink]="destination.link">{{ destination.label }}</a>
+            <a
+              class="footer__link"
+              [routerLink]="destination.link"
+              [fragment]="destination.fragment"
+            >{{ destination.label }}</a>
           </li>
         }
       </ul>
     </nav>
   }
 
-  @if (phone()) {
-    <a class="footer__phone" [href]="callHref()">{{ phone() }}</a>
+  @if (hasContacts()) {
+    <address class="footer__contacts">
+      @if (phone()) {
+        <a class="footer__phone" [href]="callHref()">{{ phone() }}</a>
+      }
+
+      @if (address()) {
+        <span class="footer__address">{{ address() }}</span>
+      }
+
+      @if (email()) {
+        <a class="footer__email" [href]="mailHref()">{{ email() }}</a>
+      }
+    </address>
   }
 
   @if (socials().length) {

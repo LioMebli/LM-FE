@@ -1,5 +1,41 @@
+@use 'breakpoints' as layout;
+
 :host {
+  --step-ordinal: 2.75rem;
+  --step-label: 17px;
+  --step-gap: var(--lm-space-md);
+  --step-inline-gap: 14px;
+  --step-body-gap: 2px;
+  --step-padding: 0;
+  --step-detail: var(--lm-text-compact);
+
   display: block;
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --step-ordinal: 4rem;
+    --step-label: var(--lm-text-lg);
+    --step-gap: 2rem;
+    --step-inline-gap: var(--lm-space-md);
+    --step-body-gap: var(--lm-space-xs);
+    --step-padding: var(--lm-space-md);
+    --step-detail: var(--lm-text-md);
+  }
+
+  .steps {
+    --step-min: 240px;
+  }
+
+  .step {
+    transition: background 0.22s ease;
+  }
+
+  @media (hover: hover) {
+    .step:hover {
+      background: var(--lm-color-surface);
+    }
+  }
 }
 
 .steps {
@@ -7,7 +43,7 @@
 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--step-min), 1fr));
-  gap: var(--lm-space-md);
+  gap: var(--step-gap);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -15,23 +51,32 @@
 
 .step {
   display: flex;
-  flex-direction: column;
-  gap: var(--lm-space-xs);
+  align-items: flex-start;
+  gap: var(--step-inline-gap);
+  padding: var(--step-padding);
+  border-radius: var(--lm-radius-md);
+}
+
+.step__body {
+  display: grid;
+  gap: var(--step-body-gap);
 }
 
 .step__ordinal {
   font-family: var(--lm-font-display);
-  font-size: var(--lm-text-xl);
-  line-height: var(--lm-leading-display);
+  font-size: var(--step-ordinal);
+  line-height: 1;
   color: var(--lm-color-primary);
 }
 
 .step__label {
-  font-size: var(--lm-text-md);
+  margin: 0;
+  font-size: var(--step-label);
   font-weight: var(--lm-weight-bold);
 }
 
 .step__detail {
-  font-size: var(--lm-text-md);
+  margin: 0;
   color: var(--lm-color-ink-muted);
+  font-size: var(--step-detail);
 }

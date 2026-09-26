@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 
 import { categoryResolver } from './features/category/category-resolver';
-import { homeResolver } from './features/home/home-resolver';
 import { productResolver } from './features/product/product-resolver';
 
 const notFoundPage = () =>
@@ -12,7 +11,6 @@ export const routes: Routes = [
     path: '',
     pathMatch: 'full',
     loadComponent: () => import('./features/home/home-page').then((m) => m.HomePage),
-    resolve: { categories: homeResolver },
   },
   {
     path: 'category/:id',

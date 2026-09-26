@@ -1,0 +1,95 @@
+@use 'breakpoints' as layout;
+
+:host {
+  --carousel-dot: 9px;
+  --carousel-quote: var(--lm-text-lg);
+  --carousel-quote-gap: 10px;
+  --carousel-slide-padding: var(--lm-space-xs);
+  --carousel-dots-gap: var(--lm-space-sm);
+  --carousel-dots-margin: var(--lm-space-sm);
+
+  display: block;
+}
+
+@media (min-width: layout.$lm-layout-wide) {
+  :host {
+    --carousel-dot: 10px;
+    --carousel-quote: 19px;
+    --carousel-quote-gap: 12px;
+    --carousel-slide-padding: var(--lm-space-sm);
+    --carousel-dots-gap: var(--lm-space-sm);
+    --carousel-dots-margin: var(--lm-space-md);
+  }
+}
+
+.carousel {
+  display: grid;
+  gap: var(--carousel-dots-margin);
+}
+
+.carousel__window {
+  overflow: clip;
+}
+
+.carousel__track {
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  translate: calc(var(--shown, 0) * -100%);
+  transition: translate 0.45s ease;
+}
+
+.carousel__slide {
+  flex: 0 0 100%;
+  padding-inline: var(--carousel-slide-padding);
+}
+
+.carousel__quote {
+  display: grid;
+  gap: var(--carousel-quote-gap);
+  margin: 0;
+}
+
+.carousel__words {
+  margin: 0;
+  font-family: var(--lm-font-display);
+  font-size: var(--carousel-quote);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.carousel__author {
+  color: var(--lm-color-ink-muted);
+  font-size: var(--lm-text-sm);
+}
+
+.carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--carousel-dots-gap);
+}
+
+.carousel__pick {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.carousel__dot {
+  display: block;
+  inline-size: var(--carousel-dot);
+  block-size: var(--carousel-dot);
+  border-radius: var(--lm-radius-pill);
+  background: var(--lm-color-hairline);
+  transition: background 0.22s ease;
+}
+
+.carousel__pick[aria-current] .carousel__dot {
+  background: var(--lm-color-primary);
+}

@@ -1,9 +1,11 @@
 import { Component, computed, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+
+import { telHref } from '../../core/site-contact';
+import { SelectionLink } from '../selection-link/selection-link';
 
 @Component({
   selector: 'app-sticky-action-bar',
-  imports: [RouterLink],
+  imports: [SelectionLink],
   templateUrl: './sticky-action-bar.html',
   styleUrl: './sticky-action-bar.scss',
 })
@@ -14,12 +16,5 @@ export class StickyActionBar {
 
   readonly phone = input.required<string>();
 
-  protected readonly callHref = computed(() => `tel:${this.phone()}`);
-
-  protected readonly selection = computed(() => {
-    const count = this.selectionCount();
-    const link = this.selectionLink();
-
-    return count !== undefined && link !== undefined ? { count, link } : null;
-  });
+  protected readonly callHref = computed(() => telHref(this.phone()));
 }
