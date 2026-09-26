@@ -82,7 +82,14 @@
     </button>
   </div>
 
-  <dialog #menu class="menu" aria-label="Розділи сайту">
+  <dialog
+    #menu
+    class="menu"
+    aria-label="Розділи сайту"
+    (click)="closeWhenOutside($event)"
+    (pointerdown)="rememberTouch($event)"
+    (pointerup)="closeWhenSwipedAway($event)"
+  >
     <button class="menu__close" type="button" aria-label="Закрити меню" (click)="close()">
       <span class="menu__cross">×</span>
     </button>

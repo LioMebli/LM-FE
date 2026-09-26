@@ -122,6 +122,45 @@ describe('SiteHeader', () => {
     expect(menu().open).toBe(false);
   });
 
+  it('closes on a tap beside it and stays on a tap inside it, padding included', async () => {
+    await fixture.whenStable();
+    givenTheDrawerOccupies({ left: 60, right: 360, top: 0, bottom: 780 });
+
+    const tap = (x: number, y: number) =>
+      menu().dispatchEvent(new MouseEvent('click', { clientX: x, clientY: y, bubbles: true }));
+
+    host().querySelector<HTMLButtonElement>('.header__opener')!.click();
+    tap(64, 8);
+
+    expect(menu().open).toBe(true);
+
+    tap(30, 400);
+
+    expect(menu().open).toBe(false);
+  });
+
+  it('closes when swiped away to the right, and stays for a short or vertical drag', async () => {
+    await fixture.whenStable();
+
+    const swipe = (fromX: number, toX: number, toY = 0) => {
+      menu().dispatchEvent(new PointerEvent('pointerdown', { clientX: fromX, clientY: 0, bubbles: true }));
+      menu().dispatchEvent(new PointerEvent('pointerup', { clientX: toX, clientY: toY, bubbles: true }));
+    };
+
+    host().querySelector<HTMLButtonElement>('.header__opener')!.click();
+    swipe(100, 130);
+
+    expect(menu().open).toBe(true);
+
+    swipe(100, 140, 200);
+
+    expect(menu().open).toBe(true);
+
+    swipe(100, 200);
+
+    expect(menu().open).toBe(false);
+  });
+
   it('closes the menu when a destination in it is taken', async () => {
     await fixture.whenStable();
 
@@ -176,6 +215,11 @@ describe('SiteHeader', () => {
 
     expect(asked).toEqual([]);
   });
+
+  function givenTheDrawerOccupies(box: { left: number; right: number; top: number; bottom: number }): void {
+    menu().getBoundingClientRect = () =>
+      ({ ...box, width: box.right - box.left, height: box.bottom - box.top, x: box.left, y: box.top }) as DOMRect;
+  }
 
   function host(): HTMLElement {
     return fixture.nativeElement as HTMLElement;
