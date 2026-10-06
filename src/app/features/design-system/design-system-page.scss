@@ -31,8 +31,6 @@
 }
 
 .ds code {
-  /* An absolute length, because Chrome applies its monospace default after inheritance: `1em`
-     and `inherit` both measure 13px here. */
   font-size: var(--lm-text-md);
 }
 

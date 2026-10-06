@@ -23,7 +23,6 @@ describe('ProductCard', () => {
     fixture.componentRef.setInput('price', 104800);
     await fixture.whenStable();
 
-    // The separator is U+00A0, not a space: that is what uk-UA groups thousands with.
     expect(price()).toBe('104 800 ₴');
   });
 

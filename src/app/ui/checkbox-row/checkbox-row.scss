@@ -14,7 +14,6 @@
   flex-shrink: 0;
   inline-size: 22px;
   block-size: 22px;
-  /* Cancels the browser's own 4px inline-start default on a checkbox. */
   margin: 0;
   accent-color: var(--lm-color-primary);
 }

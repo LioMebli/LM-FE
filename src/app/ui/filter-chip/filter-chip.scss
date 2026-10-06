@@ -28,7 +28,6 @@
   font: inherit;
   font-size: var(--lm-text-lg);
   line-height: 1;
-  /* The `×` glyph's ink sits below the centre of its own line box, so centring alone reads low. */
   transform: translateY(-1.5px);
   cursor: pointer;
 }

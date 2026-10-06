@@ -10,7 +10,6 @@
 .card__link {
   display: flex;
   flex-direction: column;
-  /* Not redundant: the shell styles every `a` as a centred inline-flex. */
   align-items: stretch;
   flex-grow: 1;
   inline-size: 100%;

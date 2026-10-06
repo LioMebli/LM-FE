@@ -5,8 +5,6 @@
 }
 
 .bar {
-  /* Not sticky: sticky resolves against the layout viewport, so the bar detaches from the screen
-     edge when a mobile browser hides its toolbar. Reproduces only on a real phone. */
   position: fixed;
   inset-block-end: 0;
   inset-inline: 0;
